@@ -219,20 +219,21 @@ int main(void)
         GLCall(glUseProgram(shader));
         GLCall(glUniform4f(location, r, 0.3f, 0.8f, 1.0f));
 
-        //GLCall(glBindBuffer(GL_ARRAY_BUFFER, buffer));//ÉèÖÃ×´Ì¬
-        GLCall(glBindVertexArray(vao2));
-        //GLCall(glBindBuffer(GL_ARRAY_BUFFER, buffer));
-        //GLCall(glEnableVertexAttribArray(0));
-        //GLCall(glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, (void*)0));
-        GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo));
-
-        GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));
+        
         if (r > 1.0f) 
         {
+            GLCall(glBindVertexArray(vao));
+            GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo));
+
+            GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));
             increment = -0.05f;
         }
         else if (r < 0.0f)
         {
+            GLCall(glBindVertexArray(vao2));
+            GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo));
+
+            GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));
             increment = 0.05f;
         }
 
