@@ -8,11 +8,13 @@
 Shader::Shader(const std::string& filePath):
 	m_FilePath(filePath), m_RendererId(0)
 {
-
+	ShaderProgramSource source = ParseShader(filePath);
+	m_RendererId = CreateShader(source.VertexShader, source.FragmentShader);
 }
 
 Shader::~Shader()
 {
+	GLCall(glDeleteProgram(m_RendererId));
 }
 
 ShaderProgramSource Shader::ParseShader(const std::string& filepath)
@@ -44,7 +46,7 @@ ShaderProgramSource Shader::ParseShader(const std::string& filepath)
 	return { ss[0].str(),ss[1].str() };
 }
 
-unsigned int Shader::CompailShader(unsigned int type, const std::string& source)
+unsigned int Shader::CompileShader(unsigned int type, const std::string& source)
 {
 	unsigned int id;
 	GLCall(id = glCreateShader(type));
@@ -90,17 +92,22 @@ int Shader::CreateShader(const std::string& vertexShader, const std::string& fra
 
 void Shader::Bind() const
 {
+	GLCall(glUseProgram(m_RendererId));
 }
 
 void Shader::Unbind() const
 {
+	GLCall(glUseProgram(0));
 }
 
 void Shader::SetUniform4f(std::string& name, float v0, float v1, float v2, float v3)
 {
+	unsigned int location = GetUniformLocation(name);
+	GLCall(glUniform4f(location, v0, v1, v2, v3));
 }
 
 unsigned int Shader::GetUniformLocation(const std::string& name)
 {
-	return 0;
+	GLCall(unsigned int location = glGetUniformLocation(m_RendererId, name.c_str()))
+	return location;
 }

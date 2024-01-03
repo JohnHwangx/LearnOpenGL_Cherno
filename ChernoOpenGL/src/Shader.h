@@ -23,6 +23,6 @@ public:
 private:
 	ShaderProgramSource ParseShader(const std::string& filepath);
 	int CreateShader(const std::string& vertexShader, const std::string& fragmentShader);
-	unsigned int CompailShader(unsigned int type, const std::string& source);
+	unsigned int CompileShader(unsigned int type, const std::string& source);
 	unsigned int GetUniformLocation(const std::string& name);
 };
