@@ -8,6 +8,7 @@
 #include "Renderer.h"
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
+#include "VertexArray.h"
 
 struct ShaderProgramSource
 {
@@ -139,23 +140,19 @@ int main(void)
 			2,3,0
 		};
 
-		unsigned int vao;
-		GLCall(glGenVertexArrays(1, &vao));
-		GLCall(glBindVertexArray(vao));
-
+		VertexArray va;
 		VertexBuffer vb(vertex, sizeof(float) * 4 * 2);
+		VertexBufferLayout layout;
+		layout.Push<float>(2);
+		va.AddBuffer(vb, layout);
 
-		GLCall(glEnableVertexAttribArray(0));
-		GLCall(glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, (void*)0));
-
-		unsigned int vao2;
-		GLCall(glGenVertexArrays(1, &vao2));
-		GLCall(glBindVertexArray(vao2));
-
+		VertexArray va2;
 		VertexBuffer vb2(vertex2, sizeof(float) * 6 * 2);
-
-		GLCall(glEnableVertexAttribArray(0));
-		GLCall(glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, (void*)0));
+		VertexBufferLayout layout2;
+		layout2.Push<float>(3);
+		va2.AddBuffer(vb2, layout2);
+		//GLCall(glEnableVertexAttribArray(0));
+		//GLCall(glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, (void*)0));
 
 		IndexBuffer ibo(indices, 6);
 
@@ -187,11 +184,13 @@ int main(void)
 
 			if ( r < 0.5f)
 			{
-				GLCall(glBindVertexArray(vao));
+				//GLCall(glBindVertexArray(vao));
+				va.Bind();
 			}
 			else
 			{
-				GLCall(glBindVertexArray(vao2));
+				//GLCall(glBindVertexArray(vao2));
+				va2.Bind();
 			}
 			ibo.Bind();
 
@@ -207,7 +206,6 @@ int main(void)
 
 			r += increment;
 
-			std::cout << r << "\n";
 			/* GLClearError();
 			 glDrawElements(GL_TRIANGLES, 6, GL_INT, nullptr);
 			 ASSERT(GLLogCall());*/
