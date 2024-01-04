@@ -11,6 +11,7 @@
 #include "VertexArray.h"
 #include "Shader.h"
 #include "VertexBufferLayout.h"
+#include "Texture.h"
 
 int main(void)
 {
@@ -46,17 +47,17 @@ int main(void)
 	std::cout << "Status: Using GL " << glVersion << std::endl;
 	{
 		float vertex[] = {
-			-0.5f, -0.5f,
-			0.5f, -0.5f,
-			0.5f, 0.5f,
-			-0.5f,0.5f
+			-0.5f, -0.5f, 0.0f, 0.0f,
+			 0.5f, -0.5f, 1.0f, 0.0f,
+			 0.5f,  0.5f, 1.0f, 1.0f,
+			-0.5f,  0.5f, 0.0f, 1.0f,
 		};
 
 		float vertex2[] = {
-			-0.2f, -0.2f, 0.0f,
-			0.8f, -0.2f, 0.0f,
-			0.8f, 0.8f, 0.0f,
-			-0.2f, 0.8f, 0.0f
+			-0.2f, -0.2f, 0.0f, 0.0f, 0.0f,
+			 0.8f, -0.2f, 0.0f, 1.0f, 0.0f,
+			 0.8f,  0.8f, 0.0f, 1.0f, 1.0f,
+			-0.2f,  0.8f, 0.0f, 0.0f, 1.0f
 		};
 
 		unsigned int indices[] = {
@@ -64,16 +65,21 @@ int main(void)
 			2,3,0
 		};
 
+		GLCall(glEnable(GL_BLEND));
+		GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
+
 		VertexArray va;
-		VertexBuffer vb(vertex, sizeof(float) * 4 * 2);
+		VertexBuffer vb(vertex, sizeof(float) * 4 * 4);
 		VertexBufferLayout layout;
+		layout.Push<float>(2);
 		layout.Push<float>(2);
 		va.AddBuffer(vb, layout);
 
 		VertexArray va2;
-		VertexBuffer vb2(vertex2, sizeof(float) * 6 * 2);
+		VertexBuffer vb2(vertex2, sizeof(float) * 6 * 4);
 		VertexBufferLayout layout2;
 		layout2.Push<float>(3);
+		layout2.Push<float>(2);
 		va2.AddBuffer(vb2, layout2);
 
 		IndexBuffer ibo(indices, 6);
@@ -81,6 +87,10 @@ int main(void)
 		Shader shader("res/shader/Basic.shader");
 		shader.Bind();
 		shader.SetUniform4f("u_Color", 0.9f, 0.3f, 0.8f, 1.0f);
+
+		Texture texture("res/textures/ChernoLogo.png");
+		texture.Bind();
+		shader.SetUniform1i("u_Texture", 0);
 
 		va.Unbind();
 		va2.Unbind();
