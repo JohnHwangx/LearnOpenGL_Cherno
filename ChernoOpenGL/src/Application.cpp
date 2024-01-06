@@ -29,7 +29,7 @@ int main(void)
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 	/* Create a windowed mode window and its OpenGL context */
-	window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
+	window = glfwCreateWindow(950, 680, "Hello World", NULL, NULL);
 	if (!window)
 	{
 		glfwTerminate();
@@ -50,10 +50,10 @@ int main(void)
 	std::cout << "Status: Using GL " << glVersion << std::endl;
 	{
 		float vertex[] = {
-			-0.5f, -0.5f, 0.0f, 0.0f,
-			 0.5f, -0.5f, 1.0f, 0.0f,
-			 0.5f,  0.5f, 1.0f, 1.0f,
-			-0.5f,  0.5f, 0.0f, 1.0f,
+			  0.0f,   0.0f, 0.0f, 0.0f,
+			100.0f,   0.0f, 1.0f, 0.0f,
+			100.0f, 100.0f, 1.0f, 1.0f,
+			  0.0f, 100.0f, 0.0f, 1.0f,
 		};
 
 		float vertex2[] = {
@@ -87,7 +87,9 @@ int main(void)
 
 		IndexBuffer ibo(indices, 6);
 
-		glm::mat4 proj = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f);
+		glm::mat4 proj = glm::ortho(0.0f, 950.0f, 0.0f, 680.0f, -1.0f, 1.0f);
+		glm::vec4 vp(100.0f, 100.0f, 0.0f, 1.0f);
+		glm::vec4 result = proj * vp;
 
 		Shader shader("res/shader/Basic.shader");
 		shader.Bind();
@@ -118,10 +120,10 @@ int main(void)
 			shader.Bind();
 			shader.SetUniform4f("u_Color", r, 0.3f, 0.8f, 1.0f);
 
-			if ( r < 0.5f)
+			//if ( r < 0.5f)
 				renderer.Draw(va, ibo, shader);
-			else
-				renderer.Draw(va2, ibo, shader);
+			//else
+				//renderer.Draw(va2, ibo, shader);
 
 			if (r > 1.0f)
 				increment = -0.05f;
