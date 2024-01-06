@@ -50,10 +50,10 @@ int main(void)
 	std::cout << "Status: Using GL " << glVersion << std::endl;
 	{
 		float vertex[] = {
-			  0.0f,   0.0f, 0.0f, 0.0f,
-			100.0f,   0.0f, 1.0f, 0.0f,
-			100.0f, 100.0f, 1.0f, 1.0f,
-			  0.0f, 100.0f, 0.0f, 1.0f,
+			-1.0f, -1.0f, 0.0f, 0.0f,
+			 1.0f, -1.0f, 1.0f, 0.0f,
+			 1.0f,  1.0f, 1.0f, 1.0f,
+			-1.0f,  1.0f, 0.0f, 1.0f,
 		};
 
 		float vertex2[] = {
@@ -88,8 +88,10 @@ int main(void)
 		IndexBuffer ibo(indices, 6);
 
 		glm::mat4 proj = glm::ortho(0.0f, 950.0f, 0.0f, 680.0f, -1.0f, 1.0f);
-		glm::vec4 vp(100.0f, 100.0f, 0.0f, 1.0f);
-		glm::vec4 result = proj * vp;
+		glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(300.0f, 300.0f, 0.0f));
+		glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(-100.0f, 0.0f, 0.0f));//先平移后缩放
+		model = glm::scale(model, glm::vec3(100.0f));
+		glm::mat4 mvp = proj * view * model;
 
 		Shader shader("res/shader/Basic.shader");
 		shader.Bind();
@@ -98,7 +100,7 @@ int main(void)
 		Texture texture("res/textures/ChernoLogo.png");
 		texture.Bind();
 		shader.SetUniform1i("u_Texture", 0);
-		shader.SetUniformMat4f("u_MVP", proj);
+		shader.SetUniformMat4f("u_MVP", mvp);
 
 		va.Unbind();
 		va2.Unbind();
