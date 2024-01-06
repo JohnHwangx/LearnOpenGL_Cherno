@@ -13,6 +13,9 @@
 #include "VertexBufferLayout.h"
 #include "Texture.h"
 
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
+
 int main(void)
 {
 	GLFWwindow* window;
@@ -84,6 +87,8 @@ int main(void)
 
 		IndexBuffer ibo(indices, 6);
 
+		glm::mat4 proj = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f);
+
 		Shader shader("res/shader/Basic.shader");
 		shader.Bind();
 		shader.SetUniform4f("u_Color", 0.9f, 0.3f, 0.8f, 1.0f);
@@ -91,6 +96,7 @@ int main(void)
 		Texture texture("res/textures/ChernoLogo.png");
 		texture.Bind();
 		shader.SetUniform1i("u_Texture", 0);
+		shader.SetUniformMat4f("u_MVP", proj);
 
 		va.Unbind();
 		va2.Unbind();
