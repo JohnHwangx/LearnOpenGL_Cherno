@@ -116,7 +116,8 @@ int main(void)
 		ImGui_ImplOpenGL3_Init();
 		ImGui::StyleColorsDark();
 
-		glm::vec3 translation(0.0f, 0.0f, 0.0f);
+		glm::vec3 translationA(200.0f, 200.0f, 0.0f);
+		glm::vec3 translationB(400.0f, 200.0f, 0.0f);
 
 		ImGuiIO& io = ImGui::GetIO(); (void)io;
 		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
@@ -135,18 +136,25 @@ int main(void)
 			ImGui_ImplGlfw_NewFrame();
 			ImGui::NewFrame();
 
-			glm::mat4 model = glm::translate(glm::mat4(1.0f), translation);//先平移后缩放
-			model = glm::scale(model, glm::vec3(100.0f));
-			glm::mat4 mvp = proj * view * model;
+			{
+				glm::mat4 model = glm::translate(glm::mat4(1.0f), translationA);//先平移后缩放
+				model = glm::scale(model, glm::vec3(100.0f));
+				glm::mat4 mvp = proj * view * model;
+				shader.Bind();
+				shader.SetUniformMat4f("u_MVP", mvp);
 
-			shader.Bind();
-			shader.SetUniform4f("u_Color", r, 0.3f, 0.8f, 1.0f);
-			shader.SetUniformMat4f("u_MVP", mvp);
-
-			//if ( r < 0.5f)
 				renderer.Draw(va, ibo, shader);
-			//else
-				//renderer.Draw(va2, ibo, shader);
+			}
+
+			{
+				glm::mat4 model = glm::translate(glm::mat4(1.0f), translationB);//先平移后缩放
+				model = glm::scale(model, glm::vec3(100.0f));
+				glm::mat4 mvp = proj * view * model;
+				shader.Bind();
+				shader.SetUniformMat4f("u_MVP", mvp);
+
+				renderer.Draw(va, ibo, shader);
+			}
 
 			if (r > 1.0f)
 				increment = -0.05f;
@@ -159,7 +167,8 @@ int main(void)
 			{
 				ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
 
-				ImGui::SliderFloat3("Translation", &translation.x, 0.0f, 950.0f);
+				ImGui::SliderFloat3("Translation A", &translationA.x, 0.0f, 950.0f);
+				ImGui::SliderFloat3("Translation B", &translationB.x, 0.0f, 950.0f);
 				ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
 				ImGui::End();
 			}
