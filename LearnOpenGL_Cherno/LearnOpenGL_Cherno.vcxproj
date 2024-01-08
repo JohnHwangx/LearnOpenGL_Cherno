@@ -22,8 +22,9 @@
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{44a3761f-a9d2-4c94-b05f-e6b244b8c8b1}</ProjectGuid>
-    <RootNamespace>ChernoOpenGL</RootNamespace>
+    <RootNamespace>LearnOpenGL_Cherno</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>LearnOpenGL_Cherno</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
