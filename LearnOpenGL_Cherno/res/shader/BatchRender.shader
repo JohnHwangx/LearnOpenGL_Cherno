@@ -2,11 +2,15 @@
 #version 330 core
 
 layout(location = 0)in vec4 position;
+layout(location = 1)in vec4 color;
 
 uniform mat4 u_MVP;
 
+out vec4 v_color;
+
 void main()
 {
+	v_color = color;
 	gl_Position = u_MVP * position;
 };
 
@@ -15,7 +19,9 @@ void main()
 
 layout(location = 0)out vec4 color;
 
+in vec4 v_color;
+
 void main()
 {
-	color = vec4(1.0f, 1.0f, 1.0f, 1.0f);
+	color = v_color;
 };
