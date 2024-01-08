@@ -73,7 +73,7 @@ namespace Test {
 		m_Texture->Bind();
 
 		{
-			glm::mat4 model = glm::translate(glm::mat4(1.0f), m_TranslationA);//ÏÈÆ½ÒÆºóËõ·Å
+			glm::mat4 model = glm::translate(glm::mat4(1.0f), m_TranslationA);
 			model = glm::scale(model, glm::vec3(100.0f));
 			glm::mat4 mvp = m_Proj * m_View * model;
 			m_Shader->Bind();
@@ -83,7 +83,7 @@ namespace Test {
 		}
 
 		{
-			glm::mat4 model = glm::translate(glm::mat4(1.0f), m_TranslationB);//ÏÈÆ½ÒÆºóËõ·Å
+			glm::mat4 model = glm::translate(glm::mat4(1.0f), m_TranslationB);
 			model = glm::scale(model, glm::vec3(100.0f));
 			glm::mat4 mvp = m_Proj * m_View * model;
 			m_Shader->Bind();
