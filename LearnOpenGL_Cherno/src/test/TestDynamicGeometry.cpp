@@ -7,11 +7,23 @@
 
 namespace Test {
 
+	struct Vec2
+	{
+		float x, y;
+	};
+	struct Vec3
+	{
+		float x, y, z;
+	};
+	struct Vec4
+	{
+		float r, g, b, a;
+	};
 	struct Vertex
 	{
-		float Position[3];
-		float Color[4];
-		float TexCoord[2];
+		Vec3 Position;
+		Vec4 Color;
+		Vec2 TexCoord;
 		float TexId;
 	};
 
@@ -102,13 +114,13 @@ namespace Test {
 		v0.TexId = texId;
 
 		Vertex v1;
-		v1.Position = { x + size,y, 0.0f };
+		v1.Position = { x + size, y, 0.0f };
 		v1.Color = { 0.18f, 0.6f, 0.96f, 1.0f };
 		v1.TexCoord = { 1.0f, 0.0f };
 		v1.TexId = texId;
 
 		Vertex v2;
-		v2.Position = { x + size,y + size, 0.0f };
+		v2.Position = { x + size, y + size, 0.0f };
 		v2.Color = { 0.18f, 0.6f, 0.96f, 1.0f };
 		v2.TexCoord = { 1.0f, 1.0f };
 		v2.TexId = texId;
@@ -128,21 +140,8 @@ namespace Test {
 		GLCall(glClearColor(0.3f, 0.3f, 0.3f, 1.0f));
 		GLCall(glClear(GL_COLOR_BUFFER_BIT));
 
-		//float vertices[] = {
-		//	// position		   //color					 //texCoord  //texture Index
-		//	0.5f, -1.0f, 0.0f, 0.18f, 0.6f, 0.96f, 1.0f, 0.0f, 0.0f, 0.0f,
-		//	2.5f, -1.0f, 0.0f, 0.18f, 0.6f, 0.96f, 1.0f, 1.0f, 0.0f, 0.0f,
-		//	2.5f,  1.0f, 0.0f, 0.18f, 0.6f, 0.96f, 1.0f, 1.0f, 1.0f, 0.0f,
-		//	0.5f,  1.0f, 0.0f, 0.18f, 0.6f, 0.96f, 1.0f, 0.0f, 1.0f, 0.0f,
-
-		//   -2.5f, -1.0f, 0.0f, 1.0f, 0.93f, 0.24f, 1.0f, 0.0f, 0.0f, 1.0f,
-		//   -0.5f, -1.0f, 0.0f, 1.0f, 0.93f, 0.24f, 1.0f, 1.0f, 0.0f, 1.0f,
-		//   -0.5f,  1.0f, 0.0f, 1.0f, 0.93f, 0.24f, 1.0f, 1.0f, 1.0f, 1.0f,
-		//   -2.5f,  1.0f, 0.0f, 1.0f, 0.93f, 0.24f, 1.0f, 0.0f, 1.0f, 1.0f
-		//};
-
-		auto q0 = CreateQaud(0.5f, -1.0f, 0.0f);
-		auto q1 = CreateQaud(-2.5f, -1.0f, 1.0f);
+		auto q0 = CreateQaud(-1.5f, -0.5f, 0.0f);
+		auto q1 = CreateQaud(0.5f, -0.5f, 1.0f);
 
 		Vertex vertices[8];
 		memcpy(vertices, q0.data(), q0.size() * sizeof(Vertex));
@@ -150,7 +149,6 @@ namespace Test {
 
 		GLCall(glBindBuffer(GL_ARRAY_BUFFER, m_QuadVB));
 		GLCall(glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices));
-
 
 		GLCall(glUseProgram(m_Shader->GetRendererID()));
 		GLCall(glBindTextureUnit(0, m_Texture[0]->GetRendererId()));
