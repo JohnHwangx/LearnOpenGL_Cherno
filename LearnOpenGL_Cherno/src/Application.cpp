@@ -5,14 +5,6 @@
 #include <string>
 #include <sstream>
 
-#include "Renderer.h"
-#include "VertexBuffer.h"
-#include "IndexBuffer.h"
-#include "VertexArray.h"
-#include "Shader.h"
-#include "VertexBufferLayout.h"
-#include "Texture.h"
-
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 
@@ -23,7 +15,8 @@
 #include "test/TestClearColor.h"
 #include "test/TestTexture2D.h"
 #include "test/TestBatchRender.h"
-#include <test/LearnOpenGL/01_HelloTriangle.h>
+#include "test/TestDynamicGeometry.h"
+#include "test/LearnOpenGL/01_HelloTriangle.h"
 
 int main(void)
 {
@@ -75,6 +68,7 @@ int main(void)
 		testMenu->RegisterTest<Test::TestClearColor>("Clear Color");
 		testMenu->RegisterTest<Test::TestTexture2D>("2D Texture");
 		testMenu->RegisterTest<Test::TestBatchRender>("Batch Render");
+		testMenu->RegisterTest<Test::TestDynamicGeometry>("Dynamic Geometry");
 		testMenu->RegisterTest<Test::Part1_HelloTriangle>("Part1_HelloTriangle");
 
 		/* Loop until the user closes the window */
