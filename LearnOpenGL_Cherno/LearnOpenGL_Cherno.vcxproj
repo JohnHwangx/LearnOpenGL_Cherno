@@ -138,6 +138,7 @@
     <ClCompile Include="src\IndexBuffer.cpp" />
     <ClCompile Include="src\Renderer.cpp" />
     <ClCompile Include="src\Shader.cpp" />
+    <ClCompile Include="src\test\LearnOpenGL\01_HelloTriangle.cpp" />
     <ClCompile Include="src\test\Test.cpp" />
     <ClCompile Include="src\test\TestBatchRender.cpp" />
     <ClCompile Include="src\test\TestClearColor.cpp" />
@@ -157,6 +158,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shader\Basic.shader" />
+    <None Include="res\shader\Part1_Simple.shader" />
     <None Include="src\vendor\glm\detail\func_common.inl" />
     <None Include="src\vendor\glm\detail\func_common_simd.inl" />
     <None Include="src\vendor\glm\detail\func_exponential.inl" />
@@ -301,6 +303,7 @@
     <ClInclude Include="src\IndexBuffer.h" />
     <ClInclude Include="src\Renderer.h" />
     <ClInclude Include="src\Shader.h" />
+    <ClInclude Include="src\test\LearnOpenGL\01_HelloTriangle.h" />
     <ClInclude Include="src\test\Test.h" />
     <ClInclude Include="src\test\TestBatchRender.h" />
     <ClInclude Include="src\test\TestClearColor.h" />

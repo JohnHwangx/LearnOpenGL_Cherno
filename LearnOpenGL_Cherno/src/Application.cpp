@@ -23,6 +23,7 @@
 #include "test/TestClearColor.h"
 #include "test/TestTexture2D.h"
 #include "test/TestBatchRender.h"
+#include <test/LearnOpenGL/01_HelloTriangle.h>
 
 int main(void)
 {
@@ -74,6 +75,7 @@ int main(void)
 		testMenu->RegisterTest<Test::TestClearColor>("Clear Color");
 		testMenu->RegisterTest<Test::TestTexture2D>("2D Texture");
 		testMenu->RegisterTest<Test::TestBatchRender>("Batch Render");
+		testMenu->RegisterTest<Test::Part1_HelloTriangle>("Part1_HelloTriangle");
 
 		/* Loop until the user closes the window */
 		while (!glfwWindowShouldClose(window))
@@ -92,7 +94,7 @@ int main(void)
 				currentTest->OnUpdate(0.0f);
 				currentTest->OnRender();
 				ImGui::Begin("Test");
-				if (currentTest != testMenu&&ImGui::Button("<-"))
+				if (currentTest != testMenu && ImGui::Button("<-"))
 				{
 					delete currentTest;
 					currentTest = testMenu;

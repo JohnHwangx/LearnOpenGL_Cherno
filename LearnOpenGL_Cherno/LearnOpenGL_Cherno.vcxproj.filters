@@ -75,6 +75,9 @@
     <ClCompile Include="src\test\TestBatchRender.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\test\LearnOpenGL\01_HelloTriangle.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shader\Basic.shader" />
@@ -495,6 +498,7 @@
     <None Include="src\vendor\glm\gtx\wrap.inl">
       <Filter>头文件</Filter>
     </None>
+    <None Include="res\shader\Part1_Simple.shader" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Renderer.h">
@@ -1419,6 +1423,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\test\TestBatchRender.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\test\LearnOpenGL\01_HelloTriangle.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
