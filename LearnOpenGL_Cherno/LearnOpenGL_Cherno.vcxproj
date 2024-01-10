@@ -141,6 +141,7 @@
     <ClCompile Include="src\test\LearnOpenGL\01_HelloTriangle.cpp" />
     <ClCompile Include="src\test\LearnOpenGL\02_Shader.cpp" />
     <ClCompile Include="src\test\LearnOpenGL\02_Shader_Interpolation.cpp" />
+    <ClCompile Include="src\test\LearnOpenGL\03_Textures.cpp" />
     <ClCompile Include="src\test\Test.cpp" />
     <ClCompile Include="src\test\TestBatchRender.cpp" />
     <ClCompile Include="src\test\TestClearColor.cpp" />
@@ -164,6 +165,7 @@
     <None Include="res\shader\Part1_Shader.shader" />
     <None Include="res\shader\Part1_Shader_Interpolation.shader" />
     <None Include="res\shader\Part1_Simple.shader" />
+    <None Include="res\shader\Part1_Textures.shader" />
     <None Include="src\vendor\glm\detail\func_common.inl" />
     <None Include="src\vendor\glm\detail\func_common_simd.inl" />
     <None Include="src\vendor\glm\detail\func_exponential.inl" />
@@ -311,6 +313,7 @@
     <ClInclude Include="src\test\LearnOpenGL\01_HelloTriangle.h" />
     <ClInclude Include="src\test\LearnOpenGL\02_Shader.h" />
     <ClInclude Include="src\test\LearnOpenGL\02_Shader_Interpolation.h" />
+    <ClInclude Include="src\test\LearnOpenGL\03_Textures.h" />
     <ClInclude Include="src\test\Test.h" />
     <ClInclude Include="src\test\TestBatchRender.h" />
     <ClInclude Include="src\test\TestClearColor.h" />

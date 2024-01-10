@@ -19,6 +19,7 @@
 #include "test/LearnOpenGL/01_HelloTriangle.h"
 #include "test/LearnOpenGL/02_Shader.h"
 #include "test/LearnOpenGL/02_Shader_Interpolation.h"
+#include "test/LearnOpenGL/03_Textures.h"
 
 int main(void)
 {
@@ -71,6 +72,7 @@ int main(void)
 		testMenu->RegisterTest<Test::Part1_HelloTriangle>("Part1: Hello Triangle");
 		testMenu->RegisterTest<Test::Part1_Shader>("Part1: Shader");
 		testMenu->RegisterTest<Test::Part1_Shader_Interpolation>("Part1: Shader Interpolation");
+		testMenu->RegisterTest<Test::Part1_Textures>("Part1: Textures");
 
 		/* Loop until the user closes the window */
 		while (!glfwWindowShouldClose(window))
