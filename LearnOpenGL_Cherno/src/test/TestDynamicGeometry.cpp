@@ -39,12 +39,17 @@ namespace Test {
 
 		glUniform1iv(loc, 2, samplers);
 
+		const size_t MaxQuadCount = 1000;
+		const size_t MaxVertexCount = MaxQuadCount * 4;
+		const size_t MaxIndexCount = MaxQuadCount * 6;
+
+
 		GLCall(glCreateVertexArrays(1, &m_QuadVA));
 		GLCall(glBindVertexArray(m_QuadVA));
 
 		GLCall(glCreateBuffers(1, &m_QuadVB));
 		GLCall(glBindBuffer(GL_ARRAY_BUFFER, m_QuadVB));
-		GLCall(glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * 1000, nullptr, GL_DYNAMIC_DRAW));
+		GLCall(glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * MaxVertexCount, nullptr, GL_DYNAMIC_DRAW));
 
 		GLCall(glEnableVertexAttribArray(0));
 		GLCall(glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const void*)offsetof(Vertex, Position)));
@@ -58,10 +63,25 @@ namespace Test {
 		GLCall(glEnableVertexAttribArray(3));
 		GLCall(glVertexAttribPointer(3, 1, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const void*)offsetof(Vertex, TexId)));
 
-		unsigned int indices[] = {
-			0, 1, 2, 2, 3, 0,
-			4, 5, 6, 6, 7, 4
-		};
+		//unsigned int indices[] = {
+		//	0, 1, 2, 2, 3, 0,
+		//	4, 5, 6, 6, 7, 4
+		//};
+
+		uint32_t indices[MaxIndexCount];
+		uint32_t offset = 0;
+		for (size_t i = 0; i < MaxIndexCount; i += 6)
+		{
+			indices[i + 0] = 0 + offset;
+			indices[i + 1] = 1 + offset;
+			indices[i + 2] = 2 + offset;
+
+			indices[i + 3] = 2 + offset;
+			indices[i + 4] = 3 + offset;
+			indices[i + 5] = 0 + offset;
+
+			offset += 4;
+		}
 
 		GLCall(glCreateBuffers(1, &m_QuadIB));
 		GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_QuadIB));
@@ -77,35 +97,35 @@ namespace Test {
 	{
 	}
 
-	static std::array<Vertex, 4> CreateQaud(float x, float y, float texId)
+	static Vertex* CreateQaud(Vertex* target, float x, float y, float texId)
 	{
 		float size = 2.0f;
 
-		Vertex v0;
-		v0.Position = { x, y, 0.0f };
-		v0.Color = { 0.18f, 0.6f, 0.96f, 1.0f };
-		v0.TexCoord = { 0.0f, 0.0f };
-		v0.TexId = texId;
+		target->Position = { x, y, 0.0f };
+		target->Color = { 0.18f, 0.6f, 0.96f, 1.0f };
+		target->TexCoord = { 0.0f, 0.0f };
+		target->TexId = texId;
+		target++;
 
-		Vertex v1;
-		v1.Position = { x + size, y, 0.0f };
-		v1.Color = { 0.18f, 0.6f, 0.96f, 1.0f };
-		v1.TexCoord = { 1.0f, 0.0f };
-		v1.TexId = texId;
+		target->Position = { x + size, y, 0.0f };
+		target->Color = { 0.18f, 0.6f, 0.96f, 1.0f };
+		target->TexCoord = { 1.0f, 0.0f };
+		target->TexId = texId;
+		target++;
 
-		Vertex v2;
-		v2.Position = { x + size, y + size, 0.0f };
-		v2.Color = { 0.18f, 0.6f, 0.96f, 1.0f };
-		v2.TexCoord = { 1.0f, 1.0f };
-		v2.TexId = texId;
+		target->Position = { x + size, y + size, 0.0f };
+		target->Color = { 0.18f, 0.6f, 0.96f, 1.0f };
+		target->TexCoord = { 1.0f, 1.0f };
+		target->TexId = texId;
+		target++;
 
-		Vertex v3;
-		v3.Position = { x, y + size, 0.0f };
-		v3.Color = { 0.18f, 0.6f, 0.96f, 1.0f };
-		v3.TexCoord = { 0.0f, 1.0f };
-		v3.TexId = texId;
+		target->Position = { x, y + size, 0.0f };
+		target->Color = { 0.18f, 0.6f, 0.96f, 1.0f };
+		target->TexCoord = { 0.0f, 1.0f };
+		target->TexId = texId;
+		target++;
 
-		return { v0,v1,v2,v3 };
+		return target;
 	}
 
 	void TestDynamicGeometry::OnRender()
@@ -114,28 +134,42 @@ namespace Test {
 		GLCall(glClearColor(0.3f, 0.3f, 0.3f, 1.0f));
 		GLCall(glClear(GL_COLOR_BUFFER_BIT));
 
-		auto q0 = CreateQaud(m_Position[0], m_Position[1], 0.0f);
-		auto q1 = CreateQaud(0.5f, -0.5f, 1.0f);
+		uint32_t indexCount = 0;
 
-		Vertex vertices[8];
-		memcpy(vertices, q0.data(), q0.size() * sizeof(Vertex));
-		memcpy(vertices + q0.size(), q1.data(), q1.size() * sizeof(Vertex));
+		std::array<Vertex, 1000> vertices;
+		Vertex* buffer = vertices.data();
+		for (int y = 0; y < 5; y++)
+		{
+			for (int x = 0; x < 5; x++)
+			{
+				buffer = CreateQaud(buffer, x, y, (x + y) % 2);
+				indexCount += 6;
+			}
+		}
+
+		buffer = CreateQaud(buffer, m_Position[0], m_Position[1], 0.0f);
+		indexCount += 6;
+		//auto q1 = CreateQaud(0.5f, -0.5f, 1.0f);
+
+		//Vertex vertices[8];
+		//memcpy(vertices, q0.data(), q0.size() * sizeof(Vertex));
+		//memcpy(vertices + q0.size(), q1.data(), q1.size() * sizeof(Vertex));
 
 		GLCall(glBindBuffer(GL_ARRAY_BUFFER, m_QuadVB));
-		GLCall(glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices));
+		GLCall(glBufferSubData(GL_ARRAY_BUFFER, 0, vertices.size() * sizeof(Vertex), vertices.data()));
 
 		GLCall(glUseProgram(m_Shader->GetRendererID()));
 		GLCall(glBindTextureUnit(0, m_Texture[0]->GetRendererId()));
 		GLCall(glBindTextureUnit(1, m_Texture[1]->GetRendererId()));
 
 		glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(400.0f, 400.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(100.0f));
+		model = glm::scale(model, glm::vec3(20.0f));
 		glm::mat4 mvp = m_Proj * m_View * model;
 
 		m_Shader->SetUniformMat4f("u_MVP", mvp);
 
 		GLCall(glBindVertexArray(m_QuadVA));
-		GLCall(glDrawElements(GL_TRIANGLES, 12, GL_UNSIGNED_INT, nullptr));
+		GLCall(glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, nullptr));
 	}
 
 	void TestDynamicGeometry::OnImGuiRender()
