@@ -22,5 +22,7 @@ namespace Test {
 		std::unique_ptr<Texture> m_Texture[2];
 
 		glm::mat4 m_Proj, m_View;
+
+		float m_Position[2] = { -1.5f,-0.5f };
 	};
 }

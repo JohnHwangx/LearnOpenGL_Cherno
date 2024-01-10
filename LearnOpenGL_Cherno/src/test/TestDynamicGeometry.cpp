@@ -114,7 +114,7 @@ namespace Test {
 		GLCall(glClearColor(0.3f, 0.3f, 0.3f, 1.0f));
 		GLCall(glClear(GL_COLOR_BUFFER_BIT));
 
-		auto q0 = CreateQaud(-1.5f, -0.5f, 0.0f);
+		auto q0 = CreateQaud(m_Position[0], m_Position[1], 0.0f);
 		auto q1 = CreateQaud(0.5f, -0.5f, 1.0f);
 
 		Vertex vertices[8];
@@ -140,5 +140,6 @@ namespace Test {
 
 	void TestDynamicGeometry::OnImGuiRender()
 	{
+		ImGui::DragFloat2("Quad Position", m_Position, 0.1f);
 	}
 }
