@@ -39,37 +39,11 @@ namespace Test {
 
 		glUniform1iv(loc, 2, samplers);
 
-		//float vertices[] = {
-		//	// position		   //color					 //texCoord  //texture Index
-		//	0.5f, -1.0f, 0.0f, 0.18f, 0.6f, 0.96f, 1.0f, 0.0f, 0.0f, 0.0f,
-		//	2.5f, -1.0f, 0.0f, 0.18f, 0.6f, 0.96f, 1.0f, 1.0f, 0.0f, 0.0f,
-		//	2.5f,  1.0f, 0.0f, 0.18f, 0.6f, 0.96f, 1.0f, 1.0f, 1.0f, 0.0f,
-		//	0.5f,  1.0f, 0.0f, 0.18f, 0.6f, 0.96f, 1.0f, 0.0f, 1.0f, 0.0f,
-
-		//   -2.5f, -1.0f, 0.0f, 1.0f, 0.93f, 0.24f, 1.0f, 0.0f, 0.0f, 1.0f,
-		//   -0.5f, -1.0f, 0.0f, 1.0f, 0.93f, 0.24f, 1.0f, 1.0f, 0.0f, 1.0f,
-		//   -0.5f,  1.0f, 0.0f, 1.0f, 0.93f, 0.24f, 1.0f, 1.0f, 1.0f, 1.0f,
-		//   -2.5f,  1.0f, 0.0f, 1.0f, 0.93f, 0.24f, 1.0f, 0.0f, 1.0f, 1.0f
-		//};
-
 		GLCall(glCreateVertexArrays(1, &m_QuadVA));
 		GLCall(glBindVertexArray(m_QuadVA));
 
 		GLCall(glCreateBuffers(1, &m_QuadVB));
 		GLCall(glBindBuffer(GL_ARRAY_BUFFER, m_QuadVB));
-		/*GLCall(glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW));
-
-		GLCall(glEnableVertexAttribArray(0));
-		GLCall(glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 10, 0));
-
-		GLCall(glEnableVertexAttribArray(1));
-		GLCall(glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(float) * 10, (const void*)12));
-
-		GLCall(glEnableVertexAttribArray(2));
-		GLCall(glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 10, (const void*)28));
-
-		GLCall(glEnableVertexAttribArray(3));
-		GLCall(glVertexAttribPointer(3, 1, GL_FLOAT, GL_FALSE, sizeof(float) * 10, (const void*)36));*/
 		GLCall(glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * 1000, nullptr, GL_DYNAMIC_DRAW));
 
 		GLCall(glEnableVertexAttribArray(0));
@@ -105,7 +79,7 @@ namespace Test {
 
 	static std::array<Vertex, 4> CreateQaud(float x, float y, float texId)
 	{
-		float size = 1.0f;
+		float size = 2.0f;
 
 		Vertex v0;
 		v0.Position = { x, y, 0.0f };
@@ -128,7 +102,7 @@ namespace Test {
 		Vertex v3;
 		v3.Position = { x, y + size, 0.0f };
 		v3.Color = { 0.18f, 0.6f, 0.96f, 1.0f };
-		v3.TexCoord = { 1.0f, 0.0f };
+		v3.TexCoord = { 0.0f, 1.0f };
 		v3.TexId = texId;
 
 		return { v0,v1,v2,v3 };
