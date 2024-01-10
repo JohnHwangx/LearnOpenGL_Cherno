@@ -99,7 +99,7 @@ namespace Test {
 
 	static Vertex* CreateQaud(Vertex* target, float x, float y, float texId)
 	{
-		float size = 2.0f;
+		float size =1.0f;
 
 		target->Position = { x, y, 0.0f };
 		target->Color = { 0.18f, 0.6f, 0.96f, 1.0f };
@@ -149,11 +149,6 @@ namespace Test {
 
 		buffer = CreateQaud(buffer, m_Position[0], m_Position[1], 0.0f);
 		indexCount += 6;
-		//auto q1 = CreateQaud(0.5f, -0.5f, 1.0f);
-
-		//Vertex vertices[8];
-		//memcpy(vertices, q0.data(), q0.size() * sizeof(Vertex));
-		//memcpy(vertices + q0.size(), q1.data(), q1.size() * sizeof(Vertex));
 
 		GLCall(glBindBuffer(GL_ARRAY_BUFFER, m_QuadVB));
 		GLCall(glBufferSubData(GL_ARRAY_BUFFER, 0, vertices.size() * sizeof(Vertex), vertices.data()));
@@ -162,8 +157,8 @@ namespace Test {
 		GLCall(glBindTextureUnit(0, m_Texture[0]->GetRendererId()));
 		GLCall(glBindTextureUnit(1, m_Texture[1]->GetRendererId()));
 
-		glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(400.0f, 400.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(20.0f));
+		glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(200.0f, 100.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(100.0f));
 		glm::mat4 mvp = m_Proj * m_View * model;
 
 		m_Shader->SetUniformMat4f("u_MVP", mvp);
