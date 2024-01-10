@@ -78,6 +78,15 @@
     <ClCompile Include="src\test\LearnOpenGL\01_HelloTriangle.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\test\TestDynamicGeometry.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\test\LearnOpenGL\02_Shader.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\test\LearnOpenGL\02_Shader_Interpolation.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shader\Basic.shader" />
@@ -499,6 +508,8 @@
       <Filter>头文件</Filter>
     </None>
     <None Include="res\shader\Part1_Simple.shader" />
+    <None Include="res\shader\Part1_Shader.shader" />
+    <None Include="res\shader\Part1_Shader_Interpolation.shader" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Renderer.h">
@@ -1426,6 +1437,15 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\test\LearnOpenGL\01_HelloTriangle.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\test\TestDynamicGeometry.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\test\LearnOpenGL\02_Shader.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\test\LearnOpenGL\02_Shader_Interpolation.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

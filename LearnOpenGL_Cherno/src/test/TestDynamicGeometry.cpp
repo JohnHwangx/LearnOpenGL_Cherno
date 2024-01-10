@@ -31,6 +31,9 @@ namespace Test {
 		:m_Proj(glm::ortho(0.0f, 950.0f, 0.0f, 680.0f, -1.0f, 1.0f)),
 		m_View(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f)))
 	{
+		GLCall(glEnable(GL_BLEND));
+		GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
+
 		m_Shader = std::make_unique<Shader>("res/shader/BatchRender.shader");
 
 		glUseProgram(m_Shader->GetRendererID());
@@ -42,7 +45,6 @@ namespace Test {
 		const size_t MaxQuadCount = 1000;
 		const size_t MaxVertexCount = MaxQuadCount * 4;
 		const size_t MaxIndexCount = MaxQuadCount * 6;
-
 
 		GLCall(glCreateVertexArrays(1, &m_QuadVA));
 		GLCall(glBindVertexArray(m_QuadVA));

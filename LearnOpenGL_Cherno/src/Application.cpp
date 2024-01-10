@@ -17,6 +17,8 @@
 #include "test/TestBatchRender.h"
 #include "test/TestDynamicGeometry.h"
 #include "test/LearnOpenGL/01_HelloTriangle.h"
+#include "test/LearnOpenGL/02_Shader.h"
+#include "test/LearnOpenGL/02_Shader_Interpolation.h"
 
 int main(void)
 {
@@ -51,9 +53,6 @@ int main(void)
 	GLCall(glVersion = (unsigned char*)glGetString(GL_VERSION));
 	std::cout << "Status: Using GL " << glVersion << std::endl;
 	{
-		GLCall(glEnable(GL_BLEND));
-		GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
-
 		Renderer renderer;
 
 		ImGui::CreateContext();
@@ -69,7 +68,9 @@ int main(void)
 		testMenu->RegisterTest<Test::TestTexture2D>("2D Texture");
 		testMenu->RegisterTest<Test::TestBatchRender>("Batch Render");
 		testMenu->RegisterTest<Test::TestDynamicGeometry>("Dynamic Geometry");
-		testMenu->RegisterTest<Test::Part1_HelloTriangle>("Part1_HelloTriangle");
+		testMenu->RegisterTest<Test::Part1_HelloTriangle>("Part1: Hello Triangle");
+		testMenu->RegisterTest<Test::Part1_Shader>("Part1: Shader");
+		testMenu->RegisterTest<Test::Part1_Shader_Interpolation>("Part1: Shader Interpolation");
 
 		/* Loop until the user closes the window */
 		while (!glfwWindowShouldClose(window))
@@ -85,7 +86,8 @@ int main(void)
 
 			if (currentTest)
 			{
-				currentTest->OnUpdate(0.0f);
+				float timeValue = glfwGetTime();
+				currentTest->OnUpdate(timeValue);
 				currentTest->OnRender();
 				ImGui::Begin("Test");
 				if (currentTest != testMenu && ImGui::Button("<-"))
