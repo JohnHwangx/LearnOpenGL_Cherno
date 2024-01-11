@@ -38,9 +38,9 @@ namespace Test {
 
 		m_Shader->Bind();
 
-		m_TextureIds[0] = GetTexture("res/textures/imageLena_512.png");
-		m_TextureIds[1] = GetTexture("res/textures/imageLena_300.png");
-		m_TextureIds[2] = GetTexture("res/textures/imageUV_256.png");
+		m_Textures[0] = std::make_unique<Texture>("res/textures/imageLena_512.png");
+		m_Textures[1] = std::make_unique<Texture>("res/textures/imageLena_300.png");
+		m_Textures[2] = std::make_unique<Texture>("res/textures/imageUV_256.png");
 
 		m_Shader->SetUniform1i("uTexture", 0);
 
@@ -62,33 +62,14 @@ namespace Test {
 	{
 		GLCall(glClearColor(0.2f, 0.3f, 0.3f, 1.0f));
 		GLCall(glClear(GL_COLOR_BUFFER_BIT));
-		GLCall(glBindTexture(GL_TEXTURE_2D, 0));
+		m_Textures[m_TextureIndex]->Unbind();
 
 		float scale[] = { powf(m_Scale, 2) };
 		m_Shader->SetUniform1fv("uScale", 1, scale);
 
-		//m_Texture->Bind();
-		GLCall(glBindTexture(GL_TEXTURE_2D, m_TextureIds[m_TextureIndex]));
-
-		if (m_WrapIndex == 0) 
-		{
-			GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE));
-			GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE));
-		}
-		else
-		{
-			GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT));
-			GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT));
-		}
-
-		if (m_MagFilterIndex == 0)
-		{
-			GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
-		}
-		else
-		{
-			GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST));
-		}
+		m_Textures[m_TextureIndex]->Bind();
+		m_Textures[m_TextureIndex]->SetTextureWrap(m_WrapIndex == 0 ? GL_CLAMP_TO_EDGE : GL_REPEAT);
+		m_Textures[m_TextureIndex]->SetTextureMagFilter(m_MagFilterIndex == 0 ? GL_LINEAR : GL_NEAREST);
 
 		Renderer renderer;
 
@@ -105,28 +86,5 @@ namespace Test {
 
 		const char* magFilterItems[] = { "LINEAR","NEAREST" };
 		ImGui::Combo("MAG_FILTER", &m_MagFilterIndex, magFilterItems, IM_ARRAYSIZE(magFilterItems));
-	}
-	
-	unsigned int Part1_Textures::GetTexture(const std::string& path)
-	{
-		unsigned int textureId;
-		stbi_set_flip_vertically_on_load(1);
-		unsigned char* localBuffer = stbi_load(path.c_str(), &m_Width, &m_Height, &m_BPP, 4);
-
-		GLCall(glGenTextures(1, &textureId));
-		GLCall(glBindTexture(GL_TEXTURE_2D, textureId));
-
-		GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
-		GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
-		GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE));
-		GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE));
-
-		GLCall(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, m_Width, m_Height, 0, GL_RGBA, GL_UNSIGNED_BYTE, localBuffer));
-		GLCall(glBindTexture(GL_TEXTURE_2D, 0));
-
-		if (localBuffer)
-			stbi_image_free(localBuffer);
-
-		return textureId;
 	}
 }

@@ -27,6 +27,22 @@ Texture::~Texture()
 	GLCall(glDeleteTextures(1, &m_RendererId));
 }
 
+void Texture::SetTextureWrap(unsigned int wrap) const
+{
+	GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wrap));
+	GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrap));
+}
+
+void Texture::SetTextureMagFilter(unsigned int magFilter) const
+{
+	GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, magFilter));
+}
+
+void Texture::SetTextureMinFilter(unsigned int minFilter) const
+{
+	GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, minFilter));
+}
+
 void Texture::Bind(unsigned int slot) const
 {
 	GLCall(glActiveTexture(GL_TEXTURE0 + slot));
@@ -42,3 +58,5 @@ void Texture::Unbind()
 {
 	GLCall(glBindTexture(GL_TEXTURE_2D, 0));
 }
+
+

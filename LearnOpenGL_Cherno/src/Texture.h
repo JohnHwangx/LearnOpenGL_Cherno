@@ -12,6 +12,10 @@ public:
 	Texture(const std::string& path);
 	~Texture();
 
+	void SetTextureWrap(unsigned int) const;
+	void SetTextureMagFilter(unsigned int) const;
+	void SetTextureMinFilter(unsigned int) const;
+
 	void Bind(unsigned int slot = 0) const;
 	void BindUnit(unsigned int slot = 0) const;
 	void Unbind();
