@@ -1,5 +1,10 @@
 #include "04_Transformation.h"
 
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
+
+#include "imgui/imgui.h"
+
 namespace Test {
 
 	Part1_Transformation::Part1_Transformation()
@@ -44,6 +49,12 @@ namespace Test {
 
 	void Part1_Transformation::OnUpdate(float deltaTime)
 	{
+		glm::mat4 trans = glm::mat4(1.0f);;
+		trans = glm::translate(trans, glm::vec3(m_Position[0], m_Position[1], 0.0f));
+		trans = glm::rotate(trans, deltaTime, glm::vec3(0.0f, 0.0f, 1.0f));
+		m_Shader->SetUniformMat4f("transform", trans);
+
+		m_Shader->SetUniform1f("mixValue", m_CombineValue);
 	}
 
 	void Part1_Transformation::OnRender()
@@ -60,5 +71,8 @@ namespace Test {
 
 	void Part1_Transformation::OnImGuiRender()
 	{
+		ImGui::DragFloat2("Position: ", m_Position, 0.1f, -1, 1);
+		ImGui::DragFloat("Combine Value: : ", &m_CombineValue, 0.05f, 0, 1);
+
 	}
 }

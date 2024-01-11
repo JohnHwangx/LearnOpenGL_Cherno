@@ -23,5 +23,8 @@ namespace Test {
 		std::unique_ptr<IndexBuffer> m_IndexBUffer;
 		std::unique_ptr<Shader> m_Shader;
 		std::unique_ptr<Texture> m_Textures[2];
+
+		float m_Position[2] = { 0.5f, -0.5f };
+		float m_CombineValue = 0.5;
 	};
 }

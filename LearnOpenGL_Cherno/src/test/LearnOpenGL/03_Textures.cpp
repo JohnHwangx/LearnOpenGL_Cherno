@@ -4,8 +4,6 @@
 
 #include "imgui/imgui.h"
 
-#include <vendor/stb_image/stb_image.h>
-
 namespace Test {
 
 	Part1_Textures::Part1_Textures()
