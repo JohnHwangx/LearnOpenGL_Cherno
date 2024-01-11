@@ -41,6 +41,9 @@ namespace Test {
 		m_Shader->Bind();
 		m_Shader->SetUniform1i("uTexture1", 0);
 		m_Shader->SetUniform1i("uTexture2", 1);
+
+		m_Textures[0]->Bind();
+		m_Textures[1]->Bind(1);
 	}
 
 	Part1_Transformation::~Part1_Transformation()
@@ -49,30 +52,35 @@ namespace Test {
 
 	void Part1_Transformation::OnUpdate(float deltaTime)
 	{
+		GLCall(glClearColor(0.2f, 0.3f, 0.3f, 1.0f));
+		GLCall(glClear(GL_COLOR_BUFFER_BIT));
+
+		m_Shader->SetUniform1f("mixValue", m_CombineValue);
+
 		glm::mat4 trans = glm::mat4(1.0f);;
 		trans = glm::translate(trans, glm::vec3(m_Position[0], m_Position[1], 0.0f));
 		trans = glm::rotate(trans, deltaTime, glm::vec3(0.0f, 0.0f, 1.0f));
 		m_Shader->SetUniformMat4f("transform", trans);
 
-		m_Shader->SetUniform1f("mixValue", m_CombineValue);
+		Renderer renderer;
+		renderer.DrawElement(*m_VAO, *m_IB, *m_Shader);
+
+		trans = glm::mat4(1.0f); // reset it to identity matrix
+		trans = glm::translate(trans, glm::vec3(-0.5f, 0.5f, 0.0f));
+		float scaleAmount = static_cast<float>(sin(deltaTime));
+		trans = glm::scale(trans, glm::vec3(scaleAmount, scaleAmount, scaleAmount));
+		m_Shader->SetUniformMat4f("transform", trans);
+
+		renderer.DrawElement(*m_VAO, *m_IB, *m_Shader);
 	}
 
 	void Part1_Transformation::OnRender()
 	{
-		GLCall(glClearColor(0.2f, 0.3f, 0.3f, 1.0f));
-		GLCall(glClear(GL_COLOR_BUFFER_BIT));
-
-		m_Textures[0]->Bind();
-		m_Textures[1]->Bind(1);
-
-		Renderer renderer;
-		renderer.DrawElement(*m_VAO, *m_IB, *m_Shader);
 	}
 
 	void Part1_Transformation::OnImGuiRender()
 	{
 		ImGui::DragFloat2("Position: ", m_Position, 0.1f, -1, 1);
 		ImGui::DragFloat("Combine Value: : ", &m_CombineValue, 0.05f, 0, 1);
-
 	}
 }
