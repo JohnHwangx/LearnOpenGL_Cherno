@@ -623,6 +623,7 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\textures\ChernoLogo.png" />
+    <Image Include="res\textures\imageLena_512.png" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="res\shader\BatchRender.shader" />
