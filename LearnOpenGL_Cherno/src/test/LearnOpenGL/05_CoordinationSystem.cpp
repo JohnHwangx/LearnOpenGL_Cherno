@@ -13,24 +13,65 @@ namespace Test {
 			//---- 位置 ----      ---- 颜色 ----     - 纹理坐标 -
 			-0.5f, -0.5f, -0.5f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // 右上
 			-0.5f,  0.5f, -0.5f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // 右下
+			 0.5f, -0.5f, -0.5f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // 左下
+			 0.5f,  0.5f, -0.5f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f,   // 左上
+
+			-0.5f, -0.5f,  0.5f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // 右上
+			 0.5f, -0.5f,  0.5f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // 右下
+			-0.5f,  0.5f,  0.5f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // 左下
+			 0.5f,  0.5f,  0.5f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f,   // 左上
+
+			-0.5f,  0.5f, -0.5f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // 右上
+			-0.5f,  0.5f,  0.5f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // 右下
 			 0.5f,  0.5f, -0.5f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // 左下
-			 0.5f, -0.5f, -0.5f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f    // 左上
+			 0.5f,  0.5f,  0.5f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f,   // 左上
+
+			-0.5f, -0.5f, -0.5f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // 右上
+			 0.5f, -0.5f, -0.5f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // 右下
+			-0.5f, -0.5f,  0.5f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // 左下
+			 0.5f, -0.5f,  0.5f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f,   // 左上
+
+			-0.5f, -0.5f, -0.5f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // 右上
+			-0.5f, -0.5f,  0.5f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // 右下
+			-0.5f,  0.5f, -0.5f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // 左下
+			-0.5f,  0.5f,  0.5f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f,   // 左上
+
+			 0.5f, -0.5f, -0.5f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // 右上
+			 0.5f,  0.5f, -0.5f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // 右下
+			 0.5f, -0.5f,  0.5f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // 左下
+			 0.5f,  0.5f,  0.5f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f,   // 左上
 		};
 
 		unsigned int indices[] = {
-			0, 1, 3, // first triangle
-			1, 2, 3  // second triangle
+			// select the top left image
+			0, 1, 2,
+			1, 3, 2,
+			// select the top middle image
+			0 + 4, 1 + 4, 2 + 4,
+			1 + 4, 3 + 4, 2 + 4,
+			// select to top right image
+			0 + 8, 1 + 8, 2 + 8,
+			1 + 8, 3 + 8, 2 + 8,
+			// select the bottom left image
+			0 + 12, 1 + 12, 2 + 12,
+			1 + 12, 3 + 12, 2 + 12,
+			// select the bottom middle image
+			0 + 16, 1 + 16, 2 + 16,
+			1 + 16, 3 + 16, 2 + 16,
+			// select the bottom right image
+			0 + 20, 1 + 20, 2 + 20,
+			1 + 20, 3 + 20, 2 + 20,
 		};
 
 		m_VAO = std::make_unique<VertexArray>();
-		m_VertexBuffer = std::make_unique<VertexBuffer>(vertices, sizeof(float) * 8 * 4);
+		m_VertexBuffer = std::make_unique<VertexBuffer>(vertices, sizeof(float) * 8 * 4 * 6);
 		VertexBufferLayout layout;
 		layout.Push<float>(3);
 		layout.Push<float>(3);
 		layout.Push<float>(2);
 		m_VAO->AddBuffer(*m_VertexBuffer, layout);
 
-		m_IB = std::make_unique<IndexBuffer>(indices, 6);
+		m_IB = std::make_unique<IndexBuffer>(indices, 36);
 
 		m_Shader = std::make_unique<Shader>("res/shader/Part1_CoordinationSystem.shader");
 
@@ -44,6 +85,8 @@ namespace Test {
 
 		m_Textures[0]->Bind();
 		m_Textures[1]->Bind(1);
+
+		GLCall(glEnable(GL_DEPTH_TEST));
 	}
 
 	Part1_CoodinationSystem::~Part1_CoodinationSystem()
@@ -53,8 +96,9 @@ namespace Test {
 	void Part1_CoodinationSystem::OnUpdate(float deltaTime)
 	{
 		glm::mat4 model(1.0f);
-		model = glm::rotate(model, glm::radians(m_Fov), glm::vec3(1.0f, 0.0f, 0.0f));
-		model = glm::rotate(model, deltaTime, glm::vec3(0.0f, 0.0f, 1.0f));
+		/*model = glm::rotate(model, glm::radians(m_Fov), glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::rotate(model, deltaTime, glm::vec3(0.0f, 0.0f, 1.0f));*/
+		model = glm::rotate(model, deltaTime, glm::vec3(0.5f, 1.0f, 0.0f));
 
 		glm::mat4 view(1.0f);		
 		view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));// 注意，我们将矩阵向我们要进行移动场景的反方向移动。
@@ -73,7 +117,7 @@ namespace Test {
 	void Part1_CoodinationSystem::OnRender()
 	{
 		GLCall(glClearColor(0.2f, 0.3f, 0.3f, 1.0f));
-		GLCall(glClear(GL_COLOR_BUFFER_BIT));
+		GLCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 
 		m_Shader->SetUniform1f("mixValue", m_CombineValue);		
 
@@ -83,7 +127,7 @@ namespace Test {
 
 	void Part1_CoodinationSystem::OnImGuiRender()
 	{
-		ImGui::DragFloat("Combine Value: : ", &m_CombineValue, 0.05f, 0, 1);
+		ImGui::DragFloat("Combine Value", &m_CombineValue, 0.05f, 0, 1);
 		ImGui::Checkbox("Demo Window", &m_IsOthor);
 		ImGui::DragFloat("Fov", &m_Fov, 1.0f, -180.0f, 180.0f);
 	}
