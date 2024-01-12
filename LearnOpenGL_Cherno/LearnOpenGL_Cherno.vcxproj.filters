@@ -93,6 +93,9 @@
     <ClCompile Include="src\test\LearnOpenGL\04_Transformation.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\test\LearnOpenGL\05_CoordinationSystem.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shader\Basic.shader" />
@@ -1459,6 +1462,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\test\LearnOpenGL\04_Transformation.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\test\LearnOpenGL\05_CoordinationSystem.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

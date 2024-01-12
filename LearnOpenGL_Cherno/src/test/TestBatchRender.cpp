@@ -6,7 +6,7 @@
 #include "glm/gtc/matrix_transform.hpp"
 
 Test::TestBatchRender::TestBatchRender()
-	:m_Proj(glm::ortho(0.0f, 950.0f, 0.0f, 680.0f, -1.0f, 1.0f)),
+	:m_Proj(glm::ortho(0.0f, 1200.0f, 0.0f, 800.0f, -1.0f, 1.0f)),
 	m_View(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f)))
 {
 

@@ -21,6 +21,7 @@
 #include "test/LearnOpenGL/02_Shader_Interpolation.h"
 #include "test/LearnOpenGL/03_Textures.h"
 #include "test/LearnOpenGL/04_Transformation.h"
+#include "test/LearnOpenGL/05_CoordinationSystem.h"
 
 int main(void)
 {
@@ -75,6 +76,7 @@ int main(void)
 		testMenu->RegisterTest<Test::Part1_Shader_Interpolation>("Part1: Shader Interpolation");
 		testMenu->RegisterTest<Test::Part1_Textures>("Part1: Textures");
 		testMenu->RegisterTest<Test::Part1_Transformation>("Part1: Transformation");
+		testMenu->RegisterTest<Test::Part1_CoodinationSystem>("Part1: Coodination System");
 
 		/* Loop until the user closes the window */
 		while (!glfwWindowShouldClose(window))
