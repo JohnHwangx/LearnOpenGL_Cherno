@@ -4,6 +4,8 @@
 #include "VertexArray.h"
 #include "VertexBufferLayout.h"
 #include "Texture.h"
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
 
 namespace Test {
 	class Part1_CoodinationSystem :public Test
@@ -27,6 +29,21 @@ namespace Test {
 		float m_Position[2] = { 0.5f, -0.5f };
 		float m_CombineValue = 0.5;
 		bool m_IsOthor = true;
-		float m_Fov = -45.0f;
+		float m_Fov = 90.0f;
+		float m_Rotation = 0.0f;
+		float m_Distance = 1.0f;
+		float m_PersDistance = -3.0f;
+		glm::vec3 m_CubePositions[10] = {
+			glm::vec3(0.0f,  0.0f,  0.0f),
+			glm::vec3(2.0f,  5.0f, -15.0f),
+			glm::vec3(-1.5f, -2.2f, -2.5f),
+			glm::vec3(-3.8f, -2.0f, -12.3f),
+			glm::vec3(2.4f, -0.4f, -3.5f),
+			glm::vec3(-1.7f,  3.0f, -7.5f),
+			glm::vec3(1.3f, -2.0f, -2.5f),
+			glm::vec3(1.5f,  2.0f, -2.5f),
+			glm::vec3(1.5f,  0.2f, -1.5f),
+			glm::vec3(-1.3f,  1.0f, -1.5f)
+		};
 	};
 }

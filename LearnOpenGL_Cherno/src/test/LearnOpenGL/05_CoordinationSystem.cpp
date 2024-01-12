@@ -1,7 +1,5 @@
 #include "05_CoordinationSystem.h"
 
-#include "glm/glm.hpp"
-#include "glm/gtc/matrix_transform.hpp"
 
 #include "imgui/imgui.h"
 
@@ -87,6 +85,7 @@ namespace Test {
 		m_Textures[1]->Bind(1);
 
 		GLCall(glEnable(GL_DEPTH_TEST));
+		
 	}
 
 	Part1_CoodinationSystem::~Part1_CoodinationSystem()
@@ -95,20 +94,22 @@ namespace Test {
 
 	void Part1_CoodinationSystem::OnUpdate(float deltaTime)
 	{
-		glm::mat4 model(1.0f);
-		model = glm::rotate(model, glm::radians(m_Fov), glm::vec3(1.0f, 0.0f, 0.0f));
-		model = glm::rotate(model, deltaTime, glm::vec3(0.0f, 0.0f, 1.0f));
+		//glm::mat4 model(1.0f);
+		//model = glm::rotate(model, glm::radians(m_Fov), glm::vec3(1.0f, 0.0f, 0.0f));
+		//model = glm::rotate(model, m_Rotation, glm::vec3(0.0f, 0.0f, 1.0f));
 
-		glm::mat4 view(1.0f);		
-		view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));// 注意，我们将矩阵向我们要进行移动场景的反方向移动。
+		glm::mat4 view(1.0f);
+		view = glm::translate(view, glm::vec3(0.0f, 0.0f, m_PersDistance));// 注意，我们将矩阵向我们要进行移动场景的反方向移动。
+		view = glm::rotate(view, glm::radians(m_Fov), glm::vec3(1.0f, 0.0f, 0.0f));
+		view = glm::rotate(view, deltaTime, glm::vec3(0.0f, 0.0f, 1.0f));
 
 		glm::mat4 projection(1.0f);
 		if (m_IsOthor)
-			projection = glm::ortho(-1.5f, 1.5f, -1.0f, 1.0f, 0.1f, 100.0f);
+			projection = glm::ortho(-m_Distance * 1.5f, m_Distance * 1.5f, -m_Distance, m_Distance, 0.1f, 100.0f);
 		else
 			projection = glm::perspective(glm::radians(45.0f), 1200.0f / 800.0f, 0.1f, 100.0f);
 
-		m_Shader->SetUniformMat4f("model", model);
+		//m_Shader->SetUniformMat4f("model", model);
 		m_Shader->SetUniformMat4f("view", view);
 		m_Shader->SetUniformMat4f("projection", projection);
 	}
@@ -118,16 +119,30 @@ namespace Test {
 		GLCall(glClearColor(0.2f, 0.3f, 0.3f, 1.0f));
 		GLCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 
-		m_Shader->SetUniform1f("mixValue", m_CombineValue);		
+		m_Shader->SetUniform1f("mixValue", m_CombineValue);
 
 		Renderer renderer;
-		renderer.DrawElement(*m_VAO, *m_IB, *m_Shader);
+		for (unsigned int i = 0; i < 10; i++)
+		{
+			// calculate the model matrix for each object and pass it to shader before drawing
+			glm::mat4 model = glm::mat4(1.0f);
+			model = glm::translate(model, m_CubePositions[i]);
+			float angle = 20.0f * i;
+			model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
+			m_Shader->SetUniformMat4f("model", model);
+
+			//glDrawArrays(GL_TRIANGLES, 0, 36);
+
+			renderer.DrawElement(*m_VAO, *m_IB, *m_Shader);
+		}
 	}
 
 	void Part1_CoodinationSystem::OnImGuiRender()
 	{
 		ImGui::DragFloat("Combine Value", &m_CombineValue, 0.05f, 0, 1);
 		ImGui::Checkbox("Demo Window", &m_IsOthor);
-		ImGui::DragFloat("Fov", &m_Fov, 1.0f, -180.0f, 180.0f);
+		ImGui::DragFloat("Fov", &m_Fov, 1.0f, 0.0f, 180.0f);
+		ImGui::DragFloat("ortho Distance", &m_Distance, 0.1f, 1.0f, 10.0f);
+		ImGui::DragFloat("perspective Distance", &m_PersDistance, 0.1f, -30.0f, -3.0f);
 	}
 }
