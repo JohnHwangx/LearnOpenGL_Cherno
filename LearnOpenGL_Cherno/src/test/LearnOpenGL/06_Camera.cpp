@@ -69,6 +69,8 @@ namespace Test {
 
 		m_IB = std::make_unique<IndexBuffer>(indices, 36);
 
+		m_Camera = std::make_unique<Camera>();
+
 		m_Shader = std::make_unique<Shader>("res/shader/Part1_CoordinationSystem.shader");
 
 		m_Textures[0] = std::make_unique<Texture>("res/textures/awesomeface.png");
@@ -92,21 +94,32 @@ namespace Test {
 
 	void Part1_Camera::OnUpdate(float deltaTime)
 	{
-		//float camX = sin(deltaTime) * cos(glm::radians(m_Fov)) * m_PersDistance;
-		//float camY = sin(glm::radians(m_Fov)) * m_PersDistance;
-		//float camZ = cos(deltaTime) * cos(glm::radians(m_Fov)) * m_PersDistance;
+		//float camX = sin(m_Yaw) * cos(glm::radians(m_Pitch));
+		//float camY = sin(glm::radians(m_Pitch));
+		//float camZ = cos(m_Yaw) * cos(glm::radians(m_Pitch));
+		//glm::mat4 view(1.0f);
+		//view = glm::lookAt(glm::vec3(camX, camY, camZ) * m_PersDistance, glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 1.0, 0.0));
+		//view = glm::scale(view, glm::vec3(m_Distance));
+
+		//float camX = cos(glm::radians(-90.0f)) * cos(glm::radians(0.0f)) * m_PersDistance;
+		//float camY = sin(glm::radians(0.0f)) * m_PersDistance;
+		//float camZ = sin(glm::radians(-90.0f)) * cos(glm::radians(0.0f)) * m_PersDistance;
 		//glm::mat4 view(1.0f);
 		//view = glm::lookAt(glm::vec3(camX, camY, camZ), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 1.0, 0.0));
+		//view = glm::scale(view, glm::vec3(m_Distance));
 
-		glm::mat4 view(1.0f);
-		view = glm::lookAt(m_CameraPos, m_CameraPos + m_CameraFront, m_CameraUp);
+		m_DeltaTime = deltaTime - m_LastFrame;
+		m_LastFrame = deltaTime;
 
 		glm::mat4 projection(1.0f);
 		if (m_IsOthor)
-			projection = glm::ortho(-m_Distance * 1.5f, m_Distance * 1.5f, -m_Distance, m_Distance, -30.0f, 1000.0f);
+			projection = glm::ortho(-1.5f, 1.5f, -1.0f, 1.0f, -30.0f, 1000.0f);
 		else
 			projection = glm::perspective(glm::radians(45.0f), 1200.0f / 800.0f, 0.1f, 100.0f);
 
+		glm::mat4 view = m_Camera->GetViewMatrix();
+		if(m_IsOthor)
+			view = glm::scale(view, glm::vec3(m_Distance));
 		m_Shader->SetUniformMat4f("view", view);
 		m_Shader->SetUniformMat4f("projection", projection);
 	}
@@ -136,23 +149,36 @@ namespace Test {
 	{
 		ImGui::DragFloat("Combine Value", &m_CombineValue, 0.05f, 0, 1);
 		ImGui::Checkbox("Demo Window", &m_IsOthor);
-		ImGui::DragFloat("Fov", &m_Fov, 1.0f, -89.9f, 89.9f);
-		if (m_IsOthor == true)
-			ImGui::DragFloat("ortho Distance", &m_Distance, 0.1f, 1.0f, 10.0f);
-		else
-			ImGui::DragFloat("perspective Distance", &m_PersDistance, 0.1f, 0.1f, 30.0f);
+		if (ImGui::DragFloat("Yaw", &m_Yaw, 1.0f, -89.9f, 89.9f))
+		{
+			m_Camera->CameraYaw(m_Yaw);
+		}
+
+		if (ImGui::DragFloat("Pitch", &m_Pitch, 1.0f, -89.9f, 89.9f))
+		{
+			m_Camera->CameraPitch(m_Pitch);
+		}
+
+		if (ImGui::DragFloat(" Distance", &m_Distance, 0.1f, 0.1f, 30.0f))
+		{
+			m_Camera->SetDistance(m_Distance);
+		}
 
 		if (ImGui::Button("W")) {
-			m_CameraPos += m_CameraSpeed * m_CameraFront;
+			//m_CameraPos += m_CameraSpeed * m_CameraFront;
+			m_Camera->CameraTranslation(Camera_Movement::FORWARD, m_DeltaTime);
 		}
 		if (ImGui::Button("S")) {
-			m_CameraPos -= m_CameraSpeed * m_CameraFront;
+			//m_CameraPos -= m_CameraSpeed * m_CameraFront;
+			m_Camera->CameraTranslation(Camera_Movement::BACKWARD, m_DeltaTime);
 		}
 		if (ImGui::Button("A")) {
-			m_CameraPos -= glm::normalize(glm::cross(m_CameraFront, m_CameraUp)) * m_CameraSpeed;
+			//m_CameraPos -= glm::normalize(glm::cross(m_CameraFront, m_CameraUp)) * m_CameraSpeed;
+			m_Camera->CameraTranslation(Camera_Movement::LEFT, m_DeltaTime);
 		}
 		if (ImGui::Button("D")) {
-			m_CameraPos += glm::normalize(glm::cross(m_CameraFront, m_CameraUp)) * m_CameraSpeed;
+			//m_CameraPos += glm::normalize(glm::cross(m_CameraFront, m_CameraUp)) * m_CameraSpeed;
+			m_Camera->CameraTranslation(Camera_Movement::RIGHT, m_DeltaTime);
 		}
 	}
 }

@@ -4,6 +4,7 @@
 #include "VertexArray.h"
 #include "VertexBufferLayout.h"
 #include "Texture.h"
+#include "Camera.h"
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 
@@ -24,14 +25,15 @@ namespace Test {
 		std::unique_ptr<VertexBuffer> m_VertexBuffer;
 		std::unique_ptr<IndexBuffer> m_IndexBUffer;
 		std::unique_ptr<Shader> m_Shader;
+		std::unique_ptr<Camera> m_Camera;
 		std::unique_ptr<Texture> m_Textures[2];
 
 		float m_CombineValue = 0.5;
-		bool m_IsOthor = true;
-		float m_Fov = 0.0f;
-		float m_Rotation = 0.0f;
-		float m_Distance = 1.0f;
-		float m_PersDistance = 3.0f;
+		bool m_IsOthor = false;
+		float m_Yaw = 0.0f;
+		float m_Pitch = 0.0f;
+		float m_Distance = 3.0f;
+		//float m_PersDistance = 3.0f;
 		const glm::vec3 m_CubePositions[10] = {
 			glm::vec3(0.0f,  0.0f,  0.0f),
 			glm::vec3(2.0f,  5.0f, -15.0f),
@@ -49,5 +51,8 @@ namespace Test {
 		glm::vec3 m_CameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
 		glm::vec3 m_CameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 		float m_CameraSpeed = 0.05f;
+		
+		float m_DeltaTime = 0.0f; // 当前帧与上一帧的时间差
+		float m_LastFrame = 0.0f; // 上一帧的时间
 	};
 }
