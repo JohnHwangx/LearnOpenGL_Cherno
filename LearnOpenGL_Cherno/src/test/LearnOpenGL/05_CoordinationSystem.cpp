@@ -94,10 +94,6 @@ namespace Test {
 
 	void Part1_CoodinationSystem::OnUpdate(float deltaTime)
 	{
-		//glm::mat4 model(1.0f);
-		//model = glm::rotate(model, glm::radians(m_Fov), glm::vec3(1.0f, 0.0f, 0.0f));
-		//model = glm::rotate(model, m_Rotation, glm::vec3(0.0f, 0.0f, 1.0f));
-
 		glm::mat4 view(1.0f);
 		view = glm::translate(view, glm::vec3(0.0f, 0.0f, m_PersDistance));// 注意，我们将矩阵向我们要进行移动场景的反方向移动。
 		view = glm::rotate(view, glm::radians(m_Fov), glm::vec3(1.0f, 0.0f, 0.0f));
@@ -105,11 +101,10 @@ namespace Test {
 
 		glm::mat4 projection(1.0f);
 		if (m_IsOthor)
-			projection = glm::ortho(-m_Distance * 1.5f, m_Distance * 1.5f, -m_Distance, m_Distance, 0.1f, 100.0f);
+			projection = glm::ortho(-m_Distance * 1.5f, m_Distance * 1.5f, -m_Distance, m_Distance, -30.0f, 1000.0f);
 		else
 			projection = glm::perspective(glm::radians(45.0f), 1200.0f / 800.0f, 0.1f, 100.0f);
 
-		//m_Shader->SetUniformMat4f("model", model);
 		m_Shader->SetUniformMat4f("view", view);
 		m_Shader->SetUniformMat4f("projection", projection);
 	}
@@ -130,8 +125,6 @@ namespace Test {
 			float angle = 20.0f * i;
 			model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
 			m_Shader->SetUniformMat4f("model", model);
-
-			//glDrawArrays(GL_TRIANGLES, 0, 36);
 
 			renderer.DrawElement(*m_VAO, *m_IB, *m_Shader);
 		}
