@@ -1,11 +1,9 @@
-#include "05_CoordinationSystem.h"
-
-
+#include "06_Camera.h"
 #include "imgui/imgui.h"
 
 namespace Test {
 
-	Part1_CoodinationSystem::Part1_CoodinationSystem()
+	Part1_Camera::Part1_Camera()
 	{
 		float vertices[] = {
 			//---- 位置 ----      ---- 颜色 ----     - 纹理坐标 -
@@ -88,16 +86,18 @@ namespace Test {
 		
 	}
 
-	Part1_CoodinationSystem::~Part1_CoodinationSystem()
+	Part1_Camera::~Part1_Camera()
 	{
 	}
 
-	void Part1_CoodinationSystem::OnUpdate(float deltaTime)
+	void Part1_Camera::OnUpdate(float deltaTime)
 	{
+		//float radius = 10.0f;
+		float camX = sin(deltaTime) * cos(glm::radians(m_Fov)) * m_PersDistance;
+		float camY = sin(glm::radians(m_Fov)) * m_PersDistance;
+		float camZ = cos(deltaTime) * cos(glm::radians(m_Fov)) * m_PersDistance;
 		glm::mat4 view(1.0f);
-		view = glm::translate(view, glm::vec3(0.0f, 0.0f, m_PersDistance));// 注意，我们将矩阵向我们要进行移动场景的反方向移动。
-		view = glm::rotate(view, glm::radians(m_Fov), glm::vec3(1.0f, 0.0f, 0.0f));
-		view = glm::rotate(view, deltaTime, glm::vec3(0.0f, 0.0f, 1.0f));
+		view = glm::lookAt(glm::vec3(camX, camY, camZ), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 1.0, 0.0));
 
 		glm::mat4 projection(1.0f);
 		if (m_IsOthor)
@@ -109,7 +109,7 @@ namespace Test {
 		m_Shader->SetUniformMat4f("projection", projection);
 	}
 
-	void Part1_CoodinationSystem::OnRender()
+	void Part1_Camera::OnRender()
 	{
 		GLCall(glClearColor(0.2f, 0.3f, 0.3f, 1.0f));
 		GLCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
@@ -130,12 +130,14 @@ namespace Test {
 		}
 	}
 
-	void Part1_CoodinationSystem::OnImGuiRender()
+	void Part1_Camera::OnImGuiRender()
 	{
 		ImGui::DragFloat("Combine Value", &m_CombineValue, 0.05f, 0, 1);
 		ImGui::Checkbox("Demo Window", &m_IsOthor);
-		ImGui::DragFloat("Fov", &m_Fov, 1.0f, 0.0f, 180.0f);
-		ImGui::DragFloat("ortho Distance", &m_Distance, 0.1f, 1.0f, 10.0f);
-		ImGui::DragFloat("perspective Distance", &m_PersDistance, 0.1f, -30.0f, -3.0f);
+		ImGui::DragFloat("Fov", &m_Fov, 1.0f, -89.9f, 89.9f);
+		if (m_IsOthor == true)
+			ImGui::DragFloat("ortho Distance", &m_Distance, 0.1f, 1.0f, 10.0f);
+		else
+			ImGui::DragFloat("perspective Distance", &m_PersDistance, 0.1f, 0.1f, 30.0f);
 	}
 }

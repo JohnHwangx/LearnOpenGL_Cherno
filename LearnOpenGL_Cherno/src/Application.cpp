@@ -22,6 +22,7 @@
 #include "test/LearnOpenGL/03_Textures.h"
 #include "test/LearnOpenGL/04_Transformation.h"
 #include "test/LearnOpenGL/05_CoordinationSystem.h"
+#include "test/LearnOpenGL/06_Camera.h"
 
 int main(void)
 {
@@ -77,6 +78,7 @@ int main(void)
 		testMenu->RegisterTest<Test::Part1_Textures>("Part1: Textures");
 		testMenu->RegisterTest<Test::Part1_Transformation>("Part1: Transformation");
 		testMenu->RegisterTest<Test::Part1_CoodinationSystem>("Part1: Coodination System");
+		testMenu->RegisterTest<Test::Part1_Camera>("Part1: Camera");
 
 		/* Loop until the user closes the window */
 		while (!glfwWindowShouldClose(window))

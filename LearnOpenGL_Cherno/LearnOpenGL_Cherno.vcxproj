@@ -144,6 +144,7 @@
     <ClCompile Include="src\test\LearnOpenGL\03_Textures.cpp" />
     <ClCompile Include="src\test\LearnOpenGL\04_Transformation.cpp" />
     <ClCompile Include="src\test\LearnOpenGL\05_CoordinationSystem.cpp" />
+    <ClCompile Include="src\test\LearnOpenGL\06_Camera.cpp" />
     <ClCompile Include="src\test\Test.cpp" />
     <ClCompile Include="src\test\TestBatchRender.cpp" />
     <ClCompile Include="src\test\TestClearColor.cpp" />
@@ -318,6 +319,7 @@
     <ClInclude Include="src\test\LearnOpenGL\03_Textures.h" />
     <ClInclude Include="src\test\LearnOpenGL\04_Transformation.h" />
     <ClInclude Include="src\test\LearnOpenGL\05_CoordinationSystem.h" />
+    <ClInclude Include="src\test\LearnOpenGL\06_Camera.h" />
     <ClInclude Include="src\test\Test.h" />
     <ClInclude Include="src\test\TestBatchRender.h" />
     <ClInclude Include="src\test\TestClearColor.h" />

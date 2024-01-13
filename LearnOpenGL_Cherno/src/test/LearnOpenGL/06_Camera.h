@@ -8,11 +8,11 @@
 #include "glm/gtc/matrix_transform.hpp"
 
 namespace Test {
-	class Part1_CoodinationSystem :public Test
+	class Part1_Camera :public Test
 	{
 	public:
-		Part1_CoodinationSystem();
-		~Part1_CoodinationSystem();
+		Part1_Camera();
+		~Part1_Camera();
 
 		void OnUpdate(float deltaTime) override;
 		void OnRender() override;
@@ -28,10 +28,10 @@ namespace Test {
 
 		float m_CombineValue = 0.5;
 		bool m_IsOthor = true;
-		float m_Fov = 90.0f;
+		float m_Fov = 0.0f;
 		float m_Rotation = 0.0f;
 		float m_Distance = 1.0f;
-		float m_PersDistance = -3.0f;
+		float m_PersDistance = 3.0f;
 		const glm::vec3 m_CubePositions[10] = {
 			glm::vec3(0.0f,  0.0f,  0.0f),
 			glm::vec3(2.0f,  5.0f, -15.0f),
