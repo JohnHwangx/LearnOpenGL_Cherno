@@ -92,12 +92,14 @@ namespace Test {
 
 	void Part1_Camera::OnUpdate(float deltaTime)
 	{
-		//float radius = 10.0f;
-		float camX = sin(deltaTime) * cos(glm::radians(m_Fov)) * m_PersDistance;
-		float camY = sin(glm::radians(m_Fov)) * m_PersDistance;
-		float camZ = cos(deltaTime) * cos(glm::radians(m_Fov)) * m_PersDistance;
+		//float camX = sin(deltaTime) * cos(glm::radians(m_Fov)) * m_PersDistance;
+		//float camY = sin(glm::radians(m_Fov)) * m_PersDistance;
+		//float camZ = cos(deltaTime) * cos(glm::radians(m_Fov)) * m_PersDistance;
+		//glm::mat4 view(1.0f);
+		//view = glm::lookAt(glm::vec3(camX, camY, camZ), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 1.0, 0.0));
+
 		glm::mat4 view(1.0f);
-		view = glm::lookAt(glm::vec3(camX, camY, camZ), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 1.0, 0.0));
+		view = glm::lookAt(m_CameraPos, m_CameraPos + m_CameraFront, m_CameraUp);
 
 		glm::mat4 projection(1.0f);
 		if (m_IsOthor)
@@ -139,5 +141,18 @@ namespace Test {
 			ImGui::DragFloat("ortho Distance", &m_Distance, 0.1f, 1.0f, 10.0f);
 		else
 			ImGui::DragFloat("perspective Distance", &m_PersDistance, 0.1f, 0.1f, 30.0f);
+
+		if (ImGui::Button("W")) {
+			m_CameraPos += m_CameraSpeed * m_CameraFront;
+		}
+		if (ImGui::Button("S")) {
+			m_CameraPos -= m_CameraSpeed * m_CameraFront;
+		}
+		if (ImGui::Button("A")) {
+			m_CameraPos -= glm::normalize(glm::cross(m_CameraFront, m_CameraUp)) * m_CameraSpeed;
+		}
+		if (ImGui::Button("D")) {
+			m_CameraPos += glm::normalize(glm::cross(m_CameraFront, m_CameraUp)) * m_CameraSpeed;
+		}
 	}
 }
