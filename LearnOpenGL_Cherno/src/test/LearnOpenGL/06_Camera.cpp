@@ -69,7 +69,7 @@ namespace Test {
 
 		m_IB = std::make_unique<IndexBuffer>(indices, 36);
 
-		m_Camera = std::make_unique<Camera>();
+		m_Camera = std::make_unique<Camera>(glm::vec3(0.0f, 0.0f, 3.0f));
 
 		m_Shader = std::make_unique<Shader>("res/shader/Part1_CoordinationSystem.shader");
 
@@ -94,20 +94,6 @@ namespace Test {
 
 	void Part1_Camera::OnUpdate(float deltaTime)
 	{
-		//float camX = sin(m_Yaw) * cos(glm::radians(m_Pitch));
-		//float camY = sin(glm::radians(m_Pitch));
-		//float camZ = cos(m_Yaw) * cos(glm::radians(m_Pitch));
-		//glm::mat4 view(1.0f);
-		//view = glm::lookAt(glm::vec3(camX, camY, camZ) * m_PersDistance, glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 1.0, 0.0));
-		//view = glm::scale(view, glm::vec3(m_Distance));
-
-		//float camX = cos(glm::radians(-90.0f)) * cos(glm::radians(0.0f)) * m_PersDistance;
-		//float camY = sin(glm::radians(0.0f)) * m_PersDistance;
-		//float camZ = sin(glm::radians(-90.0f)) * cos(glm::radians(0.0f)) * m_PersDistance;
-		//glm::mat4 view(1.0f);
-		//view = glm::lookAt(glm::vec3(camX, camY, camZ), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 1.0, 0.0));
-		//view = glm::scale(view, glm::vec3(m_Distance));
-
 		m_DeltaTime = deltaTime - m_LastFrame;
 		m_LastFrame = deltaTime;
 

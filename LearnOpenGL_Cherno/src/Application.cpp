@@ -23,6 +23,7 @@
 #include "test/LearnOpenGL/04_Transformation.h"
 #include "test/LearnOpenGL/05_CoordinationSystem.h"
 #include "test/LearnOpenGL/06_Camera.h"
+#include "test/LearnOpenGL/07_Basic_Lighting.h"
 
 int main(void)
 {
@@ -79,6 +80,7 @@ int main(void)
 		testMenu->RegisterTest<Test::Part1_Transformation>("Part1: Transformation");
 		testMenu->RegisterTest<Test::Part1_CoodinationSystem>("Part1: Coodination System");
 		testMenu->RegisterTest<Test::Part1_Camera>("Part1: Camera");
+		testMenu->RegisterTest<Test::Part2_BasicLighting>("Part2: Basic Lighting");
 
 		/* Loop until the user closes the window */
 		while (!glfwWindowShouldClose(window))
