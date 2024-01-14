@@ -58,4 +58,5 @@ private:
 	float m_Zoom;
 
 	float m_Distance = 3.0f;
+	glm::vec3 m_Center = glm::vec3(0.0f);
 };

@@ -23,10 +23,16 @@ void Camera::CameraTranslation(Camera_Movement direction, float deltaTime)
         m_Position += m_Front * velocity;
     if (direction == BACKWARD)
         m_Position -= m_Front * velocity;
-    if (direction == LEFT)
+
+    if (direction == LEFT) {
         m_Position -= m_Right * velocity;
-    if (direction == RIGHT)
+        m_Center -= m_Right * velocity;
+    }
+        
+    if (direction == RIGHT) {
         m_Position += m_Right * velocity;
+        m_Center += m_Right * velocity;
+    }
 }
 
 void Camera::CameraRotation(float xoffset, float yoffset, bool constrainPitch)
@@ -89,7 +95,7 @@ glm::mat4 Camera::GetViewMatrix() const
 {
     if (Camera_Type::ORBIT == m_CameraType) {
 
-        return glm::lookAt(m_Position + (m_Front * m_Distance), glm::vec3(0.0f), glm::vec3(0.0, 1.0, 0.0));
+        return glm::lookAt(m_Position + (m_Front * m_Distance), m_Center, glm::vec3(0.0, 1.0, 0.0));
     }
 	return glm::lookAt(m_Position, m_Position + m_Front, m_Up);
 }

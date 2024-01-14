@@ -113,7 +113,7 @@ namespace Test {
 
 		glm::mat4 projection(1.0f);
 		if (m_IsOthor)
-			projection = glm::ortho(-1.5f, 1.5f, -1.0f, 1.0f, -30.0f, 1000.0f);
+			projection = glm::ortho(-15.0f, 15.0f, -10.0f, 10.0f, -30.0f, 1000.0f);
 		else
 			projection = glm::perspective(glm::radians(45.0f), 1200.0f / 800.0f, 0.1f, 100.0f);
 
@@ -165,19 +165,15 @@ namespace Test {
 		}
 
 		if (ImGui::Button("W")) {
-			//m_CameraPos += m_CameraSpeed * m_CameraFront;
 			m_Camera->CameraTranslation(Camera_Movement::FORWARD, m_DeltaTime);
 		}
 		if (ImGui::Button("S")) {
-			//m_CameraPos -= m_CameraSpeed * m_CameraFront;
 			m_Camera->CameraTranslation(Camera_Movement::BACKWARD, m_DeltaTime);
 		}
 		if (ImGui::Button("A")) {
-			//m_CameraPos -= glm::normalize(glm::cross(m_CameraFront, m_CameraUp)) * m_CameraSpeed;
 			m_Camera->CameraTranslation(Camera_Movement::LEFT, m_DeltaTime);
 		}
 		if (ImGui::Button("D")) {
-			//m_CameraPos += glm::normalize(glm::cross(m_CameraFront, m_CameraUp)) * m_CameraSpeed;
 			m_Camera->CameraTranslation(Camera_Movement::RIGHT, m_DeltaTime);
 		}
 	}
