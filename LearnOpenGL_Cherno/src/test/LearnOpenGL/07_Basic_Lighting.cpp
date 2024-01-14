@@ -5,35 +5,35 @@ Test::Part2_BasicLighting::Part2_BasicLighting()
 {
 	float vertices[] = {
 		//---- Œª÷√ ----    
-		-0.5f, -0.5f, -0.5f,
-		-0.5f,  0.5f, -0.5f,
-		 0.5f, -0.5f, -0.5f,
-		 0.5f,  0.5f, -0.5f,
+		-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+		-0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+		 0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+		 0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
 
-		-0.5f, -0.5f,  0.5f,
-		 0.5f, -0.5f,  0.5f,
-		-0.5f,  0.5f,  0.5f,
-		 0.5f,  0.5f,  0.5f,
+		-0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+		 0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+		-0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+		 0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
 
-		-0.5f,  0.5f, -0.5f,
-		-0.5f,  0.5f,  0.5f,
-		 0.5f,  0.5f, -0.5f,
-		 0.5f,  0.5f,  0.5f,
+		-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
+		-0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+		 0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
+		 0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
 
-		-0.5f, -0.5f, -0.5f,
-		 0.5f, -0.5f, -0.5f,
-		-0.5f, -0.5f,  0.5f,
-		 0.5f, -0.5f,  0.5f,
+		-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+		 0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+		-0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+		 0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
 
-		-0.5f, -0.5f, -0.5f,
-		-0.5f, -0.5f,  0.5f,
-		-0.5f,  0.5f, -0.5f,
-		-0.5f,  0.5f,  0.5f,
+		-0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+		-0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+		-0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+		-0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
 
-		 0.5f, -0.5f, -0.5f,
-		 0.5f,  0.5f, -0.5f,
-		 0.5f, -0.5f,  0.5f,
-		 0.5f,  0.5f,  0.5f,
+		 0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+		 0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+		 0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+		 0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
 	};
 
 	unsigned int indices[] = {
@@ -59,8 +59,9 @@ Test::Part2_BasicLighting::Part2_BasicLighting()
 
 	m_CubeVAO = std::make_unique<VertexArray>();
 	m_LightCubeVAO = std::make_unique<VertexArray>();
-	m_VertexBuffer = std::make_unique<VertexBuffer>(vertices, sizeof(float) * 3 * 4 * 6);
+	m_VertexBuffer = std::make_unique<VertexBuffer>(vertices, sizeof(float) * (3 + 3) * 4 * 6);
 	VertexBufferLayout layout;
+	layout.Push<float>(3);
 	layout.Push<float>(3);
 	m_CubeVAO->AddBuffer(*m_VertexBuffer, layout);
 	m_LightCubeVAO->AddBuffer(*m_VertexBuffer, layout);
@@ -73,8 +74,11 @@ Test::Part2_BasicLighting::Part2_BasicLighting()
 	m_LightingShader->Bind();
 	m_LightingShader->SetUniform3f("objectColor", 1.0f, 0.5f, 0.31f);
 	m_LightingShader->SetUniform3f("lightColor", 1.0f, 1.0f, 1.0f);
+	m_LightingShader->SetUniform3fv("lightPos", m_LightPos);
 
 	m_Camera = std::make_unique<Camera>();
+
+	GLCall(glEnable(GL_DEPTH_TEST));
 }
 
 Test::Part2_BasicLighting::~Part2_BasicLighting()
@@ -110,7 +114,7 @@ void Test::Part2_BasicLighting::OnRender()
 	m_LightCubeShader->Bind();
 	model = glm::mat4(1.0f);
 	model = glm::translate(model, m_LightPos);
-	model = glm::scale(model, glm::vec3(1.2f)); // a smaller cube
+	model = glm::scale(model, glm::vec3(0.2f)); // a smaller cube
 	m_LightCubeShader->SetUniformMat4f("u_Model", model);
 	m_LightCubeShader->SetUniformMat4f("u_View", view);
 	m_LightCubeShader->SetUniformMat4f("u_Projection", projection);
