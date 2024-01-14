@@ -68,15 +68,15 @@ Test::Part2_BasicLighting::Part2_BasicLighting()
 
 	m_IB = std::make_unique<IndexBuffer>(indices, 36);
 
+	m_Camera = std::make_unique<Camera>(glm::vec3(0.0f, 0.0f, 3.0f));
+
 	m_LightingShader = std::make_unique<Shader>("res/shader/Part2_BasicLighting_Color.shader");
 	m_LightCubeShader = std::make_unique<Shader>("res/shader/Part2_BasicLighting_LightCube.shader");
 
 	m_LightingShader->Bind();
 	m_LightingShader->SetUniform3f("objectColor", 1.0f, 0.5f, 0.31f);
 	m_LightingShader->SetUniform3f("lightColor", 1.0f, 1.0f, 1.0f);
-	m_LightingShader->SetUniform3fv("lightPos", m_LightPos);
-
-	m_Camera = std::make_unique<Camera>();
+	m_LightingShader->SetUniform3fv("viewPos", m_Camera->GetPosition());
 
 	GLCall(glEnable(GL_DEPTH_TEST));
 }
@@ -87,16 +87,15 @@ Test::Part2_BasicLighting::~Part2_BasicLighting()
 
 void Test::Part2_BasicLighting::OnUpdate(float deltaTime)
 {
-}
-
-void Test::Part2_BasicLighting::OnRender()
-{
 	GLCall(glClearColor(0.1f, 0.1f, 0.1f, 1.0f));
 	GLCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 
 	Renderer renderer;
 
 	glm::mat4 view = m_Camera->GetViewMatrix();
+	if (m_IsOthor)
+		view = glm::scale(view, glm::vec3(m_Distance));
+
 	glm::mat4 model = glm::mat4(1.0f);
 	glm::mat4 projection(1.0f);
 	if (m_IsOthor)
@@ -111,8 +110,17 @@ void Test::Part2_BasicLighting::OnRender()
 
 	renderer.DrawElement(*m_CubeVAO, *m_IB, *m_LightingShader);
 
+	glm::mat4 r(1.0);
+	r = glm::rotate(r, deltaTime, glm::vec3(0.0f, 1.0f, 0.0f));
+	glm::vec4 lp(1.0);
+	lp = lp * r;
+	m_LightPos = glm::vec3(lp * m_LightDistance);
+	m_LightingShader->SetUniform3fv("lightPos", m_LightPos);
+
 	m_LightCubeShader->Bind();
+
 	model = glm::mat4(1.0f);
+	//model = glm::rotate(model, deltaTime, glm::vec3(0.0f, 0.0f, 1.0f));
 	model = glm::translate(model, m_LightPos);
 	model = glm::scale(model, glm::vec3(0.2f)); // a smaller cube
 	m_LightCubeShader->SetUniformMat4f("u_Model", model);
@@ -122,9 +130,13 @@ void Test::Part2_BasicLighting::OnRender()
 	renderer.DrawElement(*m_LightCubeVAO, *m_IB, *m_LightCubeShader);
 }
 
+void Test::Part2_BasicLighting::OnRender()
+{
+}
+
 void Test::Part2_BasicLighting::OnImGuiRender()
 {
-	ImGui::Checkbox("Demo Window", &m_IsOthor);
+	ImGui::Checkbox("IsOthor", &m_IsOthor);
 	if (ImGui::DragFloat("Yaw", &m_Yaw, 1.0f, -89.9f, 89.9f))
 	{
 		m_Camera->CameraYaw(m_Yaw);
@@ -135,8 +147,10 @@ void Test::Part2_BasicLighting::OnImGuiRender()
 		m_Camera->CameraPitch(m_Pitch);
 	}
 
-	if (ImGui::DragFloat(" Distance", &m_Distance, 0.1f, 0.1f, 30.0f))
+	if (ImGui::DragFloat("Distance", &m_Distance, 0.1f, 0.1f, 30.0f))
 	{
 		m_Camera->SetDistance(m_Distance);
 	}
+
+
 }

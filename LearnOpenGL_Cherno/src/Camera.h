@@ -38,6 +38,8 @@ public:
 	void SetCameraType(const Camera_Type type);
 	void SetDistance(const float distance);
 
+	inline glm::vec3 GetPosition() const { return m_Position; }
+
 private:
 	void updateCameraVectors();
 

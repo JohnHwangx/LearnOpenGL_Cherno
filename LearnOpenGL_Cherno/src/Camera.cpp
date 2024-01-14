@@ -95,7 +95,7 @@ glm::mat4 Camera::GetViewMatrix() const
 {
     if (Camera_Type::ORBIT == m_CameraType) {
 
-        return glm::lookAt(m_Position + (m_Front * m_Distance), m_Center, glm::vec3(0.0, 1.0, 0.0));
+        return glm::lookAt(m_Position, m_Center, glm::vec3(0.0, 1.0, 0.0));
     }
 	return glm::lookAt(m_Position, m_Position + m_Front, m_Up);
 }
@@ -107,7 +107,8 @@ void Camera::SetCameraType(const Camera_Type type)
 
 void Camera::SetDistance(const float distance)
 {
-    m_Distance = distance;
+    glm::vec3 direction = glm::normalize(m_Position);
+    m_Position = direction * distance;
 }
 
 void Camera::updateCameraVectors()
@@ -125,11 +126,12 @@ void Camera::updateCameraVectors()
     }
     else 
     {
-        glm::vec3 front;
-        front.x = sin(glm::radians(m_Yaw)) * cos(glm::radians(m_Pitch));
-        front.y = sin(glm::radians(m_Pitch));
-        front.z = cos(glm::radians(m_Yaw)) * cos(glm::radians(m_Pitch));
-        m_Front = glm::normalize(front);
+        float distance = glm::distance(m_Position, m_Center);
+        glm::vec3 position;
+        position.x = sin(glm::radians(m_Yaw)) * cos(glm::radians(m_Pitch));
+        position.y = sin(glm::radians(m_Pitch));
+        position.z = cos(glm::radians(m_Yaw)) * cos(glm::radians(m_Pitch));
+        m_Position = glm::normalize(position) * distance;
 
         m_Right = glm::normalize(glm::cross(m_Front, m_WorldUp));
         m_Up = glm::normalize(glm::cross(m_Right, m_Front));

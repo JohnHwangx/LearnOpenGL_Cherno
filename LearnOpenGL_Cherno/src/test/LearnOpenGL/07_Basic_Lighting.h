@@ -31,6 +31,7 @@ namespace Test {
 		float m_Yaw = 0.0f;
 		float m_Pitch = 0.0f;
 		float m_Distance = 3.0f;
+		float m_LightDistance = 2.0f;
 		glm::vec3 m_LightPos = glm::vec3(1.2f, 1.0f, 2.0f);
 	};
 }
