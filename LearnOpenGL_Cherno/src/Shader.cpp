@@ -14,6 +14,7 @@ Shader::Shader(const std::string& filePath):
 
 Shader::~Shader()
 {
+	std::cout << "Shader Distribute~\n";
 	GLCall(glDeleteProgram(m_RendererId));
 }
 

@@ -76,6 +76,8 @@ Test::Part2_Material::Part2_Material()
 	m_LightingShader->Bind();
 	m_LightingShader->SetUniform3fv("viewPos", m_Camera->GetPosition());
 
+	m_BasicMaterial = std::make_unique<BasicMaterial>(*m_LightingShader);
+
 	GLCall(glEnable(GL_DEPTH_TEST));
 }
 
@@ -90,13 +92,12 @@ void Test::Part2_Material::OnUpdate(float deltaTime)
 
 	Renderer renderer;
 
-	m_LightingShader->Bind();
-	glm::mat4 r(1.0);
-	r = glm::rotate(r, deltaTime, glm::vec3(0.0f, 1.0f, 0.0f));
-	glm::vec4 lp(1.0);
-	lp = lp * r;
+	//m_LightingShader->Bind();
+	m_BasicMaterial->Use();
+	glm::mat4 r = glm::rotate(glm::mat4(1.0), deltaTime, glm::vec3(0.0f, 1.0f, 0.0f));
+	glm::vec4 lp = glm::vec4(1.0f) * r;
 	m_LightPos = glm::vec3(lp * m_LightDistance);
-	m_LightingShader->SetUniform3fv("light.position", m_LightPos);
+	m_BasicMaterial->SetLightPosition(m_LightPos);
 
 	// light properties
 	glm::vec3 lightColor;
@@ -105,15 +106,15 @@ void Test::Part2_Material::OnUpdate(float deltaTime)
 	lightColor.z = sin(deltaTime * 1.3f);
 	glm::vec3 diffuseColor = lightColor * glm::vec3(0.5f); // decrease the influence
 	glm::vec3 ambientColor = diffuseColor * glm::vec3(0.2f); // low influence
-	m_LightingShader->SetUniform3fv("light.ambient", ambientColor);
-	m_LightingShader->SetUniform3fv("light.diffuse", diffuseColor);
-	m_LightingShader->SetUniform3f("light.specular", 1.0f, 1.0f, 1.0f);
+	m_BasicMaterial->SetLightAmbient(ambientColor);
+	m_BasicMaterial->SetLightDiffuse(diffuseColor);
+	m_BasicMaterial->SetLightSpecular(1.0f, 1.0f, 1.0f);
 
 	// material properties
-	m_LightingShader->SetUniform3f("material.ambient", 1.0f, 0.5f, 0.31f);
-	m_LightingShader->SetUniform3f("material.diffuse", 1.0f, 0.5f, 0.31f);
-	m_LightingShader->SetUniform3f("material.specular", 0.5f, 0.5f, 0.5f); // specular lighting doesn't have full effect on this object's material
-	m_LightingShader->SetUniform1f("material.shininess", 32.0f);
+	m_BasicMaterial->SetAmbient(1.0f, 0.5f, 0.31f);
+	m_BasicMaterial->SetDiffuse(1.0f, 0.5f, 0.31f);
+	m_BasicMaterial->SetSpecular(0.5f, 0.5f, 0.5f);
+	m_BasicMaterial->SetShininess(32.0f);
 
 	glm::mat4 view = m_Camera->GetViewMatrix();
 	if (m_IsOthor)
@@ -136,7 +137,6 @@ void Test::Part2_Material::OnUpdate(float deltaTime)
 	m_LightCubeShader->Bind();
 
 	model = glm::mat4(1.0f);
-	//model = glm::rotate(model, deltaTime, glm::vec3(0.0f, 0.0f, 1.0f));
 	model = glm::translate(model, m_LightPos);
 	model = glm::scale(model, glm::vec3(0.2f)); // a smaller cube
 	m_LightCubeShader->SetUniformMat4f("u_Model", model);

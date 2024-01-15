@@ -2,40 +2,39 @@
 
 #include <iostream>
 #include "Shader.h"
+#include "Light.h"
 
 class BasicMaterial {
 public:
-	BasicMaterial(const std::string& shaderPath);
+	BasicMaterial(Shader& shader);
 	~BasicMaterial();
 
-	inline void SetAmbient(float r, float g, float b)
+	inline void Use()
 	{
-		m_Ambient[0] = r;
-		m_Ambient[1] = g;
-		m_Ambient[2] = b;
-	};
-	inline void SetDiffuse(float r, float g, float b)
-	{
-		m_Diffuse[0] = r;
-		m_Diffuse[1] = g;
-		m_Diffuse[2] = b;
-	};
-	inline void SetSpecular(float r, float g, float b)
-	{
-		m_Spacular[0] = r;
-		m_Spacular[1] = g;
-		m_Spacular[2] = b;
-	};
-
-	inline void SetShininess(float value)
-	{
-		m_Shininess = value;
+		m_Shader.Bind();
 	}
+
+	void SetAmbient(float r, float g, float b);
+	void SetDiffuse(float r, float g, float b);
+	void SetSpecular(float r, float g, float b);
+	void SetShininess(float value);
 
 	inline const float* GetAmbient() const { return m_Ambient; }
 	inline const float* GetDiffuse() const { return m_Diffuse; }
 	inline const float* GetSpacular() const { return m_Spacular; }
 	inline const float GetShininess() const { return m_Shininess; }
+
+	void SetLightAmbient(glm::vec3);
+	void SetLightAmbient(float r, float g, float b);
+	void SetLightDiffuse(glm::vec3);
+	void SetLightDiffuse(float r, float g, float b);
+	void SetLightSpecular(glm::vec3);
+	void SetLightSpecular(float r, float g, float b);
+	void SetLightPosition(glm::vec3);
+
+	inline const float* GetLightAmbient() const { return m_Light->GetAmbient(); }
+	inline const float* GetLightDiffuse() const { return m_Light->GetDiffuse(); }
+	inline const float* GetLightSpacular() const { return m_Light->GetSpacular(); }
 
 private:
 	float m_Ambient[3];
@@ -44,42 +43,5 @@ private:
 	float m_Shininess;
 
 	std::unique_ptr<Light> m_Light;
-	std::unique_ptr<Shader> m_Shader;
-};
-
-class Light {
-public:
-	Light();
-	~Light();
-
-	inline void SetAmbient(float r, float g, float b)
-	{
-		m_Ambient[0] = r;
-		m_Ambient[1] = g;
-		m_Ambient[2] = b;
-	};
-	inline void SetDiffuse(float r, float g, float b)
-	{
-		m_Diffuse[0] = r;
-		m_Diffuse[1] = g;
-		m_Diffuse[2] = b;
-	};
-	inline void SetSpecular(float r, float g, float b)
-	{
-		m_Spacular[0] = r;
-		m_Spacular[1] = g;
-		m_Spacular[2] = b;
-	};
-
-	inline const float* GetAmbient() const { return m_Ambient; }
-	inline const float* GetDiffuse() const { return m_Diffuse; }
-	inline const float* GetSpacular() const { return m_Spacular; }
-
-private:
-	float m_Ambient[3];
-	float m_Diffuse[3];
-	float m_Spacular[3];
-
-private:
-
+	Shader m_Shader;
 };
