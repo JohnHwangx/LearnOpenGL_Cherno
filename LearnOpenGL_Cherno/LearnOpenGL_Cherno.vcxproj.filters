@@ -105,6 +105,12 @@
     <ClCompile Include="src\test\LearnOpenGL\07_Basic_Lighting.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\test\LearnOpenGL\08_Material.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BasicMaterial.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shader\Basic.shader" />
@@ -1483,6 +1489,12 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\test\LearnOpenGL\07_Basic_Lighting.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\test\LearnOpenGL\08_Material.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BasicMaterial.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

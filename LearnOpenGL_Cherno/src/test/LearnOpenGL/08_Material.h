@@ -6,13 +6,14 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "Camera.h"
+#include "BasicMaterial.h"
 
 namespace Test {
-	class Part2_BasicLighting:public Test
+	class Part2_Material:public Test
 	{
 	public:
-		Part2_BasicLighting();
-		~Part2_BasicLighting();
+		Part2_Material();
+		~Part2_Material();
 
 		void OnUpdate(float deltaTime) override;
 		void OnRender() override;
@@ -26,6 +27,7 @@ namespace Test {
 		std::unique_ptr<Shader> m_LightingShader;
 		std::unique_ptr<Shader> m_LightCubeShader;
 		std::unique_ptr<Camera> m_Camera;
+		std::unique_ptr<BasicMaterial> m_BasicMaterial;
 
 		bool m_IsOthor = false;
 		float m_Yaw = 0.0f;

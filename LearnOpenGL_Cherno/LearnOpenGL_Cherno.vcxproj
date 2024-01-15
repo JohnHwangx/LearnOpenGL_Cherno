@@ -135,6 +135,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Application.cpp" />
+    <ClCompile Include="src\BasicMaterial.cpp" />
     <ClCompile Include="src\Camera.cpp" />
     <ClCompile Include="src\IndexBuffer.cpp" />
     <ClCompile Include="src\Renderer.cpp" />
@@ -147,6 +148,7 @@
     <ClCompile Include="src\test\LearnOpenGL\05_CoordinationSystem.cpp" />
     <ClCompile Include="src\test\LearnOpenGL\06_Camera.cpp" />
     <ClCompile Include="src\test\LearnOpenGL\07_Basic_Lighting.cpp" />
+    <ClCompile Include="src\test\LearnOpenGL\08_Material.cpp" />
     <ClCompile Include="src\test\Test.cpp" />
     <ClCompile Include="src\test\TestBatchRender.cpp" />
     <ClCompile Include="src\test\TestClearColor.cpp" />
@@ -312,6 +314,7 @@
     <None Include="src\vendor\glm\gtx\wrap.inl" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\BasicMaterial.h" />
     <ClInclude Include="src\Camera.h" />
     <ClInclude Include="src\IndexBuffer.h" />
     <ClInclude Include="src\Renderer.h" />
@@ -324,6 +327,7 @@
     <ClInclude Include="src\test\LearnOpenGL\05_CoordinationSystem.h" />
     <ClInclude Include="src\test\LearnOpenGL\06_Camera.h" />
     <ClInclude Include="src\test\LearnOpenGL\07_Basic_Lighting.h" />
+    <ClInclude Include="src\test\LearnOpenGL\08_Material.h" />
     <ClInclude Include="src\test\Test.h" />
     <ClInclude Include="src\test\TestBatchRender.h" />
     <ClInclude Include="src\test\TestClearColor.h" />
