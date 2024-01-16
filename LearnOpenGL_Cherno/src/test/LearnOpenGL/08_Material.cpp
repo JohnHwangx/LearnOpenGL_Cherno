@@ -5,35 +5,35 @@ Test::Part2_Material::Part2_Material()
 {
 	float vertices[] = {
 		//---- Œª÷√ ----    
-		-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-		-0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-		 0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-		 0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+		-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f,  0.0f,
+		-0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f,  1.0f,
+		 0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f,  0.0f,
+		 0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f,  1.0f,
 
-		-0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
-		 0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
-		-0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
-		 0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+		-0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,  0.0f,  0.0f,
+		 0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,  0.0f,  1.0f,
+		-0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,  1.0f,  0.0f,
+		 0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,  1.0f,  1.0f,
 
-		-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
-		-0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
-		 0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
-		 0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+		-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f,  0.0f,
+		-0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  0.0f,  1.0f,
+		 0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  1.0f,  0.0f,
+		 0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  1.0f,  1.0f,
 
-		-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
-		 0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
-		-0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
-		 0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+		-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  0.0f,  0.0f,
+		 0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  0.0f,  1.0f,
+		-0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  1.0f,  0.0f,
+		 0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  1.0f,  1.0f,
 
-		-0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
-		-0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
-		-0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
-		-0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+		-0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  0.0f,  0.0f,
+		-0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  0.0f,  1.0f,
+		-0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  1.0f,  0.0f,
+		-0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  1.0f,  1.0f,
 
-		 0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
-		 0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
-		 0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
-		 0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+		 0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  0.0f,  0.0f,
+		 0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  0.0f,  1.0f,
+		 0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  1.0f,  0.0f,
+		 0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  1.0f,  1.0f,
 	};
 
 	unsigned int indices[] = {
@@ -59,10 +59,11 @@ Test::Part2_Material::Part2_Material()
 
 	m_CubeVAO = std::make_unique<VertexArray>();
 	m_LightCubeVAO = std::make_unique<VertexArray>();
-	m_VertexBuffer = std::make_unique<VertexBuffer>(vertices, sizeof(float) * (3 + 3) * 4 * 6);
+	m_VertexBuffer = std::make_unique<VertexBuffer>(vertices, sizeof(float) * (3 + 3+2) * 4 * 6);
 	VertexBufferLayout layout;
 	layout.Push<float>(3);
 	layout.Push<float>(3);
+	layout.Push<float>(2);
 	m_CubeVAO->AddBuffer(*m_VertexBuffer, layout);
 	m_LightCubeVAO->AddBuffer(*m_VertexBuffer, layout);
 
@@ -70,13 +71,22 @@ Test::Part2_Material::Part2_Material()
 
 	m_Camera = std::make_unique<Camera>(glm::vec3(0.0f, 0.0f, 3.0f));
 
-	m_LightingShader = std::make_unique<Shader>("res/shader/Part2_BasicLighting_Material.shader");
+	m_LightingShader = std::make_unique<Shader>("res/shader/Part2_BasicLighting_LightingMap.shader");
 	m_LightCubeShader = std::make_unique<Shader>("res/shader/Part2_BasicLighting_LightCube.shader");
 
+	m_Textures[0] = std::make_unique<Texture>("res/textures/container2.png");
+	m_Textures[1] = std::make_unique<Texture>("res/textures/container2_specular.png");
+
 	m_LightingShader->Bind();
+	m_LightingShader->SetUniform1i("material.diffuse", 0);
+	m_LightingShader->SetUniform1i("material.specular", 1);
+	//m_LightingShader->SetUniform1i("uTexture2", 1);
+
 	m_LightingShader->SetUniform3fv("viewPos", m_Camera->GetPosition());
 
-	m_BasicMaterial = std::make_unique<BasicMaterial>(*m_LightingShader);
+	m_Textures[0]->Bind();
+	m_Textures[1]->Bind(1);
+	//m_BasicMaterial = std::make_unique<BasicMaterial>(*m_LightingShader);
 
 	GLCall(glEnable(GL_DEPTH_TEST));
 }
@@ -92,29 +102,19 @@ void Test::Part2_Material::OnUpdate(float deltaTime)
 
 	Renderer renderer;
 
-	//m_LightingShader->Bind();
-	m_BasicMaterial->Use();
+	m_LightingShader->Bind();
 	glm::mat4 r = glm::rotate(glm::mat4(1.0), deltaTime, glm::vec3(0.0f, 1.0f, 0.0f));
 	glm::vec4 lp = glm::vec4(1.0f) * r;
 	m_LightPos = glm::vec3(lp * m_LightDistance);
-	m_BasicMaterial->SetLightPosition(m_LightPos);
+	m_LightingShader->SetUniform3fv("light.position", m_LightPos);
 
 	// light properties
-	glm::vec3 lightColor;
-	lightColor.x = sin(deltaTime * 2.0f);
-	lightColor.y = sin(deltaTime * 0.7f);
-	lightColor.z = sin(deltaTime * 1.3f);
-	glm::vec3 diffuseColor = lightColor * glm::vec3(0.5f); // decrease the influence
-	glm::vec3 ambientColor = diffuseColor * glm::vec3(0.2f); // low influence
-	m_BasicMaterial->SetLightAmbient(ambientColor);
-	m_BasicMaterial->SetLightDiffuse(diffuseColor);
-	m_BasicMaterial->SetLightSpecular(1.0f, 1.0f, 1.0f);
+	m_LightingShader->SetUniform3f("light.ambient", m_LightAmbient[0], m_LightAmbient[1], m_LightAmbient[2]);
+	m_LightingShader->SetUniform3f("light.diffuse", m_LightDiffuse[0], m_LightDiffuse[1], m_LightDiffuse[2]);
+	m_LightingShader->SetUniform3f("light.specular", m_LightSpecular[0], m_LightSpecular[1], m_LightSpecular[2]);
 
 	// material properties
-	m_BasicMaterial->SetAmbient(1.0f, 0.5f, 0.31f);
-	m_BasicMaterial->SetDiffuse(1.0f, 0.5f, 0.31f);
-	m_BasicMaterial->SetSpecular(0.5f, 0.5f, 0.5f);
-	m_BasicMaterial->SetShininess(32.0f);
+	m_LightingShader->SetUniform1f("material.shininess", m_Shininess);
 
 	glm::mat4 view = m_Camera->GetViewMatrix();
 	if (m_IsOthor)
@@ -153,7 +153,7 @@ void Test::Part2_Material::OnRender()
 void Test::Part2_Material::OnImGuiRender()
 {
 	ImGui::Checkbox("IsOthor", &m_IsOthor);
-	if (ImGui::DragFloat("Yaw", &m_Yaw, 1.0f, -89.9f, 89.9f))
+	if (ImGui::DragFloat("Yaw", &m_Yaw, 1.0f, -180.0f, 180.0f))
 	{
 		m_Camera->CameraYaw(m_Yaw);
 	}
@@ -167,6 +167,13 @@ void Test::Part2_Material::OnImGuiRender()
 	{
 		m_Camera->SetDistance(m_Distance);
 	}
-
-
+	ImGui::Text("Material");
+	ImGui::DragFloat3("Ambient", &m_Ambient[0], 0.05f, 0.0f, 1.0f);
+	ImGui::DragFloat3("Diffuse", &m_Diffuse[0], 0.05f, 0.0f, 1.0f);
+	ImGui::DragFloat3("Specular", &m_Specular[0], 0.05f, 0.0f, 1.0f);
+	ImGui::DragFloat("Shininess", &m_Shininess, 0.1f, 0.0f, 64.0f);
+	ImGui::Text("Light");
+	ImGui::DragFloat3("Light Ambient", &m_LightAmbient[0], 0.05f, 0.0f, 1.0f);
+	ImGui::DragFloat3("Light Diffuse", &m_LightDiffuse[0], 0.05f, 0.0f, 1.0f);
+	ImGui::DragFloat3("Light Specular", &m_LightSpecular[0], 0.05f, 0.0f, 1.0f);
 }
