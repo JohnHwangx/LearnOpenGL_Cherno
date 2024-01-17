@@ -22,7 +22,7 @@ namespace Test{
 
 	void Part3_LoadingModel::OnRender()
 	{
-		glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
+		glClearColor(0.3f, 0.2f, 0.8f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		m_Shader->Bind();
