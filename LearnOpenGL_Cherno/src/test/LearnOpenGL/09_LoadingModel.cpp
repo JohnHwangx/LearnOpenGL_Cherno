@@ -7,7 +7,7 @@ namespace Test{
 	Part3_LoadingModel::Part3_LoadingModel()
 	{
 		glEnable(GL_DEPTH_TEST);
-		m_Model = std::make_unique<Model>("res/models/backpack/backpack.obj");
+		m_Model = std::make_unique<Model>("res/models/nanosuit/nanosuit.obj");
 		m_Shader = std::make_shared<Shader>("res/shader/Part3_ModelLoading.shader");
 		m_Camera = std::make_unique<Camera>(glm::vec3(0.0f, 0.0f, 3.0f));
 	}
