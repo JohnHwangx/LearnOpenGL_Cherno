@@ -15,16 +15,17 @@ public:
     {
         loadModel(path);
     }
+    ~Model();
     void Draw(Shader& shader);
 private:
     /*  模型数据  */
-    std::vector<Texture> textures_loaded;	// stores all the textures loaded so far, optimization to make sure textures aren't loaded more than once.
-    std::vector<Mesh> meshes;
+    std::vector<Texture*> textures_loaded;	// stores all the textures loaded so far, optimization to make sure textures aren't loaded more than once.
+    std::vector<Mesh*> meshes;
     std::string directory;
     bool gammaCorrection;
     /*  函数   */
     void loadModel(const std::string& path);
     void processNode(aiNode* node, const aiScene* scene);
-    Mesh processMesh(aiMesh* mesh, const aiScene* scene);
-    std::vector<Texture> loadMaterialTextures(aiMaterial* mat, aiTextureType type, const std::string& typeName);
+    Mesh* processMesh(aiMesh* mesh, const aiScene* scene);
+    std::vector<Texture*> loadMaterialTextures(aiMaterial* mat, aiTextureType type, const std::string& typeName);
 };
