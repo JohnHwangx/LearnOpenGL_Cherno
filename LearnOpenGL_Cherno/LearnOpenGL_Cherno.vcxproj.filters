@@ -123,6 +123,12 @@
     <ClCompile Include="src\Mesh.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\test\LearnOpenGL\10_DepthTesting.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\test\LearnOpenGL\11_StencilTesting.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shader\Basic.shader" />
@@ -1519,6 +1525,12 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\Mesh.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\test\LearnOpenGL\10_DepthTesting.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\test\LearnOpenGL\11_StencilTesting.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
