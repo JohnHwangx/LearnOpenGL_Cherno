@@ -25,6 +25,7 @@ namespace Test {
 		std::unique_ptr<IndexBuffer> m_IB;
 		std::unique_ptr<IndexBuffer> m_PlaneIB;
 		std::unique_ptr<VertexBuffer> m_VertexBuffer;
+		std::unique_ptr<VertexBuffer> m_PlaneVertexBuffer;
 		std::unique_ptr<IndexBuffer> m_IndexBUffer;
 		std::unique_ptr<Camera> m_Camera;
 		std::unique_ptr<Shader> m_Shader;

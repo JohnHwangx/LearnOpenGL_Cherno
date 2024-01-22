@@ -81,11 +81,12 @@ namespace Test {
 		m_IB = std::make_unique<IndexBuffer>(indices, 36);
 
 		m_PlaneVAO = std::make_unique<VertexArray>();
-		m_VertexBuffer = std::make_unique<VertexBuffer>(planeVertices, sizeof(float) * (3 + 2) * 4 * 6);
-		layout.Push<float>(3);
-		layout.Push<float>(2);
-		m_PlaneVAO->AddBuffer(*m_VertexBuffer, layout);
-		m_VertexBuffer->Unbind();
+		m_PlaneVertexBuffer = std::make_unique<VertexBuffer>(planeVertices, sizeof(float) * (3 + 2) * 4 * 6);
+		VertexBufferLayout planeLayout;
+		planeLayout.Push<float>(3);
+		planeLayout.Push<float>(2);
+		m_PlaneVAO->AddBuffer(*m_PlaneVertexBuffer, planeLayout);
+		m_PlaneVertexBuffer->Unbind();
 		m_PlaneIB = std::make_unique<IndexBuffer>(planeIndex, 6);
 
 		m_Camera = std::make_unique<Camera>(glm::vec3(0.0f, 0.0f, 3.0f));
