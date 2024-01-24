@@ -30,5 +30,10 @@ namespace Test {
 		std::unique_ptr<Camera> m_Camera;
 		std::unique_ptr<Shader> m_Shader;
 		std::unique_ptr<Texture> m_Textures[2];
+
+		bool m_IsOthor = false;
+		float m_Yaw = 0.0f;
+		float m_Pitch = 0.0f;
+		float m_Distance = 3.0f;
 	};
 }

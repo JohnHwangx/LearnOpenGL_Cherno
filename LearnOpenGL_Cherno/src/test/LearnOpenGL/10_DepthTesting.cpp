@@ -1,39 +1,40 @@
 #include "10_DepthTesting.h"
+#include "imgui/imgui.h"
 
 namespace Test {
 	Part4_DepthTesting::Part4_DepthTesting()
 	{
 		float vertices[] = {
 			//---- Œª÷√ ----    
-			-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f,  0.0f,
-			-0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f,  1.0f,
-			 0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f,  0.0f,
-			 0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f,  1.0f,
+			-0.5f, -0.5f, -0.5f,  0.0f,  0.0f,
+			-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,
+			 0.5f, -0.5f, -0.5f,  1.0f,  0.0f,
+			 0.5f,  0.5f, -0.5f,  1.0f,  1.0f,
 
-			-0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,  0.0f,  0.0f,
-			 0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,  0.0f,  1.0f,
-			-0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,  1.0f,  0.0f,
-			 0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,  1.0f,  1.0f,
+			-0.5f, -0.5f,  0.5f,  0.0f,  0.0f,
+			 0.5f, -0.5f,  0.5f,  0.0f,  1.0f,
+			-0.5f,  0.5f,  0.5f,  1.0f,  0.0f,
+			 0.5f,  0.5f,  0.5f,  1.0f,  1.0f,
 
-			-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f,  0.0f,
-			-0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  0.0f,  1.0f,
-			 0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  1.0f,  0.0f,
-			 0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  1.0f,  1.0f,
+			-0.5f,  0.5f, -0.5f,  0.0f,  0.0f,
+			-0.5f,  0.5f,  0.5f,  0.0f,  1.0f,
+			 0.5f,  0.5f, -0.5f,  1.0f,  0.0f,
+			 0.5f,  0.5f,  0.5f,  1.0f,  1.0f,
 
-			-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  0.0f,  0.0f,
-			 0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  0.0f,  1.0f,
-			-0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  1.0f,  0.0f,
-			 0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  1.0f,  1.0f,
+			-0.5f, -0.5f, -0.5f,  0.0f,  0.0f,
+			 0.5f, -0.5f, -0.5f,  0.0f,  1.0f,
+			-0.5f, -0.5f,  0.5f,  1.0f,  0.0f,
+			 0.5f, -0.5f,  0.5f,  1.0f,  1.0f,
 
-			-0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  0.0f,  0.0f,
-			-0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  0.0f,  1.0f,
-			-0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  1.0f,  0.0f,
-			-0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  1.0f,  1.0f,
+			-0.5f, -0.5f, -0.5f, -0.0f,  0.0f,
+			-0.5f, -0.5f,  0.5f, -0.0f,  1.0f,
+			-0.5f,  0.5f, -0.5f, -1.0f,  0.0f,
+			-0.5f,  0.5f,  0.5f, -1.0f,  1.0f,
 
-			 0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  0.0f,  0.0f,
-			 0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  0.0f,  1.0f,
-			 0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  1.0f,  0.0f,
-			 0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  1.0f,  1.0f,
+			 0.5f, -0.5f, -0.5f,  0.0f,  0.0f,
+			 0.5f,  0.5f, -0.5f,  0.0f,  1.0f,
+			 0.5f, -0.5f,  0.5f,  1.0f,  0.0f,
+			 0.5f,  0.5f,  0.5f,  1.0f,  1.0f,
 		};
 
 		unsigned int indices[] = {
@@ -67,13 +68,12 @@ namespace Test {
 
 		unsigned int planeIndex[] = {
 			0, 1, 2,
-			1, 3, 2,
+			0, 2, 3,
 		};
 
 		m_CubeVAO = std::make_unique<VertexArray>();
-		m_VertexBuffer = std::make_unique<VertexBuffer>(vertices, sizeof(float) * (3 + 3 + 2) * 4 * 6);
+		m_VertexBuffer = std::make_unique<VertexBuffer>(vertices, sizeof(float) * (3 + 2) * 4 * 6);
 		VertexBufferLayout layout;
-		layout.Push<float>(3);
 		layout.Push<float>(3);
 		layout.Push<float>(2);
 		m_CubeVAO->AddBuffer(*m_VertexBuffer, layout);
@@ -98,10 +98,6 @@ namespace Test {
 
 		m_Shader->Bind();
 		m_Shader->SetUniform1i("texture_diffuse1", 0);
-		//m_Shader->SetUniform3fv("viewPos", m_Camera->GetPosition());
-
-		//m_Textures[0]->Bind();
-		//m_Textures[1]->Bind(1);
 
 		GLCall(glEnable(GL_DEPTH_TEST));
 	}
@@ -118,13 +114,13 @@ namespace Test {
 
 		Renderer renderer;
 		glm::mat4 view = m_Camera->GetViewMatrix();
-		//if (m_IsOthor)
-		//	view = glm::scale(view, glm::vec3(m_Distance));
+		if (m_IsOthor)
+			view = glm::scale(view, glm::vec3(m_Distance));
 
 		glm::mat4 projection(1.0f);
-		//if (m_IsOthor)
-			//projection = glm::ortho(-15.0f, 15.0f, -10.0f, 10.0f, -30.0f, 1000.0f);
-		//else
+		if (m_IsOthor)
+			projection = glm::ortho(-15.0f, 15.0f, -10.0f, 10.0f, -30.0f, 1000.0f);
+		else
 			projection = glm::perspective(glm::radians(45.0f), 1200.0f / 800.0f, 0.1f, 100.0f);
 
 		m_Shader->Bind();
@@ -147,10 +143,26 @@ namespace Test {
 		m_PlaneVAO->Bind();
 		model = glm::mat4(1.0f);
 		m_Shader->SetUniformMat4f("u_Model", model);
-		m_Textures[1]->Bind(1);
+		m_Textures[1]->Bind();
 		renderer.DrawElement(*m_PlaneVAO, *m_PlaneIB, *m_Shader);
 	}
+
 	void Part4_DepthTesting::OnImGuiRender()
 	{
+		ImGui::Checkbox("IsOthor", &m_IsOthor);
+		if (ImGui::DragFloat("Yaw", &m_Yaw, 1.0f, -180.0f, 180.0f))
+		{
+			m_Camera->CameraYaw(m_Yaw);
+		}
+
+		if (ImGui::DragFloat("Pitch", &m_Pitch, 1.0f, -89.9f, 89.9f))
+		{
+			m_Camera->CameraPitch(m_Pitch);
+		}
+
+		if (ImGui::DragFloat("Distance", &m_Distance, 0.1f, 0.1f, 30.0f))
+		{
+			m_Camera->SetDistance(m_Distance);
+		}
 	}
 }
