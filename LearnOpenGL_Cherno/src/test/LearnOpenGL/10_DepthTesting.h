@@ -1,6 +1,6 @@
 #pragma once
 
-#include "test/Test.h"
+#include "CameraTest.h"
 #include "VertexArray.h"
 #include "VertexBufferLayout.h"
 #include "Camera.h"
@@ -9,7 +9,7 @@
 #include "glm/gtc/matrix_transform.hpp"
 
 namespace Test {
-	class Part4_DepthTesting: public Test
+	class Part4_DepthTesting: public CameraTest
 	{
 	public:
 		Part4_DepthTesting();
@@ -27,13 +27,7 @@ namespace Test {
 		std::unique_ptr<VertexBuffer> m_VertexBuffer;
 		std::unique_ptr<VertexBuffer> m_PlaneVertexBuffer;
 		std::unique_ptr<IndexBuffer> m_IndexBUffer;
-		std::unique_ptr<Camera> m_Camera;
 		std::unique_ptr<Shader> m_Shader;
 		std::unique_ptr<Texture> m_Textures[2];
-
-		bool m_IsOthor = false;
-		float m_Yaw = 0.0f;
-		float m_Pitch = 0.0f;
-		float m_Distance = 3.0f;
 	};
 }

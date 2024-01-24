@@ -129,6 +129,9 @@
     <ClCompile Include="src\test\LearnOpenGL\11_StencilTesting.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\test\LearnOpenGL\CameraTest.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shader\Basic.shader" />
@@ -1531,6 +1534,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\test\LearnOpenGL\11_StencilTesting.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\test\LearnOpenGL\CameraTest.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

@@ -89,7 +89,7 @@ namespace Test {
 		m_PlaneVertexBuffer->Unbind();
 		m_PlaneIB = std::make_unique<IndexBuffer>(planeIndex, 6);
 
-		m_Camera = std::make_unique<Camera>(glm::vec3(0.0f, 0.0f, 3.0f));
+		//m_Camera = std::make_unique<Camera>(glm::vec3(0.0f, 0.0f, 3.0f));
 
 		m_Shader = std::make_unique<Shader>("res/shader/Part4_DepthTesting.shader");
 
@@ -149,7 +149,8 @@ namespace Test {
 
 	void Part4_DepthTesting::OnImGuiRender()
 	{
-		ImGui::Checkbox("IsOthor", &m_IsOthor);
+		this->CameraTest::OnImGuiRender();
+		/*ImGui::Checkbox("IsOthor", &m_IsOthor);
 		if (ImGui::DragFloat("Yaw", &m_Yaw, 1.0f, -180.0f, 180.0f))
 		{
 			m_Camera->CameraYaw(m_Yaw);
@@ -163,6 +164,6 @@ namespace Test {
 		if (ImGui::DragFloat("Distance", &m_Distance, 0.1f, 0.1f, 30.0f))
 		{
 			m_Camera->SetDistance(m_Distance);
-		}
+		}*/
 	}
 }
