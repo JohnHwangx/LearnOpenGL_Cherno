@@ -27,6 +27,7 @@
 #include "test/LearnOpenGL/08_Material.h"
 #include "test/LearnOpenGL/09_LoadingModel.h"
 #include "test/LearnOpenGL/10_DepthTesting.h"
+#include "test/LearnOpenGL/11_StencilTesting.h"
 
 int main(void)
 {
@@ -87,6 +88,7 @@ int main(void)
 		testMenu->RegisterTest<Test::Part2_Material>("Part2: Material");
 		testMenu->RegisterTest<Test::Part3_LoadingModel>("Part3: Loading Model");
 		testMenu->RegisterTest<Test::Part4_DepthTesting>("Part4: Depth Testing");
+		testMenu->RegisterTest<Test::Part4_StencilTesting>("Part4: Stencil Testing");
 
 		/* Loop until the user closes the window */
 		while (!glfwWindowShouldClose(window))

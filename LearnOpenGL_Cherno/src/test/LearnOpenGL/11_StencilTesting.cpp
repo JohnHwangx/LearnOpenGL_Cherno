@@ -97,6 +97,10 @@ namespace Test {
 		m_Shader->SetUniform1i("texture_diffuse1", 0);
 
 		GLCall(glEnable(GL_DEPTH_TEST));
+		GLCall(glDepthFunc(GL_LESS));
+		GLCall(glEnable(GL_STENCIL_TEST));
+		GLCall(glStencilFunc(GL_NOTEQUAL, 1, 0xFF));
+		GLCall(glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE));
 	}
 
 	Part4_StencilTesting::~Part4_StencilTesting()
@@ -110,9 +114,10 @@ namespace Test {
 	void Part4_StencilTesting::OnRender()
 	{
 		GLCall(glClearColor(0.1f, 0.1f, 0.1f, 1.0f));
-		GLCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
+		GLCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT));
 
 		Renderer renderer;
+		glm::mat4 model = glm::mat4(1.0f);
 		glm::mat4 view = m_Camera->GetViewMatrix();
 		if (m_IsOthor)
 			view = glm::scale(view, glm::vec3(m_Distance));
@@ -123,11 +128,30 @@ namespace Test {
 		else
 			projection = glm::perspective(glm::radians(45.0f), 1200.0f / 800.0f, 0.1f, 100.0f);
 
+		m_StencilSingleShader->Bind();
+		m_StencilSingleShader->SetUniformMat4f("u_View", view);
+		m_StencilSingleShader->SetUniformMat4f("u_Projection", projection);
+
 		m_Shader->Bind();
 		m_Shader->SetUniformMat4f("u_View", view);
 		m_Shader->SetUniformMat4f("u_Projection", projection);
 
-		glm::mat4 model = glm::mat4(1.0f);
+		// draw floor as normal, but don't write the floor to the stencil buffer, we only care about the containers. We set its mask to 0x00 to not write to the stencil buffer.
+		GLCall(glStencilMask(0x00));
+		// floor
+		m_Textures[1]->Bind();
+		m_Shader->SetUniformMat4f("u_Model", glm::mat4(1.0f));
+		m_PlaneVAO->Bind();
+		renderer.DrawElement(*m_PlaneVAO, *m_PlaneIB, *m_Shader);
+
+		// 1st. render pass, draw objects as normal, writing to the stencil buffer
+		// --------------------------------------------------------------------
+		GLCall(glStencilFunc(GL_ALWAYS, 1, 0xFF));
+		GLCall(glStencilMask(0xFF));
+
+		// cubes
+		m_CubeVAO->Bind();
+
 		model = glm::translate(model, glm::vec3(-1.0f, 0.0f, -1.0f));
 		m_Shader->SetUniformMat4f("u_Model", model);
 
@@ -140,11 +164,44 @@ namespace Test {
 
 		renderer.DrawElement(*m_CubeVAO, *m_IB, *m_Shader);
 
-		m_PlaneVAO->Bind();
+		// 2nd. render pass: now draw slightly scaled versions of the objects, this time disabling stencil writing.
+		// Because the stencil buffer is now filled with several 1s. The parts of the buffer that are 1 are not drawn, thus only drawing 
+		// the objects' size differences, making it look like borders.
+		// -----------------------------------------------------------------------------------------------------------------------------
+		GLCall(glStencilFunc(GL_NOTEQUAL, 1, 0xFF));
+		GLCall(glStencilMask(0x00));
+		GLCall(glDisable(GL_DEPTH_TEST));
+
+		m_StencilSingleShader->Bind();
+
+		float scale = 1.1f;
+
+		// cubes
+		m_CubeVAO->Bind();
+		m_Textures[0]->Bind();
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(-1.0f, 0.0f, -1.0f));
+		model = glm::scale(model, glm::vec3(scale, scale, scale));
+		m_StencilSingleShader->SetUniformMat4f("u_Model", model);
+		renderer.DrawElement(*m_CubeVAO, *m_IB, *m_StencilSingleShader);
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(2.0f, 0.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(scale, scale, scale));
+		m_StencilSingleShader->SetUniformMat4f("u_Model", model);
+		renderer.DrawElement(*m_CubeVAO, *m_IB, *m_StencilSingleShader);
+
+		m_CubeVAO->Unbind();
+
+		GLCall(glStencilMask(0xFF));
+		GLCall(glStencilFunc(GL_ALWAYS, 0, 0xFF));
+		GLCall(glEnable(GL_DEPTH_TEST));
+
+		/*m_PlaneVAO->Bind();
 		model = glm::mat4(1.0f);
 		m_Shader->SetUniformMat4f("u_Model", model);
 		m_Textures[1]->Bind();
-		renderer.DrawElement(*m_PlaneVAO, *m_PlaneIB, *m_Shader);
+		renderer.DrawElement(*m_PlaneVAO, *m_PlaneIB, *m_Shader);*/
 	}
 
 	void Part4_StencilTesting::OnImGuiRender()
