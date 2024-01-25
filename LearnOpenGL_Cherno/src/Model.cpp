@@ -73,6 +73,8 @@ Mesh* Model::processMesh(aiMesh* mesh, const aiScene* scene)
         vector.x = mesh->mVertices[i].x;
         vector.y = mesh->mVertices[i].y;
         vector.z = mesh->mVertices[i].z;
+
+        m_BBox.SetBoundingBox(vector.x, vector.y, vector.z);
         vertex.Position = vector;
         // normals
         if (mesh->HasNormals())

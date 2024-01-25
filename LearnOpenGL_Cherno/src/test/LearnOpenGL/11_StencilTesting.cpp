@@ -196,12 +196,6 @@ namespace Test {
 		GLCall(glStencilMask(0xFF));
 		GLCall(glStencilFunc(GL_ALWAYS, 0, 0xFF));
 		GLCall(glEnable(GL_DEPTH_TEST));
-
-		/*m_PlaneVAO->Bind();
-		model = glm::mat4(1.0f);
-		m_Shader->SetUniformMat4f("u_Model", model);
-		m_Textures[1]->Bind();
-		renderer.DrawElement(*m_PlaneVAO, *m_PlaneIB, *m_Shader);*/
 	}
 
 	void Part4_StencilTesting::OnImGuiRender()

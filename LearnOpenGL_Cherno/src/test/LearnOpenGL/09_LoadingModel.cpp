@@ -9,7 +9,14 @@ namespace Test{
 		glEnable(GL_DEPTH_TEST);
 		m_Model = std::make_unique<Model>("res/models/nanosuit/nanosuit.obj");
 		m_Shader = std::make_shared<Shader>("res/shader/Part3_ModelLoading.shader");
+
+		glm::vec3 modelCenter = m_Model->m_BBox.GetCenter();
 		m_Camera = std::make_unique<Camera>(glm::vec3(0.0f, 0.0f, 3.0f));
+
+		m_Shader->Bind();
+		glm::mat4 model = glm::mat4(1.0f);
+		model = glm::translate(model, -modelCenter);
+		m_Shader->SetUniformMat4f("u_Model", model);
 	}
 
 	Part3_LoadingModel::~Part3_LoadingModel()
@@ -29,11 +36,11 @@ namespace Test{
 
 		glm::mat4 view = m_Camera->GetViewMatrix();
 
-		glm::mat4 model = glm::mat4(1.0f);
+		//glm::mat4 model = glm::mat4(1.0f);
 		glm::mat4 projection(1.0f);
 		projection = glm::perspective(glm::radians(45.0f), 1200.0f / 800.0f, 0.1f, 100.0f);
 
-		m_Shader->SetUniformMat4f("u_Model", model);
+		//m_Shader->SetUniformMat4f("u_Model", model);
 		m_Shader->SetUniformMat4f("u_View", view);
 		m_Shader->SetUniformMat4f("u_Projection", projection);
 		m_Model->Draw(*(m_Shader.get()));
