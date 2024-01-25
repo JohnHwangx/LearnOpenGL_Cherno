@@ -1,38 +1,39 @@
 #include "Cube.h"
+#include "VertexBufferLayout.h"
 
 Cube::Cube()
 {
 	float vertices[] = {
-		//---- Œª÷√ ----		  // Normal			   // texCoords
-		-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f,  0.0f,
-		-0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f,  1.0f,
-		 0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f,  0.0f,
-		 0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f,  1.0f,
+		//---- Œª÷√ ----		  // texCoords
+		-0.5f, -0.5f, -0.5f,  0.0f,  0.0f,
+		-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,
+		 0.5f, -0.5f, -0.5f,  1.0f,  0.0f,
+		 0.5f,  0.5f, -0.5f,  1.0f,  1.0f,
 
-		-0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,  0.0f,  0.0f,
-		 0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,  0.0f,  1.0f,
-		-0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,  1.0f,  0.0f,
-		 0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,  1.0f,  1.0f,
+		-0.5f, -0.5f,  0.5f,  0.0f,  0.0f,
+		 0.5f, -0.5f,  0.5f,  0.0f,  1.0f,
+		-0.5f,  0.5f,  0.5f,  1.0f,  0.0f,
+		 0.5f,  0.5f,  0.5f,  1.0f,  1.0f,
 
-		-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f,  0.0f,
-		-0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  0.0f,  1.0f,
-		 0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  1.0f,  0.0f,
-		 0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  1.0f,  1.0f,
+		-0.5f,  0.5f, -0.5f,  0.0f,  0.0f,
+		-0.5f,  0.5f,  0.5f,  0.0f,  1.0f,
+		 0.5f,  0.5f, -0.5f,  1.0f,  0.0f,
+		 0.5f,  0.5f,  0.5f,  1.0f,  1.0f,
 
-		-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  0.0f,  0.0f,
-		 0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  0.0f,  1.0f,
-		-0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  1.0f,  0.0f,
-		 0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  1.0f,  1.0f,
+		-0.5f, -0.5f, -0.5f,  0.0f,  0.0f,
+		 0.5f, -0.5f, -0.5f,  0.0f,  1.0f,
+		-0.5f, -0.5f,  0.5f,  1.0f,  0.0f,
+		 0.5f, -0.5f,  0.5f,  1.0f,  1.0f,
 
-		-0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  0.0f,  0.0f,
-		-0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  0.0f,  1.0f,
-		-0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  1.0f,  0.0f,
-		-0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  1.0f,  1.0f,
+		-0.5f, -0.5f, -0.5f, -0.0f,  0.0f,
+		-0.5f, -0.5f,  0.5f, -0.0f,  1.0f,
+		-0.5f,  0.5f, -0.5f, -1.0f,  0.0f,
+		-0.5f,  0.5f,  0.5f, -1.0f,  1.0f,
 
-		 0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  0.0f,  0.0f,
-		 0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  0.0f,  1.0f,
-		 0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  1.0f,  0.0f,
-		 0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  1.0f,  1.0f,
+		 0.5f, -0.5f, -0.5f,  0.0f,  0.0f,
+		 0.5f,  0.5f, -0.5f,  0.0f,  1.0f,
+		 0.5f, -0.5f,  0.5f,  1.0f,  0.0f,
+		 0.5f,  0.5f,  0.5f,  1.0f,  1.0f,
 	};
 
 	unsigned int indices[] = {
@@ -56,9 +57,26 @@ Cube::Cube()
 		1 + 20, 3 + 20, 2 + 20,
 	};
 
-
+	m_VAO = std::make_unique<VertexArray>();
+	m_VertexBuffer = std::make_unique<VertexBuffer>(vertices, sizeof(float) * (3 + 2) * 4 * 6);
+	VertexBufferLayout layout;
+	layout.Push<float>(3);
+	layout.Push<float>(2);
+	m_VAO->AddBuffer(*m_VertexBuffer, layout);
+	m_IndexBUffer = std::make_unique<IndexBuffer>(indices, 36);
+	m_Texture = std::make_unique<Texture>("res/textures/marble.jpg");
 }
 
 Cube::~Cube()
 {
+}
+
+void Cube::Draw(Shader& shader)
+{
+	shader.Bind();
+	shader.SetUniform1i("texture_diffuse1", 0);
+	
+	m_Texture->Bind();
+	Renderer renderer;
+	renderer.DrawElement(*m_VAO, *m_IndexBUffer, shader);
 }
