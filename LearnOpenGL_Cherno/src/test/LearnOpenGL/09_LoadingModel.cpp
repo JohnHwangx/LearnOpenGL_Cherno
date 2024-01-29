@@ -7,7 +7,7 @@ namespace Test{
 	Part3_LoadingModel::Part3_LoadingModel()
 	{
 		glEnable(GL_DEPTH_TEST);
-		m_Model = std::make_unique<Model>("res/models/nanosuit/nanosuit.obj");
+		m_Model = std::make_unique<Model>("res/models/fbx/Honda_CBR600_F4i.fbx");
 		m_Shader = std::make_shared<Shader>("res/shader/Part3_ModelLoading.shader");
 
 		glm::vec3 modelCenter = m_Model->m_BBox.GetCenter();

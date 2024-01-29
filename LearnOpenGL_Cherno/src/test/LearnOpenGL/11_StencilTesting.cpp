@@ -52,7 +52,6 @@ namespace Test {
 		// draw floor as normal, but don't write the floor to the stencil buffer, we only care about the containers. We set its mask to 0x00 to not write to the stencil buffer.
 		GLCall(glStencilMask(0x00));
 		// floor
-		//m_Shader->SetUniformMat4f("u_Model", glm::mat4(1.0f));
 		m_Plane->SetTransform(glm::mat4(1.0f));
 		m_Plane->Draw();
 

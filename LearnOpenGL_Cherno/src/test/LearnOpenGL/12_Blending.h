@@ -6,6 +6,7 @@
 #include "Texture.h"
 #include "Cube.h"
 #include "Plane.h"
+#include "Transparent.h"
 
 namespace Test {
 
@@ -22,6 +23,18 @@ namespace Test {
 	private:
 		std::unique_ptr<Cube> m_Cube;
 		std::unique_ptr<Plane> m_Plane;
+		std::unique_ptr<Transparent> m_Transparent;
 		std::unique_ptr<Shader> m_Shader;
+
+		// transparent vegetation locations
+		// --------------------------------
+		std::vector<glm::vec3> vegetation
+		{
+			glm::vec3(-1.5f, 0.0f, -0.48f),
+			glm::vec3(1.5f, 0.0f, 0.51f),
+			glm::vec3(0.0f, 0.0f, 0.7f),
+			glm::vec3(-0.3f, 0.0f, -2.3f),
+			glm::vec3(0.5f, 0.0f, -0.6f)
+		};
 	};
 }

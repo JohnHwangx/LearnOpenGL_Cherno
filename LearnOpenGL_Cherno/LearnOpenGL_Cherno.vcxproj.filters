@@ -135,6 +135,15 @@
     <ClCompile Include="src\Cube.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\Plane.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\test\LearnOpenGL\12_Blending.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Transparent.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shader\Basic.shader" />
@@ -1543,6 +1552,15 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\Cube.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Plane.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\test\LearnOpenGL\12_Blending.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Transparent.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
