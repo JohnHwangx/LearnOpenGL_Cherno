@@ -3,12 +3,17 @@
 namespace Test {
 	Part4_FrameBuffer::Part4_FrameBuffer()
 	{
-		m_Shader = std::make_unique<Shader>("res/shader/Part4_DepthTesting.shader");
+		m_Shader = std::make_unique<Shader>("res/shader/Part4_Framebuffer.shader");
+		m_ScreenShader = std::make_unique<Shader>("res/shader/Part4_FramebufferScreen.shader");
 
 		m_Cube = std::make_unique<Cube>(*(m_Shader.get()));
 		m_Plane = std::make_unique<Plane>(*(m_Shader.get()));
 
-		GLCall(glEnable(GL_DEPTH_TEST));
+		m_Framebuffer = std::make_unique<Framebuffer>(1200, 800);
+
+		m_Screen = std::make_unique<Screen>(*(m_ScreenShader.get()), m_Framebuffer->GetTextureId());
+
+		//GLCall(glEnable(GL_DEPTH_TEST));
 	}
 
 	Part4_FrameBuffer::~Part4_FrameBuffer()
@@ -21,6 +26,8 @@ namespace Test {
 
 	void Part4_FrameBuffer::OnRender()
 	{
+		m_Framebuffer->Bind();
+		GLCall(glEnable(GL_DEPTH_TEST));
 		GLCall(glClearColor(0.1f, 0.1f, 0.1f, 1.0f));
 		GLCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 
@@ -51,6 +58,14 @@ namespace Test {
 		model = glm::mat4(1.0f);
 		m_Plane->SetTransform(model);
 		m_Plane->Draw();
+
+		m_Framebuffer->Unbind();
+		GLCall(glDisable(GL_DEPTH_TEST));
+
+		GLCall(glClearColor(1.0f, 1.0f, 1.0f, 1.0f)); // set clear color to white (not really necessary actually, since we won't be able to see behind the quad anyways)
+		GLCall(glClear(GL_COLOR_BUFFER_BIT));
+
+		m_Screen->Draw();
 	}
 
 	void Part4_FrameBuffer::OnImGuiRender()

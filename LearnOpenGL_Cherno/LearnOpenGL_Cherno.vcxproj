@@ -145,6 +145,7 @@
     <ClCompile Include="src\Model.cpp" />
     <ClCompile Include="src\Plane.cpp" />
     <ClCompile Include="src\Renderer.cpp" />
+    <ClCompile Include="src\Screen.cpp" />
     <ClCompile Include="src\Shader.cpp" />
     <ClCompile Include="src\test\LearnOpenGL\01_HelloTriangle.cpp" />
     <ClCompile Include="src\test\LearnOpenGL\02_Shader.cpp" />
@@ -337,6 +338,7 @@
     <ClInclude Include="src\Model.h" />
     <ClInclude Include="src\Plane.h" />
     <ClInclude Include="src\Renderer.h" />
+    <ClInclude Include="src\Screen.h" />
     <ClInclude Include="src\Shader.h" />
     <ClInclude Include="src\test\LearnOpenGL\01_HelloTriangle.h" />
     <ClInclude Include="src\test\LearnOpenGL\02_Shader.h" />
