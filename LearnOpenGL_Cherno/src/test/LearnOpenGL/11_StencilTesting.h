@@ -2,7 +2,6 @@
 
 #include "CameraTest.h"
 #include "VertexArray.h"
-#include "VertexBufferLayout.h"
 #include "Camera.h"
 #include "Texture.h"
 #include "Cube.h"

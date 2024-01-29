@@ -157,6 +157,7 @@
     <ClCompile Include="src\test\LearnOpenGL\09_LoadingModel.cpp" />
     <ClCompile Include="src\test\LearnOpenGL\10_DepthTesting.cpp" />
     <ClCompile Include="src\test\LearnOpenGL\11_StencilTesting.cpp" />
+    <ClCompile Include="src\test\LearnOpenGL\12_Blending.cpp" />
     <ClCompile Include="src\test\LearnOpenGL\CameraTest.cpp" />
     <ClCompile Include="src\test\Test.cpp" />
     <ClCompile Include="src\test\TestBatchRender.cpp" />
@@ -345,6 +346,7 @@
     <ClInclude Include="src\test\LearnOpenGL\09_LoadingModel.h" />
     <ClInclude Include="src\test\LearnOpenGL\10_DepthTesting.h" />
     <ClInclude Include="src\test\LearnOpenGL\11_StencilTesting.h" />
+    <ClInclude Include="src\test\LearnOpenGL\12_Blending.h" />
     <ClInclude Include="src\test\LearnOpenGL\CameraTest.h" />
     <ClInclude Include="src\test\Test.h" />
     <ClInclude Include="src\test\TestBatchRender.h" />
