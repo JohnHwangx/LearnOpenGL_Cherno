@@ -4,10 +4,10 @@
 namespace Test {
 	Part4_DepthTesting::Part4_DepthTesting()
 	{
-		m_Cube = std::make_unique<Cube>();
-		m_Plane = std::make_unique<Plane>();
-
 		m_Shader = std::make_unique<Shader>("res/shader/Part4_DepthTesting.shader");
+
+		m_Cube = std::make_unique<Cube>(*(m_Shader.get()));
+		m_Plane = std::make_unique<Plane>(*(m_Shader.get()));
 
 		GLCall(glEnable(GL_DEPTH_TEST));
 	}
@@ -38,17 +38,17 @@ namespace Test {
 
 		glm::mat4 model = glm::mat4(1.0f);
 		model = glm::translate(model, glm::vec3(-1.0f, 0.0f, -1.0f));
-		m_Shader->SetUniformMat4f("u_Model", model);
-		m_Cube->Draw(*(m_Shader.get()));
+		m_Cube->SetTransform(model);
+		m_Cube->Draw();
 
 		model = glm::mat4(1.0f);
 		model = glm::translate(model, glm::vec3(2.0f, 0.0f, 0.0f));
-		m_Shader->SetUniformMat4f("u_Model", model);
-		m_Cube->Draw(*(m_Shader.get()));
+		m_Cube->SetTransform(model);
+		m_Cube->Draw();
 
 		model = glm::mat4(1.0f);
-		m_Shader->SetUniformMat4f("u_Model", model);
-		m_Plane->Draw(*(m_Shader.get()));
+		m_Plane->SetTransform(model);
+		m_Plane->Draw();
 	}
 
 	void Part4_DepthTesting::OnImGuiRender()

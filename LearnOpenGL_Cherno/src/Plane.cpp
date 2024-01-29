@@ -1,7 +1,7 @@
 #include "Plane.h"
 #include "VertexBufferLayout.h"
 
-Plane::Plane()
+Plane::Plane(Shader& shader)
 {
 	float planeVertices[] = {
 		// positions          // texture Coords (note we set these higher than 1 (together with GL_REPEAT as texture wrapping mode). this will cause the floor texture to repeat)
@@ -24,18 +24,26 @@ Plane::Plane()
 	m_VAO->AddBuffer(*m_VertexBuffer, layout);
 	m_IndexBUffer = std::make_unique<IndexBuffer>(planeIndex, 6);
 	m_Texture = std::make_unique<Texture>("res/textures/metal.png");
+
+	m_Shader = &shader;
+	m_Shader->Bind();
+	m_Shader->SetUniform1i("texture_diffuse1", 0);
 }
 
 Plane::~Plane()
 {
 }
 
-void Plane::Draw(Shader& shader)
+void Plane::Draw()
 {
-	shader.Bind();
-	shader.SetUniform1i("texture_diffuse1", 0);
-
 	m_Texture->Bind();
 	Renderer renderer;
-	renderer.DrawElement(*m_VAO, *m_IndexBUffer, shader);
+	renderer.DrawElement(*m_VAO, *m_IndexBUffer, *m_Shader);
+}
+
+
+void Plane::SetTransform(const glm::mat4& transform)
+{
+	m_Shader->Bind();
+	m_Shader->SetUniformMat4f("u_Model", transform);
 }

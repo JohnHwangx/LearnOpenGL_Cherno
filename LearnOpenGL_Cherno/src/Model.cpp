@@ -16,10 +16,21 @@ Model::~Model()
     }
 }
 
-void Model::Draw(Shader& shader)
+void Model::BindShader(Shader& shader)
+{
+    m_Shader = &shader;
+}
+
+void Model::SetTransform(const glm::mat4& transform)
+{
+    m_Shader->Bind();
+    m_Shader->SetUniformMat4f("u_Model", transform);
+}
+
+void Model::Draw()
 {
 	for (unsigned int i = 0; i < meshes.size(); i++)
-		meshes[i]->Draw(shader);
+		meshes[i]->Draw(*m_Shader);
 }
 
 void Model::loadModel(const std::string& path)

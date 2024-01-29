@@ -1,7 +1,7 @@
 #include "Cube.h"
 #include "VertexBufferLayout.h"
 
-Cube::Cube()
+Cube::Cube(Shader& shader)
 {
 	float vertices[] = {
 		//---- Î»ÖÃ ----		  // texCoords
@@ -65,18 +65,25 @@ Cube::Cube()
 	m_VAO->AddBuffer(*m_VertexBuffer, layout);
 	m_IndexBUffer = std::make_unique<IndexBuffer>(indices, 36);
 	m_Texture = std::make_unique<Texture>("res/textures/marble.jpg");
+
+	m_Shader = &shader;
+	m_Shader->Bind();
+	m_Shader->SetUniform1i("texture_diffuse1", 0);
 }
 
 Cube::~Cube()
 {
 }
 
-void Cube::Draw(Shader& shader)
+void Cube::Draw()
 {
-	shader.Bind();
-	shader.SetUniform1i("texture_diffuse1", 0);
-	
 	m_Texture->Bind();
 	Renderer renderer;
-	renderer.DrawElement(*m_VAO, *m_IndexBUffer, shader);
+	renderer.DrawElement(*m_VAO, *m_IndexBUffer, *m_Shader);
+}
+
+void Cube::SetTransform(const glm::mat4& transform)
+{
+	m_Shader->Bind();
+	m_Shader->SetUniformMat4f("u_Model", transform);
 }

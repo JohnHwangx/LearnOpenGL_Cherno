@@ -2,11 +2,12 @@
 namespace Test {
 	Part4_StencilTesting::Part4_StencilTesting()
 	{
-		m_Cube = std::make_unique<Cube>();
-		m_Plane = std::make_unique<Plane>();
-
 		m_Shader = std::make_unique<Shader>("res/shader/Part4_DepthTesting.shader");
 		m_StencilSingleShader = std::make_unique<Shader>("res/shader/Part4_StencilTesing_SingleColor.shader");
+
+		m_Cube = std::make_unique<Cube>(*(m_Shader.get()));
+		m_StencilCube = std::make_unique<Cube>(*(m_StencilSingleShader.get()));
+		m_Plane = std::make_unique<Plane>(*(m_Shader.get()));
 
 		GLCall(glEnable(GL_DEPTH_TEST));
 		GLCall(glDepthFunc(GL_LESS));
@@ -51,8 +52,9 @@ namespace Test {
 		// draw floor as normal, but don't write the floor to the stencil buffer, we only care about the containers. We set its mask to 0x00 to not write to the stencil buffer.
 		GLCall(glStencilMask(0x00));
 		// floor
-		m_Shader->SetUniformMat4f("u_Model", glm::mat4(1.0f));
-		m_Plane->Draw(*(m_Shader.get()));
+		//m_Shader->SetUniformMat4f("u_Model", glm::mat4(1.0f));
+		m_Plane->SetTransform(glm::mat4(1.0f));
+		m_Plane->Draw();
 
 		// 1st. render pass, draw objects as normal, writing to the stencil buffer
 		// --------------------------------------------------------------------
@@ -61,13 +63,13 @@ namespace Test {
 
 		// cubes
 		model = glm::translate(model, glm::vec3(-1.0f, 0.0f, -1.0f));
-		m_Shader->SetUniformMat4f("u_Model", model);
-		m_Cube->Draw(*(m_Shader.get()));
+		m_Cube->SetTransform(model);
+		m_Cube->Draw();
 
 		model = glm::mat4(1.0f);
 		model = glm::translate(model, glm::vec3(2.0f, 0.0f, 0.0f));
-		m_Shader->SetUniformMat4f("u_Model", model);
-		m_Cube->Draw(*(m_Shader.get()));
+		m_Cube->SetTransform(model);
+		m_Cube->Draw();
 
 		// 2nd. render pass: now draw slightly scaled versions of the objects, this time disabling stencil writing.
 		// Because the stencil buffer is now filled with several 1s. The parts of the buffer that are 1 are not drawn, thus only drawing 
@@ -85,14 +87,14 @@ namespace Test {
 		model = glm::mat4(1.0f);
 		model = glm::translate(model, glm::vec3(-1.0f, 0.0f, -1.0f));
 		model = glm::scale(model, glm::vec3(scale, scale, scale));
-		m_StencilSingleShader->SetUniformMat4f("u_Model", model);
-		m_Cube->Draw(*(m_StencilSingleShader.get()));
+		m_StencilCube->SetTransform(model);
+		m_StencilCube->Draw();
 
 		model = glm::mat4(1.0f);
 		model = glm::translate(model, glm::vec3(2.0f, 0.0f, 0.0f));
 		model = glm::scale(model, glm::vec3(scale, scale, scale));
-		m_StencilSingleShader->SetUniformMat4f("u_Model", model);
-		m_Cube->Draw(*(m_StencilSingleShader.get()));
+		m_StencilCube->SetTransform(model);
+		m_StencilCube->Draw();
 
 		GLCall(glStencilMask(0xFF));
 		GLCall(glStencilFunc(GL_ALWAYS, 0, 0xFF));

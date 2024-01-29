@@ -13,10 +13,11 @@ namespace Test{
 		glm::vec3 modelCenter = m_Model->m_BBox.GetCenter();
 		m_Camera = std::make_unique<Camera>(glm::vec3(0.0f, 0.0f, 3.0f));
 
-		m_Shader->Bind();
+		m_Model->BindShader(*(m_Shader.get()));
+
 		glm::mat4 model = glm::mat4(1.0f);
 		model = glm::translate(model, -modelCenter);
-		m_Shader->SetUniformMat4f("u_Model", model);
+		m_Model->SetTransform(model);
 	}
 
 	Part3_LoadingModel::~Part3_LoadingModel()
@@ -43,7 +44,7 @@ namespace Test{
 		//m_Shader->SetUniformMat4f("u_Model", model);
 		m_Shader->SetUniformMat4f("u_View", view);
 		m_Shader->SetUniformMat4f("u_Projection", projection);
-		m_Model->Draw(*(m_Shader.get()));
+		m_Model->Draw();
 	}
 
 	void Part3_LoadingModel::OnImGuiRender()
