@@ -1,4 +1,5 @@
 #include "12_Blending.h"
+#include <map>
 
 namespace Test {
 
@@ -8,9 +9,12 @@ namespace Test {
 
 		m_Cube = std::make_unique<Cube>(*(m_Shader.get()));
 		m_Plane = std::make_unique<Plane>(*(m_Shader.get()));
-		m_Transparent = std::make_unique<Transparent>(*(m_Shader.get()));
+		m_Grass = std::make_unique<Transparent>("res/textures/grass.png", *(m_Shader.get()));
+		m_Window = std::make_unique<Transparent>("res/textures/window.png" , *(m_Shader.get()));
 
 		GLCall(glEnable(GL_DEPTH_TEST));
+		GLCall(glEnable(GL_BLEND));
+		GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 	}
 
 	Part4_Blending::~Part4_Blending()
@@ -58,8 +62,23 @@ namespace Test {
 		{
 			model = glm::mat4(1.0f);
 			model = glm::translate(model, vegetation[i]);
-			m_Transparent->SetTransform(model);
-			m_Transparent->Draw();
+			m_Grass->SetTransform(model);
+			m_Grass->Draw();
+		}
+
+		std::map<float, glm::vec3> sorted;
+		for (unsigned int i = 0; i < windows.size(); i++)
+		{
+			float distance = glm::length(m_Camera->GetPosition() - windows[i]);
+			sorted[distance] = windows[i];
+		}
+
+		for (std::map<float, glm::vec3>::reverse_iterator it = sorted.rbegin(); it != sorted.rend(); ++it)
+		{
+			model = glm::mat4(1.0f);
+			model = glm::translate(model, it->second);
+			m_Window->SetTransform(model);
+			m_Window->Draw();
 		}
 	}
 

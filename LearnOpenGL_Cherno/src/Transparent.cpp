@@ -2,7 +2,7 @@
 
 #include "VertexBufferLayout.h"
 
-Transparent::Transparent(Shader& shader)
+Transparent::Transparent(const std::string& texturepath, Shader& shader)
 {
 	float transparentVertices[] = {
 		// positions          // texture Coords (note we set these higher than 1 (together with GL_REPEAT as texture wrapping mode). this will cause the floor texture to repeat)
@@ -24,7 +24,7 @@ Transparent::Transparent(Shader& shader)
 	layout.Push<float>(2);
 	m_VAO->AddBuffer(*m_VertexBuffer, layout);
 	m_IndexBUffer = std::make_unique<IndexBuffer>(transparentIndex, 6);
-	m_Texture = std::make_unique<Texture>("res/textures/grass.png");
+	m_Texture = std::make_unique<Texture>(texturepath);
 
 	m_Shader = &shader;
 	m_Shader->Bind();

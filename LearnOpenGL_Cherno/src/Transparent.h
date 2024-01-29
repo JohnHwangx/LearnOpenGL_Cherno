@@ -7,7 +7,7 @@
 class Transparent
 {
 public:
-	Transparent(Shader& shader);
+	Transparent(const std::string& texturepath, Shader& shader);
 	~Transparent();
 
 	void Draw();

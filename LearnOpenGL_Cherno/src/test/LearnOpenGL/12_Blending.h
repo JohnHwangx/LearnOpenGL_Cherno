@@ -23,7 +23,8 @@ namespace Test {
 	private:
 		std::unique_ptr<Cube> m_Cube;
 		std::unique_ptr<Plane> m_Plane;
-		std::unique_ptr<Transparent> m_Transparent;
+		std::unique_ptr<Transparent> m_Grass;
+		std::unique_ptr<Transparent> m_Window;
 		std::unique_ptr<Shader> m_Shader;
 
 		// transparent vegetation locations
@@ -35,6 +36,14 @@ namespace Test {
 			glm::vec3(0.0f, 0.0f, 0.7f),
 			glm::vec3(-0.3f, 0.0f, -2.3f),
 			glm::vec3(0.5f, 0.0f, -0.6f)
+		};
+		std::vector<glm::vec3> windows
+		{
+			glm::vec3(-1.5f, 0.0f, -0.43f),
+			glm::vec3(1.5f, 0.0f, 0.55f),
+			glm::vec3(0.0f, 0.0f, 0.3f),
+			glm::vec3(-0.3f, 0.0f, -2.6f),
+			glm::vec3(0.5f, 0.0f, -0.3f)
 		};
 	};
 }
