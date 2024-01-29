@@ -31,6 +31,17 @@ Texture::Texture(const std::string& path)
 		stbi_image_free(m_LocalBuffer);
 }
 
+Texture::Texture(const unsigned int width, const unsigned int height)
+	:m_Width(width), m_Height(height)
+{
+	GLCall(glGenTextures(1, &m_RendererId));
+	GLCall(glBindTexture(GL_TEXTURE_2D, m_RendererId));
+	GLCall(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, m_Width, m_Height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL));
+	GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
+	GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
+	GLCall(glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_RendererId, 0));
+}
+
 Texture::~Texture()
 {
 	GLCall(glDeleteTextures(1, &m_RendererId));
@@ -60,6 +71,11 @@ void Texture::SetTextureMinFilter(unsigned int minFilter) const
 void Texture::Bind(unsigned int slot) const
 {
 	GLCall(glActiveTexture(GL_TEXTURE0 + slot));
+	GLCall(glBindTexture(GL_TEXTURE_2D, m_RendererId));
+}
+
+void Texture::ScreenBind() const
+{
 	GLCall(glBindTexture(GL_TEXTURE_2D, m_RendererId));
 }
 

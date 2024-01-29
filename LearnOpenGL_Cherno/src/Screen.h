@@ -7,12 +7,13 @@
 class Screen
 {
 public:
-	Screen(Shader& shader, const unsigned int textureId);
+	Screen(Shader& shader, Texture& texture);
 	~Screen();
 
 	void Draw();
 private:
-	unsigned int m_TextureId;
+	//unsigned int m_TextureId;
+	Texture* m_Texture;
 	Shader* m_Shader;
 	std::unique_ptr<VertexArray> m_VAO;
 	std::unique_ptr<VertexBuffer> m_VertexBuffer;

@@ -1,8 +1,8 @@
 #include "Screen.h"
 #include "VertexBufferLayout.h"
 
-Screen::Screen(Shader& shader, const unsigned int textureId)
-    :m_TextureId(textureId)
+Screen::Screen(Shader& shader, Texture& texture)
+    //:m_TextureId(textureId)
 {
     float quadVertices[] = { // vertex attributes for a quad that fills the entire screen in Normalized Device Coordinates. NOTE that this plane is now much smaller and at the top of the screen
         // positions   // texCoords
@@ -28,6 +28,8 @@ Screen::Screen(Shader& shader, const unsigned int textureId)
     m_Shader = &shader;
     m_Shader->Bind();
     m_Shader->SetUniform1i("screenTexture", 0);
+
+    m_Texture = &texture;
 }
 
 Screen::~Screen()
@@ -36,7 +38,8 @@ Screen::~Screen()
 
 void Screen::Draw()
 {
-    GLCall(glBindTexture(GL_TEXTURE_2D, m_TextureId));
+    //GLCall(glBindTexture(GL_TEXTURE_2D, m_TextureId));
+    m_Texture->ScreenBind();
     Renderer renderer;
     renderer.DrawElement(*m_VAO, *m_IndexBUffer, *m_Shader);
 }

@@ -11,6 +11,7 @@ private:
 	std::string m_Type;
 public:
 	Texture(const std::string& path);
+	Texture(const unsigned int width, const unsigned int height);
 	~Texture();
 
 	void SetType(const std::string& type);
@@ -19,6 +20,7 @@ public:
 	void SetTextureMinFilter(unsigned int) const;
 
 	void Bind(unsigned int slot = 0) const;
+	void ScreenBind() const;
 	void BindUnit(unsigned int slot = 0) const;
 	void Unbind();
 

@@ -11,7 +11,7 @@ namespace Test {
 
 		m_Framebuffer = std::make_unique<Framebuffer>(1200, 800);
 
-		m_Screen = std::make_unique<Screen>(*(m_ScreenShader.get()), m_Framebuffer->GetTextureId());
+		m_Screen = std::make_unique<Screen>(*(m_ScreenShader.get()), *(m_Framebuffer->GetTexture()));
 
 		//GLCall(glEnable(GL_DEPTH_TEST));
 	}

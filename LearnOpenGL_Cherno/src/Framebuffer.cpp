@@ -11,13 +11,7 @@ Framebuffer::Framebuffer(const unsigned int width, const unsigned int height)
     GLCall(glBindFramebuffer(GL_FRAMEBUFFER, m_RendererID));
 
     // create a color attachment texture
-    //unsigned int textureColorbuffer;
-    GLCall(glGenTextures(1, &m_TextureID));
-    GLCall(glBindTexture(GL_TEXTURE_2D, m_TextureID));
-    GLCall(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, m_Width, m_Height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL));
-    GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
-    GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
-    GLCall(glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_TextureID, 0));
+    m_Texture = std::make_unique<Texture>(m_Width, m_Height);
 
     // create a renderbuffer object for depth and stencil attachment (we won't be sampling these)
     unsigned int rbo;
