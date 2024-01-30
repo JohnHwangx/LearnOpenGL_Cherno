@@ -10,9 +10,13 @@ private:
 	int m_Width, m_Height, m_BPP;
 	std::string m_Type;
 public:
+	Texture();
 	Texture(const std::string& path);
-	Texture(const unsigned int width, const unsigned int height);
 	~Texture();
+
+	void BindImage(const std::string& path);
+	void BindEmpth(unsigned int width, unsigned int height);
+	void BindDepth(unsigned int width, unsigned int height);
 
 	void SetType(const std::string& type);
 	void SetTextureWrap(unsigned int) const;

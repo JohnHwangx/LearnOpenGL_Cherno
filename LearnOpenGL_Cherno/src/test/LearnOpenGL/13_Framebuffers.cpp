@@ -12,8 +12,8 @@ namespace Test {
 		m_BlurShader = std::make_unique<Shader>("res/shader/Part4_PostProcessings/Part4_PostProcessing_Blur.shader");
 		m_EdgeDetectionShader = std::make_unique<Shader>("res/shader/Part4_PostProcessings/Part4_PostProcessing_EdgeDetection.shader");
 
-		m_Cube = std::make_unique<Cube>(*(m_Shader.get()));
-		m_Plane = std::make_unique<Plane>(*(m_Shader.get()));
+		m_Cube = std::make_unique<Cube>("res/textures/container.jpg", *(m_Shader.get()));
+		m_Plane = std::make_unique<Plane>("res/textures/metal.png", *(m_Shader.get()));
 
 		m_Framebuffer = std::make_unique<Framebuffer>(1200, 800);
 

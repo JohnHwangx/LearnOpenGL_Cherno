@@ -30,6 +30,7 @@
 #include "test/LearnOpenGL/11_StencilTesting.h"
 #include "test/LearnOpenGL/12_Blending.h"
 #include "test/LearnOpenGL/13_Framebuffers.h"
+#include "test/LearnOpenGL/14_ShadowMapping.h"
 
 int main(void)
 {
@@ -93,6 +94,7 @@ int main(void)
 		testMenu->RegisterTest<Test::Part4_StencilTesting>("Part4: Stencil Testing");
 		testMenu->RegisterTest<Test::Part4_Blending>("Part4: Blending");
 		testMenu->RegisterTest<Test::Part4_FrameBuffer>("Part4: Framebuffers");
+		testMenu->RegisterTest<Test::Part5_ShadowMapping>("Part4: Shadow Mapping");
 
 		/* Loop until the user closes the window */
 		while (!glfwWindowShouldClose(window))

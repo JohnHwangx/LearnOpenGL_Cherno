@@ -8,6 +8,8 @@ class Plane
 {
 public:
 	Plane(Shader& shader);
+	Plane(const std::string& texturePath, Shader& shader);
+	Plane(float width, const std::string& texturePath, Shader& shader);
 	~Plane();
 
 	void Draw();

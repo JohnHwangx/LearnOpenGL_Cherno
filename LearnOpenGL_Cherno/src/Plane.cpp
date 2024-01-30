@@ -30,6 +30,65 @@ Plane::Plane(Shader& shader)
 	m_Shader->SetUniform1i("texture_diffuse1", 0);
 }
 
+Plane::Plane(const std::string& texturePath, Shader& shader)
+{
+	float planeVertices[] = {
+		// positions          // texture Coords (note we set these higher than 1 (together with GL_REPEAT as texture wrapping mode). this will cause the floor texture to repeat)
+		 5.0f, -0.5f,  5.0f,  2.0f, 0.0f,
+		-5.0f, -0.5f,  5.0f,  0.0f, 0.0f,
+		-5.0f, -0.5f, -5.0f,  0.0f, 2.0f,
+		 5.0f, -0.5f, -5.0f,  2.0f, 2.0f
+	};
+
+	unsigned int planeIndex[] = {
+		0, 1, 2,
+		0, 2, 3,
+	};
+
+	m_VAO = std::make_unique<VertexArray>();
+	m_VertexBuffer = std::make_unique<VertexBuffer>(planeVertices, sizeof(float) * (3 + 2) * 4 * 6);
+	VertexBufferLayout layout;
+	layout.Push<float>(3);
+	layout.Push<float>(2);
+	m_VAO->AddBuffer(*m_VertexBuffer, layout);
+	m_IndexBUffer = std::make_unique<IndexBuffer>(planeIndex, 6);
+	m_Texture = std::make_unique<Texture>(texturePath);
+
+	m_Shader = &shader;
+	m_Shader->Bind();
+	m_Shader->SetUniform1i("texture_diffuse1", 0);
+}
+
+Plane::Plane(float width, const std::string& texturePath, Shader& shader)
+{
+	float planeVertices[] = {
+		// positions								// texture Coords
+		 width, -width,  width,  0.0f, 1.0f, 0.0f,  2.0f, 0.0f,
+		-width, -width,  width,  0.0f, 1.0f, 0.0f,  0.0f, 0.0f,
+		-width, -width, -width,  0.0f, 1.0f, 0.0f,  0.0f, 2.0f,
+		 width, -width, -width,  0.0f, 1.0f, 0.0f,  2.0f, 2.0f
+	};
+
+	unsigned int planeIndex[] = {
+		0, 1, 2,
+		0, 2, 3,
+	};
+
+	m_VAO = std::make_unique<VertexArray>();
+	m_VertexBuffer = std::make_unique<VertexBuffer>(planeVertices, sizeof(float) * (3 + 3 + 2) * 4 * 6);
+	VertexBufferLayout layout;
+	layout.Push<float>(3);
+	layout.Push<float>(3);
+	layout.Push<float>(2);
+	m_VAO->AddBuffer(*m_VertexBuffer, layout);
+	m_IndexBUffer = std::make_unique<IndexBuffer>(planeIndex, 6);
+	m_Texture = std::make_unique<Texture>(texturePath);
+
+	m_Shader = &shader;
+	m_Shader->Bind();
+	m_Shader->SetUniform1i("texture_diffuse1", 0);
+}
+
 Plane::~Plane()
 {
 }

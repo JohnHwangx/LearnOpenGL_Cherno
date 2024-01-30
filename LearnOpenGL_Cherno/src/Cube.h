@@ -8,6 +8,8 @@ class Cube
 {
 public:
 	Cube(Shader& shader);
+	Cube(const std::string& texturePath, Shader& shader);
+	Cube(float width, const std::string& texturePath, Shader& shader);
 	~Cube();
 
 	void Draw();
