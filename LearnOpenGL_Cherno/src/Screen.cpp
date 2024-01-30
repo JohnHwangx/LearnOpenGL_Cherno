@@ -1,7 +1,7 @@
 #include "Screen.h"
 #include "VertexBufferLayout.h"
 
-Screen::Screen(Shader& shader, Texture& texture)
+Screen::Screen(Texture& texture)
     //:m_TextureId(textureId)
 {
     float quadVertices[] = { // vertex attributes for a quad that fills the entire screen in Normalized Device Coordinates. NOTE that this plane is now much smaller and at the top of the screen
@@ -25,10 +25,6 @@ Screen::Screen(Shader& shader, Texture& texture)
     m_VAO->AddBuffer(*m_VertexBuffer, layout);
     m_IndexBUffer = std::make_unique<IndexBuffer>(quadIndices, 6);
 
-    m_Shader = &shader;
-    m_Shader->Bind();
-    m_Shader->SetUniform1i("screenTexture", 0);
-
     m_Texture = &texture;
 }
 
@@ -42,4 +38,11 @@ void Screen::Draw()
     m_Texture->ScreenBind();
     Renderer renderer;
     renderer.DrawElement(*m_VAO, *m_IndexBUffer, *m_Shader);
+}
+
+void Screen::BindShader(Shader& shader)
+{
+    m_Shader = &shader;
+    m_Shader->Bind();
+    m_Shader->SetUniform1i("screenTexture", 0);
 }

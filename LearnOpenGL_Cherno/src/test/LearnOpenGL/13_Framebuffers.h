@@ -28,8 +28,14 @@ namespace Test {
 		std::unique_ptr<Transparent> m_Grass;
 		std::unique_ptr<Transparent> m_Window;
 		std::unique_ptr<Screen> m_Screen;
+
 		std::unique_ptr<Shader> m_Shader;
 		std::unique_ptr<Shader> m_ScreenShader;
+		std::unique_ptr<Shader> m_InversionShader;
+		std::unique_ptr<Shader> m_GrayscaleShader;
+		std::unique_ptr<Shader> m_SharpenShader;
+		std::unique_ptr<Shader> m_BlurShader;
+		std::unique_ptr<Shader> m_EdgeDetectionShader;
 		std::unique_ptr<Framebuffer> m_Framebuffer;
 	};
 }

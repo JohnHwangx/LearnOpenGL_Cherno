@@ -7,10 +7,12 @@
 class Screen
 {
 public:
-	Screen(Shader& shader, Texture& texture);
+	Screen(Texture& texture);
 	~Screen();
 
 	void Draw();
+
+	void BindShader(Shader& shader);
 private:
 	//unsigned int m_TextureId;
 	Texture* m_Texture;
