@@ -8,7 +8,7 @@ namespace Test {
 		m_DebugDepthQuadShader = std::make_unique<Shader>("res/shader/Part5_ShadowMapping_DebugQuad.shader");
 
 		m_Cube = std::make_unique<Cube>(1.0f, "res/textures/container.jpg", *(m_SimpleDepthShader.get()));
-		m_Plane = std::make_unique<Plane>(25.0f, "res/textures/wood.png", *(m_DebugDepthQuadShader.get()));
+		m_Plane = std::make_unique<Plane>(25.0f, "res/textures/wood.png", *(m_SimpleDepthShader.get()));
 
 		m_Framebuffer = std::make_unique<Framebuffer>();
 		m_Framebuffer->MakeDepthFramebuffer(1024, 1024);
