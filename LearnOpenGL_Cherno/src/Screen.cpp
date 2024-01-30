@@ -2,14 +2,13 @@
 #include "VertexBufferLayout.h"
 
 Screen::Screen(Texture& texture)
-    //:m_TextureId(textureId)
 {
     float quadVertices[] = { // vertex attributes for a quad that fills the entire screen in Normalized Device Coordinates. NOTE that this plane is now much smaller and at the top of the screen
         // positions   // texCoords
-        -0.8f,  0.8f,  0.0f, 1.0f,
-        -0.8f, -0.8f,  0.0f, 0.0f,
-         0.8f, -0.8f,  1.0f, 0.0f,
-         0.8f,  0.8f,  1.0f, 1.0f
+        -1.0f,  1.0f,  0.0f, 1.0f,
+        -1.0f, -1.0f,  0.0f, 0.0f,
+         1.0f, -1.0f,  1.0f, 0.0f,
+         1.0f,  1.0f,  1.0f, 1.0f
     };
 
     unsigned int quadIndices[] = {

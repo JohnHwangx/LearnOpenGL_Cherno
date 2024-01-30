@@ -63,10 +63,10 @@ Plane::Plane(float width, const std::string& texturePath, Shader& shader)
 {
 	float planeVertices[] = {
 		// positions								// texture Coords
-		 width, -width,  width,  0.0f, 1.0f, 0.0f,  2.0f, 0.0f,
-		-width, -width,  width,  0.0f, 1.0f, 0.0f,  0.0f, 0.0f,
-		-width, -width, -width,  0.0f, 1.0f, 0.0f,  0.0f, 2.0f,
-		 width, -width, -width,  0.0f, 1.0f, 0.0f,  2.0f, 2.0f
+		 width, -0.5f,  width,  0.0f, 1.0f, 0.0f,  width, 0.0f,
+		-width, -0.5f,  width,  0.0f, 1.0f, 0.0f,  0.0f, 0.0f,
+		-width, -0.5f, -width,  0.0f, 1.0f, 0.0f,  0.0f, width,
+		 width, -0.5f, -width,  0.0f, 1.0f, 0.0f,  width, width
 	};
 
 	unsigned int planeIndex[] = {

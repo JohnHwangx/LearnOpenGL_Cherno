@@ -4,11 +4,11 @@
 layout(location = 0) in vec3 aPos;
 
 uniform mat4 lightSpaceMatrix;
-uniform mat4 model;
+uniform mat4 u_Model;
 
 void main()
 {
-    gl_Position = lightSpaceMatrix * model * vec4(aPos, 1.0);
+    gl_Position = lightSpaceMatrix * u_Model * vec4(aPos, 1.0);
 }
 
 #shader fragment
@@ -17,4 +17,5 @@ void main()
 void main()
 {
     // gl_FragDepth = gl_FragCoord.z;
+    //FragColor = vec4(1.0, 0.0, 0.0, 1.0);
 }
