@@ -17,6 +17,7 @@ namespace Test {
 		m_Screen = std::make_unique<Screen>(*(m_Framebuffer->GetTexture()));
 		m_Screen->BindShader(*(m_DebugDepthQuadShader.get()));
 		GLCall(glEnable(GL_DEPTH_TEST));
+		m_IsOthor = true;
 	}
 
 	Part5_ShadowMapping::~Part5_ShadowMapping()
@@ -31,29 +32,22 @@ namespace Test {
 	{
 		GLCall(glClearColor(0.1f, 0.1f, 0.1f, 1.0f));
 		GLCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
-
-		/*glm::mat4 view = m_Camera->GetViewMatrix();
+		float near_plane = -30.0f, far_plane = 100.0f;
+		glm::mat4 view = m_Camera->GetViewMatrix();
 		if (m_IsOthor)
 			view = glm::scale(view, glm::vec3(m_Distance));
 
 		glm::mat4 projection(1.0f);
 		if (m_IsOthor)
-			projection = glm::ortho(-15.0f, 15.0f, -10.0f, 10.0f, -30.0f, 1000.0f);
+			projection = glm::ortho(-15.0f, 15.0f, -10.0f, 10.0f, near_plane, far_plane);
 		else
-			projection = glm::perspective(glm::radians(45.0f), 1200.0f / 800.0f, 0.1f, 100.0f);
+			projection = glm::perspective(glm::radians(45.0f), 1200.0f / 800.0f, near_plane, near_plane);
 
 		m_SimpleDepthShader->Bind();
 		m_SimpleDepthShader->SetUniformMat4f("u_View", view);
-		m_SimpleDepthShader->SetUniformMat4f("u_Projection", projection);*/
+		m_SimpleDepthShader->SetUniformMat4f("u_Projection", projection);
 
-		//glm::mat4 lightSpaceMatrix = projection * view;
-		glm::vec3 lightPos(-2.0f, 4.0f, -1.0f);
-		glm::mat4 lightProjection, lightView;
-		glm::mat4 lightSpaceMatrix;
-		float near_plane = 1.0f, far_plane = 7.5f;
-		lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, near_plane, far_plane);
-		lightView = glm::lookAt(lightPos, glm::vec3(0.0f), glm::vec3(0.0, 1.0, 0.0));
-		lightSpaceMatrix = lightProjection * lightView;
+		glm::mat4 lightSpaceMatrix = projection * view;
 		m_SimpleDepthShader->Bind();
 		m_SimpleDepthShader->SetUniformMat4f("lightSpaceMatrix", lightSpaceMatrix);
 
