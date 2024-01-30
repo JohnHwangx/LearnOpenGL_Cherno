@@ -12,6 +12,7 @@ Framebuffer::Framebuffer(const unsigned int width, const unsigned int height)
 
     // create a color attachment texture
     m_Texture = std::make_unique<Texture>(m_Width, m_Height);
+    GLCall(glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_Texture->GetRendererId(), 0));
 
     // create a renderbuffer object for depth and stencil attachment (we won't be sampling these)
     unsigned int rbo;
