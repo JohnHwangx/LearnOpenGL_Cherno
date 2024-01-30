@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include "Texture.h"
+#include "Renderbuffer.h"
 
 class Framebuffer
 {
@@ -17,4 +18,5 @@ private:
 	unsigned int m_Width, m_Height;
 
 	std::unique_ptr<Texture> m_Texture;
+	std::unique_ptr<Renderbuffer> m_Renderbuffer;
 };
