@@ -159,6 +159,9 @@
     <ClCompile Include="src\test\LearnOpenGL\14_ShadowMapping.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\geometries\Geometry.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shader\Basic.shader" />
@@ -1591,6 +1594,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\test\LearnOpenGL\14_ShadowMapping.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\geometries\Geometry.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
