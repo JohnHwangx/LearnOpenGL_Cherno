@@ -13,6 +13,7 @@ public:
 	void Unbind() const;
 
 	void MakeDepthFramebuffer(const unsigned int width, const unsigned int height);
+	void BindTexture();
 
 	inline Texture* GetTexture() { return m_Texture.get(); }
 

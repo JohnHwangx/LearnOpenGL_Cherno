@@ -8,11 +8,13 @@ class Cube
 {
 public:
 	Cube(Shader& shader);
+	Cube(float width, const std::string& texturePath);
 	Cube(const std::string& texturePath, Shader& shader);
 	Cube(float width, const std::string& texturePath, Shader& shader);
 	~Cube();
 
 	void Draw();
+	void BindShader(Shader& shader);
 	void SetTransform(const glm::mat4& transform);
 private:
 	Shader* m_Shader;

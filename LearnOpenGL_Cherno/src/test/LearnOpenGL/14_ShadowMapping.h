@@ -22,12 +22,18 @@ namespace Test {
 		void OnImGuiRender() override;
 
 	private:
+		void DrawScene(Shader& shader);
+
+	private:
 		std::unique_ptr<Cube> m_Cube;
 		std::unique_ptr<Plane> m_Plane;
 		std::unique_ptr<Screen> m_Screen;
 
+		std::unique_ptr<Shader> m_Shader;
 		std::unique_ptr<Shader> m_SimpleDepthShader;
 		std::unique_ptr<Shader> m_DebugDepthQuadShader;
 		std::unique_ptr<Framebuffer> m_Framebuffer;
+
+		glm::vec3 m_LightPos = glm::vec3(-2.0f, 4.0f, -1.0f);
 	};
 }

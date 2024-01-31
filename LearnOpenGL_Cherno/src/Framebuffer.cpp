@@ -50,6 +50,11 @@ void Framebuffer::MakeDepthFramebuffer(const unsigned int width, const unsigned 
     GLCall(glBindFramebuffer(GL_FRAMEBUFFER, 0));
 }
 
+void Framebuffer::BindTexture()
+{
+    m_Texture->Bind();
+}
+
 void Framebuffer::Bind() const
 {
     GLCall(glBindFramebuffer(GL_FRAMEBUFFER, m_RendererID));

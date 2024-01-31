@@ -34,7 +34,8 @@ Screen::~Screen()
 void Screen::Draw()
 {
     //GLCall(glBindTexture(GL_TEXTURE_2D, m_TextureId));
-    m_Texture->ScreenBind();
+    //m_Texture->ScreenBind();
+    m_Texture->Bind();
     Renderer renderer;
     renderer.DrawElement(*m_VAO, *m_IndexBUffer, *m_Shader);
 }

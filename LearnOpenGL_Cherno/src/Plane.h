@@ -9,10 +9,12 @@ class Plane
 public:
 	Plane(Shader& shader);
 	Plane(const std::string& texturePath, Shader& shader);
+	Plane(float width, const std::string& texturePath);
 	Plane(float width, const std::string& texturePath, Shader& shader);
 	~Plane();
 
 	void Draw();
+	void BindShader(Shader& shader);
 	void SetTransform(const glm::mat4& transform);
 private:
 	Shader* m_Shader;
