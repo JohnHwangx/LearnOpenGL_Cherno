@@ -162,6 +162,12 @@
     <ClCompile Include="src\geometries\Geometry.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\GLAttribState.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GLMeshBase.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shader\Basic.shader" />
@@ -1597,6 +1603,12 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\geometries\Geometry.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GLAttribState.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GLMeshBase.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
