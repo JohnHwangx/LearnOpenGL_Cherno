@@ -74,7 +74,6 @@ namespace Test {
 		m_Shader->SetUniform3fv("lightPos", m_LightPos);
 		m_Shader->SetUniformMat4f("lightSpaceMatrix", lightSpaceMatrix);
 
-		//m_Framebuffer->BindTexture();
 		DrawScene(*(m_Shader.get()));
 
 		m_DebugDepthQuadShader->Bind();
