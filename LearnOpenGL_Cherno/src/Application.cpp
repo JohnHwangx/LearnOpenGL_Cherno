@@ -31,6 +31,7 @@
 #include "test/LearnOpenGL/12_Blending.h"
 #include "test/LearnOpenGL/13_Framebuffers.h"
 #include "test/LearnOpenGL/14_ShadowMapping.h"
+#include "test/TestCube2.h"
 
 int main(void)
 {
@@ -80,6 +81,7 @@ int main(void)
 		testMenu->RegisterTest<Test::TestTexture2D>("2D Texture");
 		testMenu->RegisterTest<Test::TestBatchRender>("Batch Render");
 		testMenu->RegisterTest<Test::TestDynamicGeometry>("Dynamic Geometry");
+		testMenu->RegisterTest<Test::TestCube2>("Cube2");
 		testMenu->RegisterTest<Test::Part1_HelloTriangle>("Part1: Hello Triangle");
 		testMenu->RegisterTest<Test::Part1_Shader>("Part1: Shader");
 		testMenu->RegisterTest<Test::Part1_Shader_Interpolation>("Part1: Shader Interpolation");
@@ -94,7 +96,7 @@ int main(void)
 		testMenu->RegisterTest<Test::Part4_StencilTesting>("Part4: Stencil Testing");
 		testMenu->RegisterTest<Test::Part4_Blending>("Part4: Blending");
 		testMenu->RegisterTest<Test::Part4_FrameBuffer>("Part4: Framebuffers");
-		testMenu->RegisterTest<Test::Part5_ShadowMapping>("Part4: Shadow Mapping");
+		testMenu->RegisterTest<Test::Part5_ShadowMapping>("Part5: Shadow Mapping");
 
 		/* Loop until the user closes the window */
 		while (!glfwWindowShouldClose(window))

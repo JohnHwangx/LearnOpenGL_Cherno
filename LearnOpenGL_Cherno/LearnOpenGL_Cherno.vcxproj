@@ -135,6 +135,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Application.cpp" />
+    <ClCompile Include="src\geometries\Cube2.cpp" />
+    <ClCompile Include="src\geometries\GeometryData.cpp" />
     <ClCompile Include="src\GLAttribState.cpp" />
     <ClCompile Include="src\BasicMaterial.cpp" />
     <ClCompile Include="src\Camera.cpp" />
@@ -142,6 +144,7 @@
     <ClCompile Include="src\Framebuffer.cpp" />
     <ClCompile Include="src\geometries\Geometry.cpp" />
     <ClCompile Include="src\GLMeshBase.cpp" />
+    <ClCompile Include="src\GLStaticMesh.cpp" />
     <ClCompile Include="src\IndexBuffer.cpp" />
     <ClCompile Include="src\Light.cpp" />
     <ClCompile Include="src\Mesh.cpp" />
@@ -169,6 +172,7 @@
     <ClCompile Include="src\test\Test.cpp" />
     <ClCompile Include="src\test\TestBatchRender.cpp" />
     <ClCompile Include="src\test\TestClearColor.cpp" />
+    <ClCompile Include="src\test\TestCube2.cpp" />
     <ClCompile Include="src\test\TestDynamicGeometry.cpp" />
     <ClCompile Include="src\test\TestTexture2D.cpp" />
     <ClCompile Include="src\Texture.cpp" />
@@ -192,6 +196,7 @@
     <None Include="res\shader\Part1_Shader_Interpolation.shader" />
     <None Include="res\shader\Part1_Simple.shader" />
     <None Include="res\shader\Part1_Textures.shader" />
+    <None Include="res\shader\Test\TextureShader.shader" />
     <None Include="src\vendor\glm\detail\func_common.inl" />
     <None Include="src\vendor\glm\detail\func_common_simd.inl" />
     <None Include="src\vendor\glm\detail\func_exponential.inl" />
@@ -333,6 +338,8 @@
     <None Include="src\vendor\glm\gtx\wrap.inl" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\geometries\Cube2.h" />
+    <ClInclude Include="src\geometries\GeometryData.h" />
     <ClInclude Include="src\GLAttribState.h" />
     <ClInclude Include="src\BasicMaterial.h" />
     <ClInclude Include="src\Camera.h" />
@@ -340,6 +347,7 @@
     <ClInclude Include="src\Framebuffer.h" />
     <ClInclude Include="src\geometries\Geometry.h" />
     <ClInclude Include="src\GLMeshBase.h" />
+    <ClInclude Include="src\GLStaticMesh.h" />
     <ClInclude Include="src\IndexBuffer.h" />
     <ClInclude Include="src\Light.h" />
     <ClInclude Include="src\Mesh.h" />
@@ -367,6 +375,7 @@
     <ClInclude Include="src\test\Test.h" />
     <ClInclude Include="src\test\TestBatchRender.h" />
     <ClInclude Include="src\test\TestClearColor.h" />
+    <ClInclude Include="src\test\TestCube2.h" />
     <ClInclude Include="src\test\TestDynamicGeometry.h" />
     <ClInclude Include="src\test\TestTexture2D.h" />
     <ClInclude Include="src\Texture.h" />
