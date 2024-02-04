@@ -22,7 +22,9 @@ namespace Blaze {
 
 		unsigned int vertexCount = m_Positions.size();
 		const unsigned int bufferLength = stride * vertexCount;
-		float* buffer = new float[bufferLength]();
+
+		unsigned int bufferSize = GLAttribState::GetVertexBufferSize(bits, vertexCount);
+		float* buffer = new float[bufferSize]();
 		for (size_t i = 0; i < vertexCount; i++)
 		{
 			unsigned int j = i * step;

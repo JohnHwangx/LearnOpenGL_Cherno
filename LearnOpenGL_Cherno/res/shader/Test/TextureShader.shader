@@ -1,13 +1,13 @@
 #shader vertex
 #version 330 core
 layout (location = 0) in vec3 aPosition;
-layout (location = 2) in vec2 aTexCoord;
+//layout (location = 1) in vec2 aTexCoord;
 
 out vec2 TexCoords;
 
 void main()
 {
-    TexCoords = aTexCoord;
+    //TexCoords = aTexCoord;
     gl_Position = vec4(aPosition, 1.0);
 }
 
@@ -15,8 +15,8 @@ void main()
 #version 330 core
 out vec4 FragColor;
 
-in vec2 TexCoords;
-uniform sampler2D uTexture;
+//in vec2 TexCoords;
+//uniform sampler2D uTexture;
 
 void main()
 {

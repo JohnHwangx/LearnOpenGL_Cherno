@@ -168,6 +168,21 @@
     <ClCompile Include="src\GLMeshBase.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\geometries\Cube2.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\geometries\GeometryData.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GLStaticMesh.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\test\TestCube2.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\geometries\Triangle.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shader\Basic.shader" />
@@ -592,6 +607,7 @@
     <None Include="res\shader\Part1_Shader.shader" />
     <None Include="res\shader\Part1_Shader_Interpolation.shader" />
     <None Include="res\shader\Part1_Textures.shader" />
+    <None Include="res\shader\Test\TextureShader.shader" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Renderer.h">
@@ -1609,6 +1625,21 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\GLMeshBase.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\geometries\Cube2.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\geometries\GeometryData.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GLStaticMesh.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\test\TestCube2.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\geometries\Triangle.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,7 +1,7 @@
 #include "GLAttribState.h"
 #include "Renderer.h"
 
-char GLAttribState::MakeVertexAttribs(bool useTexcoord0, bool useTexcoord1, bool useNormal, bool useTangent, bool useColor)
+char GLAttribState::MakeVertexAttribs(const bool useTexcoord0, const bool useTexcoord1, const bool useNormal, const bool useTangent, const bool useColor)
 {
 	char bits = GLAttribState::POSITION_BIT;
 
@@ -24,37 +24,62 @@ char GLAttribState::MakeVertexAttribs(bool useTexcoord0, bool useTexcoord1, bool
 	return bits;
 }
 
-bool GLAttribState::hasPosition(char attribBits)
+bool GLAttribState::hasPosition(const char attribBits)
 {
     return (attribBits & GLAttribState::POSITION_BIT) != 0;
 }
 
-bool GLAttribState::hasNormal(char attribBits)
+bool GLAttribState::hasNormal(const char attribBits)
 {
     return (attribBits & GLAttribState::NORMAL_BIT) != 0;
 }
 
-bool GLAttribState::hasTexCoord_0(char attribBits)
+bool GLAttribState::hasTexCoord_0(const char attribBits)
 {
     return (attribBits & GLAttribState::TEXCOORD_BIT) != 0;
 }
 
-bool GLAttribState::hasTexCoord_1(char attribBits)
+bool GLAttribState::hasTexCoord_1(const char attribBits)
 {
     return (attribBits & GLAttribState::TEXCOORD1_BIT) != 0;
 }
 
-bool GLAttribState::hasColor(char attribBits)
+bool GLAttribState::hasColor(const char attribBits)
 {
     return (attribBits & GLAttribState::COLOR_BIT) != 0;
 }
 
-bool GLAttribState::hasTangent(char attribBits)
+bool GLAttribState::hasTangent(const char attribBits)
 {
     return (attribBits & GLAttribState::TANGENT_BIT) != 0;
 }
 
-char GLAttribState::GetVertexByteStride(char attribBits)
+unsigned int GLAttribState::GetVertexBufferSize(const char attribBits, const unsigned int vertexCount)
+{
+    unsigned int bufferSize = 0;
+
+    if (GLAttribState::hasPosition(attribBits))
+        bufferSize += GLAttribState::POSITION_COMPONENT;
+
+    if (GLAttribState::hasNormal(attribBits))
+        bufferSize += GLAttribState::NORMAL_COMPONENT;
+
+    if (GLAttribState::hasTexCoord_0(attribBits))
+        bufferSize += GLAttribState::TEXCOORD_COMPONENT;
+
+    if (GLAttribState::hasTexCoord_1(attribBits))
+        bufferSize += GLAttribState::TEXCOORD1_COMPONENT;
+
+    if (GLAttribState::hasColor(attribBits))
+        bufferSize += GLAttribState::COLOR_COMPONENT;
+
+    if (GLAttribState::hasTangent(attribBits))
+        bufferSize += GLAttribState::TANGENT_COMPONENT;
+
+    return bufferSize * vertexCount;
+}
+
+char GLAttribState::GetVertexByteStride(const char attribBits)
 {
     char byteOffset = 0;
     if (GLAttribState::hasPosition(attribBits))
@@ -78,7 +103,7 @@ char GLAttribState::GetVertexByteStride(char attribBits)
     return byteOffset;
 }
 
-GLAttribOffsetMap GLAttribState::GetInterleavedLayoutAttribOffsetMap(char attribBits)
+GLAttribOffsetMap GLAttribState::GetInterleavedLayoutAttribOffsetMap(const char attribBits)
 {
     GLAttribOffsetMap offsets;
     unsigned int byteOffset = 0;
@@ -121,7 +146,7 @@ GLAttribOffsetMap GLAttribState::GetInterleavedLayoutAttribOffsetMap(char attrib
     return offsets;
 }
 
-void GLAttribState::SetAttribVertexArrayPointer(GLAttribOffsetMap offsetMap)
+void GLAttribState::SetAttribVertexArrayPointer(GLAttribOffsetMap& offsetMap)
 {
     unsigned int stride = offsetMap[GLAttribState::ATTRIBSTRIDE];
     if (stride == 0)
@@ -198,7 +223,7 @@ void GLAttribState::SetAttribVertexArrayPointer(GLAttribOffsetMap offsetMap)
     }
 }
 
-void GLAttribState::SetAttribVertexArrayState(char attribBits, bool enable)
+void GLAttribState::SetAttribVertexArrayState(const char attribBits, const bool enable)
 {
     if (GLAttribState::hasPosition(attribBits))
         if (enable)

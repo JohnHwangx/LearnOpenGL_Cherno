@@ -45,21 +45,22 @@ public:
 	constexpr static const char* ATTRIBSTRIDE = "STRIDE";
 	constexpr static const char* ATTRIBBYTELENGTH = "BYTELENGTH";
 
-	static char MakeVertexAttribs(bool useTexcoord0,
-		bool useTexcoord1,
-		bool useNormal,
-		bool useTangent,
-		bool useColor);
+	static char MakeVertexAttribs(const bool useTexcoord0,
+		const bool useTexcoord1,
+		const bool useNormal,
+		const bool useTangent,
+		const bool useColor);
 
-	static bool hasPosition(char attribBits);
-	static bool hasNormal(char attribBits);
-	static bool hasTexCoord_0(char attribBits);
-	static bool hasTexCoord_1(char attribBits);
-	static bool hasColor(char attribBits);
-	static bool hasTangent(char attribBits);
+	static bool hasPosition(const char attribBits);
+	static bool hasNormal(const char attribBits);
+	static bool hasTexCoord_0(const char attribBits);
+	static bool hasTexCoord_1(const char attribBits);
+	static bool hasColor(const char attribBits);
+	static bool hasTangent(const char attribBits);
 
-	static char GetVertexByteStride(char attribBits);
-	static GLAttribOffsetMap GetInterleavedLayoutAttribOffsetMap(char attribBits);
-	static void SetAttribVertexArrayPointer(GLAttribOffsetMap offsetMap);
-	static void SetAttribVertexArrayState(char attribBits, bool enable = true);
+	static unsigned int GetVertexBufferSize(const char attribBits, const unsigned int vertexCount);
+	static char GetVertexByteStride(const char attribBits);
+	static GLAttribOffsetMap GetInterleavedLayoutAttribOffsetMap(const char attribBits);
+	static void SetAttribVertexArrayPointer(GLAttribOffsetMap& offsetMap);
+	static void SetAttribVertexArrayState(const char attribBits, const  bool enable = true);
 };

@@ -1,15 +1,17 @@
 #include "GLStaticMesh.h"
 #include "Renderer.h"
 
-GLStaticMesh::GLStaticMesh(char attribBits, const void* vertices,unsigned int vertexSize, const void* indices, unsigned int count, char drawMode)
-	:GLMeshBase(attribBits, drawMode),m_VertCount(vertexSize), m_IndexCount(count)
+GLStaticMesh::GLStaticMesh(char attribBits, const void* vertices, unsigned int vertexCount, const void* indices, unsigned int count, char drawMode)
+	:GLMeshBase(attribBits, drawMode),m_VertCount(vertexCount), m_IndexCount(count)
 {
+	unsigned int vbSize = GLAttribState::GetVertexBufferSize(attribBits, vertexCount);
+
 	Bind();
 	GLCall(glGenBuffers(1, &m_VBO));
 	GLCall(glBindBuffer(GL_ARRAY_BUFFER, m_VBO));//…Ë÷√◊¥Ã¨
-	GLCall(glBufferData(GL_ARRAY_BUFFER, vertexSize, vertices, GL_STATIC_DRAW));
+	GLCall(glBufferData(GL_ARRAY_BUFFER, vbSize * sizeof(float), vertices, GL_STATIC_DRAW));
 
-	GLAttribOffsetMap offsetMap =GLAttribState::GetInterleavedLayoutAttribOffsetMap(attribBits);
+	GLAttribOffsetMap offsetMap = GLAttribState::GetInterleavedLayoutAttribOffsetMap(attribBits);
 	GLAttribState::SetAttribVertexArrayPointer(offsetMap);
 	GLAttribState::SetAttribVertexArrayState(m_AttriBits);
 
@@ -25,7 +27,7 @@ void GLStaticMesh::Draw()
 	Bind();
 	if (m_IBO)
 	{
-		GLCall(glDrawElements(m_Mode, m_IndexCount, GL_UNSIGNED_SHORT, 0));
+		GLCall(glDrawElements(m_Mode, m_IndexCount, GL_UNSIGNED_INT, 0));
 	}
 	else
 	{
