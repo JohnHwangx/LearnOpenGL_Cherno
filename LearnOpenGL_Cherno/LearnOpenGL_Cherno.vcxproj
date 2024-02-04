@@ -137,6 +137,7 @@
     <ClCompile Include="src\Application.cpp" />
     <ClCompile Include="src\Blaze\Cube2.cpp" />
     <ClCompile Include="src\Blaze\GeometryData.cpp" />
+    <ClCompile Include="src\Blaze\Plane2.cpp" />
     <ClCompile Include="src\Blaze\Triangle.cpp" />
     <ClCompile Include="src\Blaze\GLAttribState.cpp" />
     <ClCompile Include="src\BasicMaterial.cpp" />
@@ -341,6 +342,7 @@
   <ItemGroup>
     <ClInclude Include="src\Blaze\Cube2.h" />
     <ClInclude Include="src\Blaze\GeometryData.h" />
+    <ClInclude Include="src\Blaze\Plane2.h" />
     <ClInclude Include="src\Blaze\Triangle.h" />
     <ClInclude Include="src\Blaze\GLAttribState.h" />
     <ClInclude Include="src\BasicMaterial.h" />

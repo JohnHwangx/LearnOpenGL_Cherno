@@ -1,10 +1,12 @@
 #include "CameraTest.h"
+#include "Renderer.h"
 #include "imgui/imgui.h"
 
 namespace Test {
 	CameraTest::CameraTest()
 	{
-		m_Camera = std::make_unique<Camera>(glm::vec3(0.0f, 0.0f, 10.0f));
+		m_Camera = std::make_unique<Camera>(glm::vec3(0.0f, 0.0f, 3.0f));
+		GLCall(glEnable(GL_DEPTH_TEST));
 	}
 
 	CameraTest::~CameraTest()

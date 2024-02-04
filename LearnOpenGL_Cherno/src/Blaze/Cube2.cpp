@@ -2,29 +2,29 @@
 
 namespace Blaze {
 
-	Cube2::Cube2(float width, float height, float depth)
-		:m_Width(width), m_Height(height), m_Depth(depth)
+	Cube::Cube(const float width, const float height, const float depth, const std::string& texturePath)
+		:Geometry(texturePath), m_Width(width), m_Height(height), m_Depth(depth)
 	{
 		Blaze::GeometryData* data = MakeGeometryData();
-		m_CubeVAO.reset(data->MakeStaticVAO());
+		m_CubeVAO.reset(data->MakeStaticVAO(true));
 	}
 
-	Cube2::~Cube2()
+	Cube::~Cube()
 	{
 	}
 
 	/*
-				   /3--------/7
-				  / |       / |
-				 /  |      /  |
-				1---------5   |
-				|  /2- - -|- -6
-				| /       |  /
-				|/        | /
-				0---------4/
+		   /3--------/7
+		  / |       / |
+		 /  |      /  |
+		1---------5   |
+		|  /2- - -|- -6
+		| /       |  /
+		|/        | /
+		0---------4/
 
 	*/
-	GeometryData* Cube2::MakeGeometryData()
+	GeometryData* Cube::MakeGeometryData()
 	{
 		float halfWidth = m_Width / 2.0f;
 		float halfHeight = m_Height / 2.0f;
@@ -32,43 +32,124 @@ namespace Blaze {
 
 		GeometryData* data = new GeometryData();
 		//0
-		data->m_Positions.push_back({ -halfWidth, -halfHeight, halfDepth });
-		data->m_TexCoords.push_back({ 1, 0 });
-		//1
-		data->m_Positions.push_back({ -halfWidth, halfHeight, halfDepth });
-		data->m_TexCoords.push_back({ 1, 1 });
-		//2
 		data->m_Positions.push_back({ -halfWidth, -halfHeight, -halfDepth });
-		data->m_TexCoords.push_back({ 0, 0 });
-		//3
+		data->m_Positions.push_back({ -halfWidth,  halfHeight, -halfDepth });
+		data->m_Positions.push_back({  halfWidth, -halfHeight, -halfDepth });
+		data->m_Positions.push_back({  halfWidth,  halfHeight, -halfDepth });
+		data->m_Normals.push_back({ 0.0f,  0.0f, -1.0f });
+		data->m_Normals.push_back({ 0.0f,  0.0f, -1.0f });
+		data->m_Normals.push_back({ 0.0f,  0.0f, -1.0f });
+		data->m_Normals.push_back({ 0.0f,  0.0f, -1.0f });
+		data->m_Colors.push_back({ 1.0f, 0.0f, 0.0f, 1.0f });
+		data->m_Colors.push_back({ 0.0f, 1.0f, 0.0f, 1.0f });
+		data->m_Colors.push_back({ 0.0f, 0.0f, 1.0f, 1.0f });
+		data->m_Colors.push_back({ 1.0f, 1.0f, 0.0f, 1.0f });
+		data->m_TexCoords.push_back({ 0.0f,  0.0f });
+		data->m_TexCoords.push_back({ 0.0f,  1.0f });
+		data->m_TexCoords.push_back({ 1.0f,  0.0f });
+		data->m_TexCoords.push_back({ 1.0f,  1.0f });
+		//1
+		data->m_Positions.push_back({ -halfWidth, -halfHeight,  halfDepth });
+		data->m_Positions.push_back({  halfWidth, -halfHeight,  halfDepth });
+		data->m_Positions.push_back({ -halfWidth,  halfHeight,  halfDepth });
+		data->m_Positions.push_back({  halfWidth,  halfHeight,  halfDepth });
+		data->m_Normals.push_back({ 0.0f,  0.0f, 1.0f });
+		data->m_Normals.push_back({ 0.0f,  0.0f, 1.0f });
+		data->m_Normals.push_back({ 0.0f,  0.0f, 1.0f });
+		data->m_Normals.push_back({ 0.0f,  0.0f, 1.0f });
+		data->m_Colors.push_back({ 1.0f, 0.0f, 0.0f, 1.0f });
+		data->m_Colors.push_back({ 0.0f, 1.0f, 0.0f, 1.0f });
+		data->m_Colors.push_back({ 0.0f, 0.0f, 1.0f, 1.0f });
+		data->m_Colors.push_back({ 0.0f, 1.0f, 1.0f, 1.0f });
+		data->m_TexCoords.push_back({ 0.0f,  0.0f });
+		data->m_TexCoords.push_back({ 0.0f,  1.0f });
+		data->m_TexCoords.push_back({ 1.0f,  0.0f });
+		data->m_TexCoords.push_back({ 1.0f,  1.0f });
+		//2
 		data->m_Positions.push_back({ -halfWidth, halfHeight, -halfDepth });
-		data->m_TexCoords.push_back({ 0, 1 });
+		data->m_Positions.push_back({ -halfWidth, halfHeight,  halfDepth });
+		data->m_Positions.push_back({  halfWidth, halfHeight, -halfDepth });
+		data->m_Positions.push_back({  halfWidth, halfHeight,  halfDepth });
+		data->m_Normals.push_back({ 0.0f, 1.0f,  0.0f });
+		data->m_Normals.push_back({ 0.0f, 1.0f,  0.0f });
+		data->m_Normals.push_back({ 0.0f, 1.0f,  0.0f });
+		data->m_Normals.push_back({ 0.0f, 1.0f,  0.0f });
+		data->m_Colors.push_back({ 1.0f, 0.0f, 0.0f, 1.0f });
+		data->m_Colors.push_back({ 0.0f, 1.0f, 0.0f, 1.0f });
+		data->m_Colors.push_back({ 0.0f, 0.0f, 1.0f, 1.0f });
+		data->m_Colors.push_back({ 1.0f, 0.0f, 1.0f, 1.0f });
+		data->m_TexCoords.push_back({ 0.0f,  0.0f });
+		data->m_TexCoords.push_back({ 0.0f,  1.0f });
+		data->m_TexCoords.push_back({ 1.0f,  0.0f });
+		data->m_TexCoords.push_back({ 1.0f,  1.0f });
+		//3
+		data->m_Positions.push_back({ -halfWidth, -halfHeight, -halfDepth });
+		data->m_Positions.push_back({  halfWidth, -halfHeight, -halfDepth });
+		data->m_Positions.push_back({ -halfWidth, -halfHeight,  halfDepth });
+		data->m_Positions.push_back({  halfWidth, -halfHeight,  halfDepth });
+		data->m_Normals.push_back({ 0.0f, -1.0f, 0.0f });
+		data->m_Normals.push_back({ 0.0f, -1.0f, 0.0f });
+		data->m_Normals.push_back({ 0.0f, -1.0f, 0.0f });
+		data->m_Normals.push_back({ 0.0f, -1.0f, 0.0f });
+		data->m_Colors.push_back({ 1.0f, 0.0f, 0.0f, 1.0f });
+		data->m_Colors.push_back({ 0.0f, 1.0f, 0.0f, 1.0f });
+		data->m_Colors.push_back({ 0.0f, 0.0f, 1.0f, 1.0f });
+		data->m_Colors.push_back({ 1.0f, 0.0f, 1.0f, 1.0f });
+		data->m_TexCoords.push_back({ 0.0f,  0.0f });
+		data->m_TexCoords.push_back({ 0.0f,  1.0f });
+		data->m_TexCoords.push_back({ 1.0f,  0.0f });
+		data->m_TexCoords.push_back({ 1.0f,  1.0f });
 		//4
-		data->m_Positions.push_back({ halfWidth, -halfHeight, halfDepth });
-		data->m_TexCoords.push_back({ 0, 0 });
+		data->m_Positions.push_back({ -halfWidth, -halfHeight, -halfDepth });
+		data->m_Positions.push_back({ -halfWidth, -halfHeight,  halfDepth });
+		data->m_Positions.push_back({ -halfWidth,  halfHeight, -halfDepth });
+		data->m_Positions.push_back({ -halfWidth,  halfHeight,  halfDepth });
+		data->m_Normals.push_back({ -1.0f, 0.0f, 0.0f });
+		data->m_Normals.push_back({ -1.0f, 0.0f, 0.0f });
+		data->m_Normals.push_back({ -1.0f, 0.0f, 0.0f });
+		data->m_Normals.push_back({ -1.0f, 0.0f, 0.0f });
+		data->m_Colors.push_back({ 1.0f, 0.0f, 0.0f, 1.0f });
+		data->m_Colors.push_back({ 0.0f, 1.0f, 0.0f, 1.0f });
+		data->m_Colors.push_back({ 0.0f, 0.0f, 1.0f, 1.0f });
+		data->m_Colors.push_back({ 1.0f, 1.0f, 0.0f, 1.0f });
+		data->m_TexCoords.push_back({ 0.0f,  0.0f });
+		data->m_TexCoords.push_back({ 0.0f,  1.0f });
+		data->m_TexCoords.push_back({ 1.0f,  0.0f });
+		data->m_TexCoords.push_back({ 1.0f,  1.0f });
 		//5
-		data->m_Positions.push_back({ halfWidth, halfHeight, halfDepth });
-		data->m_TexCoords.push_back({ 0, 1 });
-		//6
 		data->m_Positions.push_back({ halfWidth, -halfHeight, -halfDepth });
-		data->m_TexCoords.push_back({ 1, 0 });
-		//7
-		data->m_Positions.push_back({ halfWidth, halfHeight, -halfDepth });
-		data->m_TexCoords.push_back({ 1, 1 });
+		data->m_Positions.push_back({ halfWidth,  halfHeight, -halfDepth });
+		data->m_Positions.push_back({ halfWidth, -halfHeight,  halfDepth });
+		data->m_Positions.push_back({ halfWidth,  halfHeight,  halfDepth });
+		data->m_Normals.push_back({ 1.0f, 0.0f, 0.0f });
+		data->m_Normals.push_back({ 1.0f, 0.0f, 0.0f });
+		data->m_Normals.push_back({ 1.0f, 0.0f, 0.0f });
+		data->m_Normals.push_back({ 1.0f, 0.0f, 0.0f });
+		data->m_Colors.push_back({ 1.0f, 0.0f, 0.0f, 1.0f });
+		data->m_Colors.push_back({ 0.0f, 1.0f, 0.0f, 1.0f });
+		data->m_Colors.push_back({ 0.0f, 0.0f, 1.0f, 1.0f });
+		data->m_Colors.push_back({ 1.0f, 1.0f, 0.0f, 1.0f });
+		data->m_TexCoords.push_back({ 0.0f,  0.0f });
+		data->m_TexCoords.push_back({ 0.0f,  1.0f });
+		data->m_TexCoords.push_back({ 1.0f,  0.0f });
+		data->m_TexCoords.push_back({ 1.0f,  1.0f });
 
 		// 法线朝外
-		data->m_Indices = { 0, 1, 3, 0, 3, 2 }; // 左面
-		data->m_Indices.insert(data->m_Indices.end(), { 3, 7, 6, 3, 6, 2 }); // 后面
-		data->m_Indices.insert(data->m_Indices.end(), { 6, 7, 5, 6, 5, 4 }); // 右面
-		data->m_Indices.insert(data->m_Indices.end(), { 5, 1, 0, 5, 0, 4 }); // 前面
-		data->m_Indices.insert(data->m_Indices.end(), { 1, 5, 7, 1, 7, 3 }); // 上面
-		data->m_Indices.insert(data->m_Indices.end(), { 2, 6, 4, 2, 4, 0 }); // 下面
+		data->m_Indices = { 0, 1, 2, 1, 3, 2 }; // 左面
+		data->m_Indices.insert(data->m_Indices.end(), { 4, 5, 6, 5, 7, 6 }); // 后面
+		data->m_Indices.insert(data->m_Indices.end(), { 8, 9, 10, 9, 11, 10 }); // 右面
+		data->m_Indices.insert(data->m_Indices.end(), { 12, 13, 14, 13, 15, 14 }); // 前面
+		data->m_Indices.insert(data->m_Indices.end(), { 16, 17, 18, 17, 19, 18 }); // 上面
+		data->m_Indices.insert(data->m_Indices.end(), { 20, 21, 22, 21, 23, 22 }); // 下面
 
 		return data;
 	}
 
-	void Cube2::Draw()
+	void Cube::Draw()
 	{
+		if(HasTexture())
+			m_Texture->Bind();
+
 		m_CubeVAO->Draw();
 	}
 }

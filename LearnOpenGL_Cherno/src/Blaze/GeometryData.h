@@ -40,7 +40,7 @@ namespace Blaze {
 		GeometryData();
 		~GeometryData();
 
-		GLStaticMesh* MakeStaticVAO(bool needNormals = false, bool needUvs = true);
+		GLStaticMesh* MakeStaticVAO(bool needNormals = true, bool needUvs = true);
 		char GetAttribBits();
 	public:
 		//Vertex* m_Vertices;

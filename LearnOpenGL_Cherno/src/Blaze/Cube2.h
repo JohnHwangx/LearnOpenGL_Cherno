@@ -1,18 +1,21 @@
 #pragma once
 #include <iostream>
-#include "GeometryData.h"
+#include "Geometry.h"
+//#include "GeometryData.h"
 
 namespace Blaze {
 
-	class Cube2
+	class Cube: public Geometry
 	{
 	public:
-		Cube2(float width = 0.4f, float height = 0.4f, float depth = 0.4f);
-		~Cube2();
-
-		GeometryData* MakeGeometryData();
+		Cube(const float width = 0.4f, const float height = 0.4f, const float depth = 0.4f, const std::string& textirePath = "");
+		~Cube();
 
 		void Draw();
+
+	protected:
+		GeometryData* MakeGeometryData() override;
+
 	private:
 		float m_Width, m_Height, m_Depth;
 

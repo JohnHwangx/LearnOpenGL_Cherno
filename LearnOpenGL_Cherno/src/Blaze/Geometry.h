@@ -4,6 +4,7 @@
 #include "Shader.h"
 #include "Renderer.h"
 #include "Texture.h"
+#include "GeometryData.h"
 
 namespace Blaze {
 	class Geometry
@@ -17,13 +18,11 @@ namespace Blaze {
 		void SetTransform(const glm::mat4& transform);
 
 	protected:
-		void BindData(const float* vertices, const unsigned int* indices);
-	private:
+		virtual GeometryData* MakeGeometryData() = 0;
 
-		Shader* m_Shader;
-		std::unique_ptr<VertexArray> m_VAO;
-		std::unique_ptr<VertexBuffer> m_VertexBuffer;
-		std::unique_ptr<IndexBuffer> m_IndexBUffer;
+		inline bool HasTexture() const { return m_Texture->GetRendererId() != 0; }
+
+	protected:
 		std::unique_ptr<Texture> m_Texture;
 	};
 }

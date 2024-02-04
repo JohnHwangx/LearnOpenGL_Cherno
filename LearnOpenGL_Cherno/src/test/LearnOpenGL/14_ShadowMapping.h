@@ -3,8 +3,8 @@
 #include "VertexArray.h"
 #include "Camera.h"
 #include "Texture.h"
-#include "Cube.h"
-#include "Plane.h"
+#include "Blaze/Cube2.h"
+#include "Blaze/Plane2.h"
 #include "Transparent.h"
 #include "Framebuffer.h"
 #include "Screen.h"
@@ -25,8 +25,10 @@ namespace Test {
 		void DrawScene(Shader& shader);
 
 	private:
-		std::unique_ptr<Cube> m_Cube;
-		std::unique_ptr<Plane> m_Plane;
+		//std::unique_ptr<Cube> m_Cube;
+		//std::unique_ptr<Plane> m_Plane;
+		std::unique_ptr<Blaze::Cube> m_Cube;
+		std::unique_ptr<Blaze::Plane> m_Plane;
 		std::unique_ptr<Screen> m_Screen;
 
 		std::unique_ptr<Shader> m_Shader;

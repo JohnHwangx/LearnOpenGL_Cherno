@@ -1,14 +1,14 @@
 #shader vertex
 #version 330 core
 
-layout(location = 0) in vec3 aPos;
+layout(location = 0) in vec3 aPosition;
 
 uniform mat4 lightSpaceMatrix;
-uniform mat4 u_Model;
+uniform mat4 uModel;
 
 void main()
 {
-    gl_Position = lightSpaceMatrix * u_Model * vec4(aPos, 1.0);
+    gl_Position = lightSpaceMatrix * uModel * vec4(aPosition, 1.0);
 }
 
 #shader fragment

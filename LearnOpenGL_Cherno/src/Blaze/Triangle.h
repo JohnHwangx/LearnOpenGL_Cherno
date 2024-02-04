@@ -1,6 +1,7 @@
 #pragma once
 
 #include "GeometryData.h"
+#include <iostream>
 
 namespace Blaze {
 	class Triangle
@@ -8,7 +9,12 @@ namespace Blaze {
 	public:
 		Triangle();
 		~Triangle();
-		GeometryData* MakeGeometryData();
+		void Draw();
+
 	private:
+		GeometryData* MakeGeometryData();
+
+	private:
+		std::unique_ptr<GLStaticMesh> m_TriangleVAO;
 	};
 }

@@ -4,10 +4,19 @@ namespace Blaze {
 
 	Triangle::Triangle()
 	{
+		Blaze::GeometryData* data = MakeGeometryData();
+		m_TriangleVAO.reset(data->MakeStaticVAO());
 	}
+
 	Triangle::~Triangle()
 	{
 	}
+
+	void Triangle::Draw()
+	{
+		m_TriangleVAO->Draw();
+	}
+
 	GeometryData* Triangle::MakeGeometryData()
 	{
 		GeometryData* data = new GeometryData();

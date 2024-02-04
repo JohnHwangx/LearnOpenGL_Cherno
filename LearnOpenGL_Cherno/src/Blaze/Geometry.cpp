@@ -5,15 +5,11 @@ namespace Blaze {
 	Geometry::Geometry(const std::string& texturePath)
 	{
 		m_Texture = std::make_unique<Texture>(texturePath);
+
 	}
 
 	Geometry::~Geometry()
 	{
-	}
-
-	void Geometry::BindData(const float* vertices, const unsigned int* indices)
-	{
-
 	}
 
 	void Geometry::Draw()

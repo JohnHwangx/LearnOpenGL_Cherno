@@ -44,15 +44,16 @@ void Framebuffer::MakeDepthFramebuffer(const unsigned int width, const unsigned 
     // create a color attachment texture
     m_Texture = std::make_unique<Texture>();
     m_Texture->BindDepth(m_Width, m_Height);
+    GLCall(glBindFramebuffer(GL_FRAMEBUFFER, m_RendererID));
     GLCall(glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, m_Texture->GetRendererId(), 0));
     GLCall(glDrawBuffer(GL_NONE));
     GLCall(glReadBuffer(GL_NONE));
     GLCall(glBindFramebuffer(GL_FRAMEBUFFER, 0));
 }
 
-void Framebuffer::BindTexture()
+void Framebuffer::BindTexture(unsigned int slot)
 {
-    m_Texture->Bind();
+    m_Texture->Bind(slot);
 }
 
 void Framebuffer::Bind() const

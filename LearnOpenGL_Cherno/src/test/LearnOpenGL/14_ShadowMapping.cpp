@@ -6,16 +6,19 @@ namespace Test {
 	{
 		m_Shader = std::make_unique<Shader>("res/shader/Part5_ShadowMapping.shader");
 		m_SimpleDepthShader = std::make_unique<Shader>("res/shader/Part5_ShadowMappingDepth.shader");
-		m_DebugDepthQuadShader = std::make_unique<Shader>("res/shader/Part5_ShadowMapping_DebugQuad.shader");
+		//m_DebugDepthQuadShader = std::make_unique<Shader>("res/shader/Part5_ShadowMapping_DebugQuad.shader");
 
-		m_Cube = std::make_unique<Cube>(1.0f, "res/textures/container.jpg");
-		m_Plane = std::make_unique<Plane>(25.0f, "res/textures/wood.png");
+		m_Cube = std::make_unique<Blaze::Cube>(1.0f, 1.0f, 1.0f, "res/textures/wood.png");
+		m_Plane = std::make_unique<Blaze::Plane>(25.0f, 25.0f, "res/textures/wood.png");
 
 		m_Framebuffer = std::make_unique<Framebuffer>();
 		m_Framebuffer->MakeDepthFramebuffer(1024, 1024);
 
-		m_Screen = std::make_unique<Screen>(*(m_Framebuffer->GetTexture()));
-		m_Screen->BindShader(*(m_DebugDepthQuadShader.get()));
+		m_Shader->Bind();
+		m_Shader->SetUniform1i("uTexture", 0);
+		m_Shader->SetUniform1i("shadowMap", 1);
+		//m_Screen = std::make_unique<Screen>(*(m_Framebuffer->GetTexture()));
+		//m_Screen->BindShader(*(m_DebugDepthQuadShader.get()));
 		GLCall(glEnable(GL_DEPTH_TEST));
 		m_IsOthor = true;
 	}
@@ -67,43 +70,50 @@ namespace Test {
 			projection = glm::perspective(glm::radians(45.0f), 1200.0f / 800.0f, 0.1f, 150.0f);
 
 		m_Shader->Bind();
-		m_Shader->SetUniformMat4f("u_View", view);
-		m_Shader->SetUniformMat4f("u_Projection", projection);
+		m_Shader->SetUniformMat4f("uView", view);
+		m_Shader->SetUniformMat4f("uProjection", projection);
 		// set light uniforms
 		m_Shader->SetUniform3fv("viewPos", m_Camera->GetPosition());
 		m_Shader->SetUniform3fv("lightPos", m_LightPos);
 		m_Shader->SetUniformMat4f("lightSpaceMatrix", lightSpaceMatrix);
 
+		m_Framebuffer->BindTexture(1);
+
 		DrawScene(*(m_Shader.get()));
 
-		m_DebugDepthQuadShader->Bind();
+		/*m_DebugDepthQuadShader->Bind();
 		m_DebugDepthQuadShader->SetUniform1f("near_plane", near_plane);
-		m_DebugDepthQuadShader->SetUniform1f("far_plane", far_plane);
+		m_DebugDepthQuadShader->SetUniform1f("far_plane", far_plane);*/
 
 		//m_Screen->Draw();
 	}
 
 	void Part5_ShadowMapping::DrawScene(Shader& shader)
 	{
-		m_Cube->BindShader(shader);
-		m_Plane->BindShader(shader);
+		/*m_Cube->BindShader(shader);
+		m_Plane->BindShader(shader);*/
+		shader.Bind();
 
 		glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 1.5f, 0.0));
-		m_Cube->SetTransform(model);
+		//m_Cube->SetTransform(model);
+		shader.SetUniformMat4f("uModel", model);
 		m_Cube->Draw();
 
 		model = glm::translate(glm::mat4(1.0f), glm::vec3(2.0f, 0.0f, 1.0));
-		m_Cube->SetTransform(model);
+		//m_Cube->SetTransform(model);
+		shader.SetUniformMat4f("uModel", model);
 		m_Cube->Draw();
 
 		model = glm::translate(glm::mat4(1.0f), glm::vec3(-1.0f, 0.0f, 2.0));
 		model = glm::rotate(model, glm::radians(60.0f), glm::normalize(glm::vec3(1.0, 0.0, 1.0)));
-		model = glm::scale(model, glm::vec3(0.25));
-		m_Cube->SetTransform(model);
+		model = glm::scale(model, glm::vec3(0.5));
+		//m_Cube->SetTransform(model);
+		shader.SetUniformMat4f("uModel", model);
 		m_Cube->Draw();
 
-		model = glm::mat4(1.0f);
-		m_Plane->SetTransform(model);
+		model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, -0.5f, 0.0f));
+		//m_Plane->SetTransform(model);
+		shader.SetUniformMat4f("uModel", model);
 		m_Plane->Draw();
 	}
 

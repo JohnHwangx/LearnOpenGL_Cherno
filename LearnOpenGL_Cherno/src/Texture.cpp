@@ -13,6 +13,11 @@ Texture::Texture(const std::string& path)
 {
 	//stbi_set_flip_vertically_on_load(true);
 	m_LocalBuffer = stbi_load(path.c_str(), &m_Width, &m_Height, &m_BPP, 0);
+	if(m_LocalBuffer == nullptr)
+	{
+		stbi_image_free(m_LocalBuffer);
+		return;
+	}
 
 	GLCall(glGenTextures(1, &m_RendererId));
 	GLCall(glBindTexture(GL_TEXTURE_2D, m_RendererId));
@@ -34,8 +39,7 @@ Texture::Texture(const std::string& path)
 
 	GLCall(glBindTexture(GL_TEXTURE_2D, 0));
 
-	if (m_LocalBuffer)
-		stbi_image_free(m_LocalBuffer);
+	stbi_image_free(m_LocalBuffer);
 }
 
 Texture::~Texture()
@@ -92,6 +96,8 @@ void Texture::BindDepth(unsigned int width, unsigned int height)
 	GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST));
 	GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT));
 	GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT));
+	float borderColor[] = { 1.0, 1.0, 1.0, 1.0 };
+	GLCall(glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor));
 }
 
 void Texture::SetType(const std::string& type)
