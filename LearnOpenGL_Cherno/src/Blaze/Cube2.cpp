@@ -1,10 +1,12 @@
 #include "Cube2.h"
 
 namespace Blaze {
+
 	Cube2::Cube2(float width, float height, float depth)
 		:m_Width(width), m_Height(height), m_Depth(depth)
 	{
-
+		Blaze::GeometryData* data = MakeGeometryData();
+		m_CubeVAO.reset(data->MakeStaticVAO());
 	}
 
 	Cube2::~Cube2()
@@ -63,5 +65,10 @@ namespace Blaze {
 		data->m_Indices.insert(data->m_Indices.end(), { 2, 6, 4, 2, 4, 0 }); // ÏÂÃæ
 
 		return data;
+	}
+
+	void Cube2::Draw()
+	{
+		m_CubeVAO->Draw();
 	}
 }

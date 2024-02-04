@@ -1,6 +1,7 @@
 #include "Geometry.h"
 
 namespace Blaze {
+
 	Geometry::Geometry(const std::string& texturePath)
 	{
 		m_Texture = std::make_unique<Texture>(texturePath);

@@ -1,6 +1,7 @@
 #include "GeometryData.h"
 
 namespace Blaze {
+
 	GeometryData::GeometryData()
 	{
 	}

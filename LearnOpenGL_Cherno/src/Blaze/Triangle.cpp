@@ -1,6 +1,7 @@
 #include "Triangle.h"
 
 namespace Blaze {
+
 	Triangle::Triangle()
 	{
 	}

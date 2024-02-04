@@ -1,7 +1,9 @@
 #pragma once
+#include <iostream>
 #include "GeometryData.h"
 
 namespace Blaze {
+
 	class Cube2
 	{
 	public:
@@ -9,7 +11,11 @@ namespace Blaze {
 		~Cube2();
 
 		GeometryData* MakeGeometryData();
+
+		void Draw();
 	private:
 		float m_Width, m_Height, m_Depth;
+
+		std::unique_ptr<GLStaticMesh> m_CubeVAO;
 	};
 }

@@ -159,28 +159,28 @@
     <ClCompile Include="src\test\LearnOpenGL\14_ShadowMapping.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\geometries\Geometry.cpp">
+    <ClCompile Include="src\Blaze\Geometry.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\GLAttribState.cpp">
+    <ClCompile Include="src\Blaze\GLAttribState.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\GLMeshBase.cpp">
+    <ClCompile Include="src\Blaze\GLMeshBase.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\geometries\Cube2.cpp">
+    <ClCompile Include="src\Blaze\Cube2.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\geometries\GeometryData.cpp">
+    <ClCompile Include="src\Blaze\GeometryData.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\GLStaticMesh.cpp">
+    <ClCompile Include="src\Blaze\GLStaticMesh.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="src\test\TestCube2.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\geometries\Triangle.cpp">
+    <ClCompile Include="src\Blaze\Triangle.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1618,28 +1618,28 @@
     <ClInclude Include="src\test\LearnOpenGL\14_ShadowMapping.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="src\geometries\Geometry.h">
+    <ClInclude Include="src\Blaze\Geometry.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="src\GLAttribState.h">
+    <ClInclude Include="src\Blaze\GLAttribState.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="src\GLMeshBase.h">
+    <ClInclude Include="src\Blaze\GLMeshBase.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="src\geometries\Cube2.h">
+    <ClInclude Include="src\Blaze\Cube2.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="src\geometries\GeometryData.h">
+    <ClInclude Include="src\Blaze\GeometryData.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="src\GLStaticMesh.h">
+    <ClInclude Include="src\Blaze\GLStaticMesh.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\test\TestCube2.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="src\geometries\Triangle.h">
+    <ClInclude Include="src\Blaze\Triangle.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

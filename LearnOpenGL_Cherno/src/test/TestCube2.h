@@ -1,7 +1,7 @@
 #pragma once
 #include "Test.h"
-#include "geometries/Cube2.h"
-#include "geometries/Triangle.h"
+#include "Blaze/Cube2.h"
+#include "Blaze/Triangle.h"
 
 namespace Test {
 	class TestCube2 :public Test
@@ -17,7 +17,7 @@ namespace Test {
 		std::unique_ptr<Shader> m_Shader;
 		std::unique_ptr<Blaze::Cube2> m_Cube;
 		std::unique_ptr<Blaze::Triangle> m_Triangle;
-		std::unique_ptr<GLStaticMesh> m_CubeVAO;
-		std::unique_ptr<GLStaticMesh> m_TriangleVAO;
+		//std::unique_ptr<GLStaticMesh> m_CubeVAO;
+		std::unique_ptr<Blaze::GLStaticMesh> m_TriangleVAO;
 	};
 }

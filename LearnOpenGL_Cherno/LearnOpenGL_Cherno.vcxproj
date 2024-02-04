@@ -135,17 +135,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Application.cpp" />
-    <ClCompile Include="src\geometries\Cube2.cpp" />
-    <ClCompile Include="src\geometries\GeometryData.cpp" />
-    <ClCompile Include="src\geometries\Triangle.cpp" />
-    <ClCompile Include="src\GLAttribState.cpp" />
+    <ClCompile Include="src\Blaze\Cube2.cpp" />
+    <ClCompile Include="src\Blaze\GeometryData.cpp" />
+    <ClCompile Include="src\Blaze\Triangle.cpp" />
+    <ClCompile Include="src\Blaze\GLAttribState.cpp" />
     <ClCompile Include="src\BasicMaterial.cpp" />
     <ClCompile Include="src\Camera.cpp" />
     <ClCompile Include="src\Cube.cpp" />
     <ClCompile Include="src\Framebuffer.cpp" />
-    <ClCompile Include="src\geometries\Geometry.cpp" />
-    <ClCompile Include="src\GLMeshBase.cpp" />
-    <ClCompile Include="src\GLStaticMesh.cpp" />
+    <ClCompile Include="src\Blaze\Geometry.cpp" />
+    <ClCompile Include="src\Blaze\GLMeshBase.cpp" />
+    <ClCompile Include="src\Blaze\GLStaticMesh.cpp" />
     <ClCompile Include="src\IndexBuffer.cpp" />
     <ClCompile Include="src\Light.cpp" />
     <ClCompile Include="src\Mesh.cpp" />
@@ -339,17 +339,17 @@
     <None Include="src\vendor\glm\gtx\wrap.inl" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\geometries\Cube2.h" />
-    <ClInclude Include="src\geometries\GeometryData.h" />
-    <ClInclude Include="src\geometries\Triangle.h" />
-    <ClInclude Include="src\GLAttribState.h" />
+    <ClInclude Include="src\Blaze\Cube2.h" />
+    <ClInclude Include="src\Blaze\GeometryData.h" />
+    <ClInclude Include="src\Blaze\Triangle.h" />
+    <ClInclude Include="src\Blaze\GLAttribState.h" />
     <ClInclude Include="src\BasicMaterial.h" />
     <ClInclude Include="src\Camera.h" />
     <ClInclude Include="src\Cube.h" />
     <ClInclude Include="src\Framebuffer.h" />
-    <ClInclude Include="src\geometries\Geometry.h" />
-    <ClInclude Include="src\GLMeshBase.h" />
-    <ClInclude Include="src\GLStaticMesh.h" />
+    <ClInclude Include="src\Blaze\Geometry.h" />
+    <ClInclude Include="src\Blaze\GLMeshBase.h" />
+    <ClInclude Include="src\Blaze\GLStaticMesh.h" />
     <ClInclude Include="src\IndexBuffer.h" />
     <ClInclude Include="src\Light.h" />
     <ClInclude Include="src\Mesh.h" />
