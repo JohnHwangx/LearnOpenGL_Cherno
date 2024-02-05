@@ -1,4 +1,5 @@
 #include "14_ShadowMapping.h"
+#include "Blaze/GLTextureCache.h"
 
 namespace Test {
 
@@ -8,8 +9,12 @@ namespace Test {
 		m_SimpleDepthShader = std::make_unique<Shader>("res/shader/Part5_ShadowMappingDepth.shader");
 		//m_DebugDepthQuadShader = std::make_unique<Shader>("res/shader/Part5_ShadowMapping_DebugQuad.shader");
 
-		m_Cube = std::make_unique<Blaze::Cube>(1.0f, 1.0f, 1.0f, "res/textures/wood.png");
-		m_Plane = std::make_unique<Blaze::Plane>(25.0f, 25.0f, "res/textures/wood.png");
+		Blaze::GLTextureCache::Get().PrintName();
+
+		m_Texture = std::make_unique<Texture>("res/textures/wood.png");
+
+		m_Cube = std::make_unique<Blaze::Cube>(1.0f, 1.0f, 1.0f, m_Texture.get());
+		m_Plane = std::make_unique<Blaze::Plane>(25.0f, 25.0f, m_Texture.get());
 
 		m_Framebuffer = std::make_unique<Framebuffer>();
 		m_Framebuffer->MakeDepthFramebuffer(1024, 1024);

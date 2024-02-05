@@ -6,8 +6,11 @@ namespace Test {
 	{
 		m_Shader = std::make_unique<Shader>("res/shader/Test/TextureShader.shader");
 
-		m_Cube = std::make_unique<Blaze::Cube>(1.0f, 1.0f, 1.0f, "res/textures/container.jpg");
-		m_Plane = std::make_unique<Blaze::Plane>(10.0f, 10.0f, "res/textures/wood.png");
+		/*m_Texture = std::make_unique<Texture>("res/textures/wood.png");
+		m_Texture = std::make_unique<Texture>("res/textures/wood.png");*/
+
+		m_Cube = std::make_unique<Blaze::Cube>(1.0f, 1.0f, 1.0f);
+		m_Plane = std::make_unique<Blaze::Plane>(10.0f, 10.0f);
 
 		m_Shader->Bind();
 		m_Shader->SetUniform1i("uTexture", 0);

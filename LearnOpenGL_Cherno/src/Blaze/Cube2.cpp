@@ -2,8 +2,8 @@
 
 namespace Blaze {
 
-	Cube::Cube(const float width, const float height, const float depth, const std::string& texturePath)
-		:Geometry(texturePath), m_Width(width), m_Height(height), m_Depth(depth)
+	Cube::Cube(const float width, const float height, const float depth, const Texture* texture)
+		:Geometry(texture), m_Width(width), m_Height(height), m_Depth(depth)
 	{
 		Blaze::GeometryData* data = MakeGeometryData();
 		m_CubeVAO.reset(data->MakeStaticVAO(true));

@@ -31,6 +31,7 @@ namespace Test {
 		std::unique_ptr<Blaze::Plane> m_Plane;
 		std::unique_ptr<Screen> m_Screen;
 
+		std::unique_ptr<Texture> m_Texture;
 		std::unique_ptr<Shader> m_Shader;
 		std::unique_ptr<Shader> m_SimpleDepthShader;
 		std::unique_ptr<Shader> m_DebugDepthQuadShader;

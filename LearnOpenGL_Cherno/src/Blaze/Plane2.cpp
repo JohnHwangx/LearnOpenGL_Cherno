@@ -1,8 +1,8 @@
 #include "Plane2.h"
 
 namespace Blaze {
-	Plane::Plane(float width, float height, const std::string& texturePath)
-		:Geometry(texturePath), m_Width(width), m_Height(height)
+	Plane::Plane(float width, float height, const Texture* texture)
+		:Geometry(texture), m_Width(width), m_Height(height)
 	{
 		GeometryData* data = MakeGeometryData();
 		m_PlaneVAO.reset(data->MakeStaticVAO(true));

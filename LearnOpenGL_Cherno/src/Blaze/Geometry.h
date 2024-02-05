@@ -10,7 +10,7 @@ namespace Blaze {
 	class Geometry
 	{
 	public:
-		Geometry(const std::string& texturePath);
+		Geometry(const Texture* texture);
 		virtual ~Geometry();
 
 		void Draw();
@@ -20,9 +20,9 @@ namespace Blaze {
 	protected:
 		virtual GeometryData* MakeGeometryData() = 0;
 
-		inline bool HasTexture() const { return m_Texture->GetRendererId() != 0; }
+		inline bool HasTexture() const { return m_Texture != nullptr; }
 
 	protected:
-		std::unique_ptr<Texture> m_Texture;
+		const Texture* m_Texture;
 	};
 }

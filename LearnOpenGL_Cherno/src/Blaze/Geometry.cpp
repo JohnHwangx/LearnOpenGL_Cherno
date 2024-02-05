@@ -2,10 +2,9 @@
 
 namespace Blaze {
 
-	Geometry::Geometry(const std::string& texturePath)
+	Geometry::Geometry(const Texture* texture)
 	{
-		m_Texture = std::make_unique<Texture>(texturePath);
-
+		m_Texture = texture;
 	}
 
 	Geometry::~Geometry()

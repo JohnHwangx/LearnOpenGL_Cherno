@@ -8,7 +8,7 @@ namespace Blaze {
 	class Cube: public Geometry
 	{
 	public:
-		Cube(const float width = 0.4f, const float height = 0.4f, const float depth = 0.4f, const std::string& textirePath = "");
+		Cube(const float width = 0.4f, const float height = 0.4f, const float depth = 0.4f, const Texture* texture = nullptr);
 		~Cube();
 
 		void Draw();
