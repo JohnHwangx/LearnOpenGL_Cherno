@@ -4,3 +4,4 @@
 /.vs
 *.ini
 x64
+*.user
