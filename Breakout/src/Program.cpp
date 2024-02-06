@@ -21,7 +21,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 // The Width of the screen
 const unsigned int SCREEN_WIDTH = 1800;
 // The height of the screen
-const unsigned int SCREEN_HEIGHT = 1200;
+const unsigned int SCREEN_HEIGHT = 1000;
 
 Breakout::Game BreakoutApp(SCREEN_WIDTH, SCREEN_HEIGHT);
 

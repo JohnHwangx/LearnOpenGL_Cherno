@@ -3,6 +3,7 @@
 #include "ResourceManager.h"
 #include "SpriteRenderer.h"
 #include "BallObject.h"
+#include "ParticleGenerator.h"
 #include "glm/gtc/matrix_transform.hpp"
 
 namespace Breakout {
@@ -15,7 +16,8 @@ namespace Breakout {
 	// Game-related State data
 	SpriteRenderer* Renderer;
 	GameObject* Player;
-	BallObject* Ball;
+	BallObject* Ball; 
+	ParticleGenerator* Particles;
 
 	Game::Game(unsigned int width, unsigned int height)
 		: State(GAME_ACTIVE), Keys(), Width(width), Height(height)
@@ -32,16 +34,20 @@ namespace Breakout {
 	{
 		// 加载着色器
 		ResourceManager::LoadShader("res/shader/sprite.vs", "res/shader/sprite.fs", nullptr, "sprite");
+		ResourceManager::LoadShader("res/shader/particle.vs", "res/shader/particle.fs", nullptr, "particle");
 		// 配置着色器
 		glm::mat4 projection = glm::ortho(0.0f, static_cast<GLfloat>(this->Width),
 			static_cast<GLfloat>(this->Height), 0.0f, -1.0f, 1.0f);
 
 		ResourceManager::GetShader("sprite").Use().SetInteger("image", 0);
 		ResourceManager::GetShader("sprite").SetMatrix4("projection", projection);
+		ResourceManager::GetShader("particle").Use().SetInteger("sprite", 0);
+		ResourceManager::GetShader("particle").SetMatrix4("projection", projection);
 		// 设置专用于渲染的控制
 		Renderer = new SpriteRenderer(ResourceManager::GetShader("sprite"));
 		// 加载纹理
 		ResourceManager::LoadTexture("res/textures/awesomeface.png", GL_TRUE, "face");
+		ResourceManager::LoadTexture("res/textures/particle.png", GL_TRUE, "particle");
 
 		// 加载纹理
 		ResourceManager::LoadTexture("res/textures/background.jpg", GL_FALSE, "background");
@@ -66,6 +72,8 @@ namespace Breakout {
 
 		glm::vec2 ballPos = playerPos + glm::vec2(PLAYER_SIZE.x / 2 - BALL_RADIUS, -BALL_RADIUS * 2);
 		Ball = new BallObject(ballPos, BALL_RADIUS, INITIAL_BALL_VELOCITY, ResourceManager::GetTexture("face"));
+
+		Particles = new ParticleGenerator(ResourceManager::GetShader("particle"),ResourceManager::GetTexture("particle"), 500);
 	}
 
 	void Game::Update(float dt)
@@ -73,6 +81,8 @@ namespace Breakout {
 		Ball->Move(dt, this->Width);
 		// 检测碰撞
 		this->DoCollisions();
+		// update particles
+		Particles->Update(dt, *Ball, 2, glm::vec2(Ball->Radius / 2.0f));
 
 		if (Ball->Position.y >= this->Height) // 球是否接触底部边界？
 		{
@@ -125,7 +135,8 @@ namespace Breakout {
 			this->Levels[this->Level].Draw(*Renderer);
 			// draw player
 			Player->Draw(*Renderer);
-
+			// Draw particles   
+			Particles->Draw();
 			// draw ball
 			Ball->Draw(*Renderer);
 		}

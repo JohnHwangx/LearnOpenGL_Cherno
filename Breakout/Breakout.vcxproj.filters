@@ -930,6 +930,9 @@
     <ClInclude Include="src\BallObject.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="src\ParticleGenerator.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\vendor\glm\detail\glm.cpp">
@@ -984,6 +987,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="src\BallObject.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ParticleGenerator.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
