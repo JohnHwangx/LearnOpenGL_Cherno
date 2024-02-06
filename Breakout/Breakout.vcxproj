@@ -147,6 +147,7 @@
     <ClInclude Include="src\GameLevel.h" />
     <ClInclude Include="src\GameObject.h" />
     <ClInclude Include="src\ParticleGenerator.h" />
+    <ClInclude Include="src\PostProcessor.h" />
     <ClInclude Include="src\ResourceManager.h" />
     <ClInclude Include="src\Shader.h" />
     <ClInclude Include="src\SpriteRenderer.h" />
@@ -469,6 +470,7 @@
     <ClCompile Include="src\vendor\imgui\imgui_tables.cpp" />
     <ClCompile Include="src\vendor\imgui\imgui_widgets.cpp" />
     <ClCompile Include="src\vendor\stb_image\stb_image.cpp" />
+    <ClCompile Include="src\PostProcessor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shader\sprite.fs" />

@@ -4,6 +4,7 @@
 #include "SpriteRenderer.h"
 #include "BallObject.h"
 #include "ParticleGenerator.h"
+#include "PostProcessor.h"
 #include "glm/gtc/matrix_transform.hpp"
 
 namespace Breakout {
@@ -18,6 +19,9 @@ namespace Breakout {
 	GameObject* Player;
 	BallObject* Ball; 
 	ParticleGenerator* Particles;
+	PostProcessor* Effects;
+
+	float ShakeTime = 0.0f;
 
 	Game::Game(unsigned int width, unsigned int height)
 		: State(GAME_ACTIVE), Keys(), Width(width), Height(height)
@@ -27,7 +31,11 @@ namespace Breakout {
 
 	Game::~Game()
 	{
-
+		delete Renderer;
+		delete Player;
+		delete Ball;
+		delete Particles;
+		delete Effects;
 	}
 
 	void Game::Init()
@@ -35,6 +43,7 @@ namespace Breakout {
 		// 加载着色器
 		ResourceManager::LoadShader("res/shader/sprite.vs", "res/shader/sprite.fs", nullptr, "sprite");
 		ResourceManager::LoadShader("res/shader/particle.vs", "res/shader/particle.fs", nullptr, "particle");
+		ResourceManager::LoadShader("res/shader/postProcessing.vs", "res/shader/postProcessing.fs", nullptr, "postprocessing");
 		// 配置着色器
 		glm::mat4 projection = glm::ortho(0.0f, static_cast<GLfloat>(this->Width),
 			static_cast<GLfloat>(this->Height), 0.0f, -1.0f, 1.0f);
@@ -74,6 +83,7 @@ namespace Breakout {
 		Ball = new BallObject(ballPos, BALL_RADIUS, INITIAL_BALL_VELOCITY, ResourceManager::GetTexture("face"));
 
 		Particles = new ParticleGenerator(ResourceManager::GetShader("particle"),ResourceManager::GetTexture("particle"), 500);
+		Effects = new PostProcessor(ResourceManager::GetShader("postprocessing"), this->Width, this->Height);
 	}
 
 	void Game::Update(float dt)
@@ -83,6 +93,14 @@ namespace Breakout {
 		this->DoCollisions();
 		// update particles
 		Particles->Update(dt, *Ball, 2, glm::vec2(Ball->Radius / 2.0f));
+
+		// reduce shake time
+		if (ShakeTime > 0.0f)
+		{
+			ShakeTime -= dt;
+			if (ShakeTime <= 0.0f)
+				Effects->Shake = false;
+		}
 
 		if (Ball->Position.y >= this->Height) // 球是否接触底部边界？
 		{
@@ -127,6 +145,7 @@ namespace Breakout {
 
 		if (this->State == GAME_ACTIVE)
 		{
+			Effects->BeginRender();
 			// 绘制背景
 			Renderer->DrawSprite(ResourceManager::GetTexture("background"),
 				glm::vec2(0, 0), glm::vec2(this->Width, this->Height), 0.0f
@@ -139,6 +158,10 @@ namespace Breakout {
 			Particles->Draw();
 			// draw ball
 			Ball->Draw(*Renderer);
+
+
+			Effects->EndRender();
+			Effects->Render(glfwGetTime());
 		}
 	}
 
@@ -154,6 +177,12 @@ namespace Breakout {
 					// 如果砖块不是实心就销毁砖块
 					if (!box.IsSolid)
 						box.Destroyed = GL_TRUE;
+					else
+					{
+						// 如果是实心的砖块则激活shake特效
+						ShakeTime = 0.05f;
+						Effects->Shake = true;
+					}
 					// 碰撞处理
 					Direction dir = std::get<1>(collision);
 					glm::vec2 diff_vector = std::get<2>(collision);
