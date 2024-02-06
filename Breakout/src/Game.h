@@ -2,6 +2,7 @@
 #include "GLFW/glfw3.h"
 #include <vector>
 #include "GameLevel.h"
+#include "PowerUp.h"
 
 namespace Breakout {
 	enum GameState
@@ -39,7 +40,8 @@ namespace Breakout {
 		bool Keys[1024];
 		unsigned int Width, Height;
 
-		std::vector<GameLevel>  Levels;
+		std::vector<GameLevel>  Levels; 
+		std::vector<PowerUp>  PowerUps;
 		unsigned int            Level;
 		unsigned int            Lives;
 
@@ -54,5 +56,8 @@ namespace Breakout {
 		// reset
 		void ResetLevel();
 		void ResetPlayer();
+
+		void SpawnPowerUps(GameObject& block);
+		void UpdatePowerUps(GLfloat dt);
 	};
 }
