@@ -921,6 +921,15 @@
     <ClInclude Include="src\SpriteRenderer.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="src\GameLevel.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BallObject.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\vendor\glm\detail\glm.cpp">
@@ -966,6 +975,15 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="src\SpriteRenderer.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameLevel.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameObject.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BallObject.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

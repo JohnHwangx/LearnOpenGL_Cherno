@@ -1,5 +1,7 @@
 #pragma once
 #include "GLFW/glfw3.h"
+#include <vector>
+#include "GameLevel.h"
 
 namespace Breakout {
 
@@ -10,6 +12,15 @@ namespace Breakout {
 		GAME_WIN
 	};
 
+	// Initial size of the player paddle
+	const glm::vec2 PLAYER_SIZE(100.0f, 20.0f);
+	// Initial velocity of the player paddle
+	const float PLAYER_VELOCITY(500.0f);
+	// Initial velocity of the Ball
+	const glm::vec2 INITIAL_BALL_VELOCITY(100.0f, -350.0f);
+	// ÇòµÄ°ë¾¶
+	const GLfloat BALL_RADIUS = 12.5f;
+
 	class Game
 	{
 	public:
@@ -17,6 +28,9 @@ namespace Breakout {
 
 		bool Keys[1024];
 		unsigned int Width, Height;
+
+		std::vector<GameLevel>  Levels;
+		unsigned int            Level;	
 
 		Game(unsigned int width, unsigned int height);
 		~Game();
