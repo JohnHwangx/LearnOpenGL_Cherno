@@ -4,13 +4,23 @@
 #include "GameLevel.h"
 
 namespace Breakout {
-
 	enum GameState
 	{
 		GAME_ACTIVE,
 		GAME_MENU,
 		GAME_WIN
 	};
+
+	// Represents the four possible (collision) directions
+	enum Direction {
+		UP,
+		RIGHT,
+		DOWN,
+		LEFT
+	};
+
+	// Defines a Collision typedef that represents collision data
+	typedef std::tuple<bool, Direction, glm::vec2> Collision; // <collision?, what direction?, difference vector center - closest point>
 
 	// Initial size of the player paddle
 	const glm::vec2 PLAYER_SIZE(100.0f, 20.0f);
@@ -39,5 +49,6 @@ namespace Breakout {
 		void ProcessInput(float dt);
 		void Update(float dt);
 		void Render();
+		void DoCollisions();
 	};
 }
