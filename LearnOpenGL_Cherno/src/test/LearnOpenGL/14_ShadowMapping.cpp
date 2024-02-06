@@ -1,5 +1,6 @@
 #include "14_ShadowMapping.h"
 #include "Blaze/GLTextureCache.h"
+#include "glm/gtc/matrix_transform.hpp"
 
 namespace Test {
 

@@ -4,7 +4,7 @@
 #include <GL/glew.h>
 
 namespace Breakout {
-	SpriteRenderer::SpriteRenderer(Shader& shader)
+	SpriteRenderer::SpriteRenderer(const Shader& shader)
 	{
         this->shader = shader;
         this->initRenderData();
@@ -15,7 +15,7 @@ namespace Breakout {
         glDeleteVertexArrays(1, &this->quadVAO);
 	}
 
-	void SpriteRenderer::DrawSprite(Texture2D& texture, glm::vec2 position, glm::vec2 size, float rotate, glm::vec3 color)
+	void SpriteRenderer::DrawSprite(const Texture2D& texture, glm::vec2 position, glm::vec2 size, float rotate, glm::vec3 color)
 	{
         // prepare transformations
         this->shader.Use();
