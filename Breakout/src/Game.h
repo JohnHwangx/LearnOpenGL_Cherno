@@ -40,7 +40,8 @@ namespace Breakout {
 		unsigned int Width, Height;
 
 		std::vector<GameLevel>  Levels;
-		unsigned int            Level;	
+		unsigned int            Level;
+		unsigned int            Lives;
 
 		Game(unsigned int width, unsigned int height);
 		~Game();
@@ -50,5 +51,8 @@ namespace Breakout {
 		void Update(float dt);
 		void Render();
 		void DoCollisions();
+		// reset
+		void ResetLevel();
+		void ResetPlayer();
 	};
 }
