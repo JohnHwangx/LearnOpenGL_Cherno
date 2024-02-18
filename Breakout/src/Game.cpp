@@ -1,4 +1,5 @@
 #include <iostream>
+#include <sstream>
 #include "Game.h"
 #include "ResourceManager.h"
 #include "SpriteRenderer.h"
@@ -7,6 +8,7 @@
 #include "PostProcessor.h"
 #include "glm/gtc/matrix_transform.hpp"
 #include "irrKlang/irrKlang.h"
+#include "TextRenderer.h"
 
 namespace Breakout {
 
@@ -23,6 +25,7 @@ namespace Breakout {
 	ParticleGenerator* Particles;
 	PostProcessor* Effects;
 	irrklang::ISoundEngine* SoundEngine = irrklang::createIrrKlangDevice();
+	TextRenderer* Text;
 
 	float ShakeTime = 0.0f;
 
@@ -39,6 +42,7 @@ namespace Breakout {
 		delete Ball;
 		delete Particles;
 		delete Effects;
+		delete Text;
 		SoundEngine->drop();
 	}
 
@@ -77,10 +81,14 @@ namespace Breakout {
 		ResourceManager::LoadTexture("res/textures/powerup_chaos.png", true, "powerup_chaos");
 		ResourceManager::LoadTexture("res/textures/powerup_passthrough.png", true, "powerup_passthrough");
 		// 加载关卡
-		GameLevel one; one.Load("res/levels/one.lvl", this->Width, this->Height * 0.5);
-		GameLevel two; two.Load("res/levels/two.lvl", this->Width, this->Height * 0.5);
-		GameLevel three; three.Load("res/levels/three.lvl", this->Width, this->Height * 0.5);
-		GameLevel four; four.Load("res/levels/four.lvl", this->Width, this->Height * 0.5);
+		GameLevel one; 
+		one.Load("res/levels/one.lvl", this->Width, this->Height * 0.5);
+		GameLevel two; 
+		two.Load("res/levels/two.lvl", this->Width, this->Height * 0.5);
+		GameLevel three; 
+		three.Load("res/levels/three.lvl", this->Width, this->Height * 0.5);
+		GameLevel four; 
+		four.Load("res/levels/four.lvl", this->Width, this->Height * 0.5);
 		this->Levels.push_back(one);
 		this->Levels.push_back(two);
 		this->Levels.push_back(three);
@@ -95,6 +103,9 @@ namespace Breakout {
 
 		Particles = new ParticleGenerator(ResourceManager::GetShader("particle"),ResourceManager::GetTexture("particle"), 500);
 		Effects = new PostProcessor(ResourceManager::GetShader("postprocessing"), this->Width, this->Height);
+
+		Text = new TextRenderer(this->Width, this->Height);
+		Text->Load("res/fonts/ocraext.TTF", 24);
 		// audio
 		SoundEngine->play2D("res/audio/breakout.mp3", GL_TRUE);
 	}
@@ -117,10 +128,26 @@ namespace Breakout {
 				Effects->Shake = false;
 		}
 
+		// check loss condition
 		if (Ball->Position.y >= this->Height) // 球是否接触底部边界？
+		{
+			--this->Lives;
+			// did the player lose all his lives? : game over
+			if (this->Lives == 0)
+			{
+				this->ResetLevel();
+				this->State = GAME_MENU;
+			}
+			this->ResetPlayer();
+		}
+
+		// check win condition
+		if (this->State == GAME_ACTIVE && this->Levels[this->Level].IsCompleted())
 		{
 			this->ResetLevel();
 			this->ResetPlayer();
+			Effects->Chaos = true;
+			this->State = GAME_WIN;
 		}
 	}
 
@@ -158,28 +185,44 @@ namespace Breakout {
 		//Renderer->DrawSprite(ResourceManager::GetTexture("face"),
 			//glm::vec2(200, 200), glm::vec2(300, 400), 45.0f, glm::vec3(0.0f, 1.0f, 0.0f));
 
-		if (this->State == GAME_ACTIVE)
+		if (this->State == GAME_ACTIVE || this->State == GAME_MENU || this->State == GAME_WIN)
 		{
 			Effects->BeginRender();
-			// 绘制背景
-			Renderer->DrawSprite(ResourceManager::GetTexture("background"), glm::vec2(0, 0), glm::vec2(this->Width, this->Height), 0.0f);
-			// 绘制关卡
-			this->Levels[this->Level].Draw(*Renderer);
-			// draw player
-			Player->Draw(*Renderer);
+			{
+				// 绘制背景
+				Renderer->DrawSprite(ResourceManager::GetTexture("background"), glm::vec2(0, 0), glm::vec2(this->Width, this->Height), 0.0f);
+				// 绘制关卡
+				this->Levels[this->Level].Draw(*Renderer);
+				// draw player
+				Player->Draw(*Renderer);
 
-			for (PowerUp& powerUp : this->PowerUps)
-				if (!powerUp.Destroyed)
-					powerUp.Draw(*Renderer);
+				for (PowerUp& powerUp : this->PowerUps)
+					if (!powerUp.Destroyed)
+						powerUp.Draw(*Renderer);
 
-			// Draw particles   
-			Particles->Draw();
-			// draw ball
-			Ball->Draw(*Renderer);
-
-
+				// Draw particles   
+				Particles->Draw();
+				// draw ball
+				Ball->Draw(*Renderer);
+			}
 			Effects->EndRender();
 			Effects->Render(glfwGetTime());
+
+			std::stringstream ss; 
+			ss << this->Lives;
+			Text->RenderText("Lives:" + ss.str(), 5.0f, 5.0f, 1.0f);
+		}
+
+		if (this->State == GAME_MENU)
+		{
+			Text->RenderText("Press ENTER to start", 250.0f, this->Height / 2.0f, 1.0f);
+			Text->RenderText("Press W or S to select level", 245.0f, this->Height / 2.0f + 20.0f, 0.75f);
+		}
+
+		if (this->State == GAME_WIN)
+		{
+			Text->RenderText("You WON!!!", 320.0f, this->Height / 2.0f - 20.0f, 1.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+			Text->RenderText("Press ENTER to retry or ESC to quit", 130.0f, this->Height / 2.0f, 1.0f, glm::vec3(1.0f, 1.0f, 0.0f));
 		}
 	}
 

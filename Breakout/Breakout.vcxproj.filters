@@ -939,6 +939,9 @@
     <ClInclude Include="src\PowerUp.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="src\TextRenderer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\vendor\glm\detail\glm.cpp">
@@ -999,6 +1002,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="src\PostProcessor.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TextRenderer.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1422,5 +1428,6 @@
     </None>
     <None Include="res\shader\sprite.vs" />
     <None Include="res\shader\sprite.fs" />
+    <None Include="res\shader\text_2d.fs" />
   </ItemGroup>
 </Project>

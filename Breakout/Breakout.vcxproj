@@ -121,8 +121,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib;glew32s.lib;assimp-vc142-mt.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)Dependecies\GLEW\lib\Release\x64;$(SolutionDir)Dependecies\GLFW\lib-vc2019;$(SolutionDir)Dependecies\ASSIMP\lib\Release</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib;glew32s.lib;assimp-vc142-mt.lib;freetype.lib;irrKlang.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dependecies\GLEW\lib\Release\x64;$(SolutionDir)Dependecies\GLFW\lib-vc2019;$(SolutionDir)Dependecies\FreeType;$(SolutionDir)Dependecies\ASSIMP\lib\Release;$(SolutionDir)Dependecies\irrKlang</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -152,6 +152,7 @@
     <ClInclude Include="src\ResourceManager.h" />
     <ClInclude Include="src\Shader.h" />
     <ClInclude Include="src\SpriteRenderer.h" />
+    <ClInclude Include="src\TextRenderer.h" />
     <ClInclude Include="src\Texture.h" />
     <ClInclude Include="src\vendor\glm\common.hpp" />
     <ClInclude Include="src\vendor\glm\detail\compute_common.hpp" />
@@ -461,6 +462,7 @@
     <ClCompile Include="src\ResourceManager.cpp" />
     <ClCompile Include="src\Shader.cpp" />
     <ClCompile Include="src\SpriteRenderer.cpp" />
+    <ClCompile Include="src\TextRenderer.cpp" />
     <ClCompile Include="src\Texture.cpp" />
     <ClCompile Include="src\vendor\glm\detail\glm.cpp" />
     <ClCompile Include="src\vendor\imgui\imgui.cpp" />
@@ -476,6 +478,7 @@
   <ItemGroup>
     <None Include="res\shader\sprite.fs" />
     <None Include="res\shader\sprite.vs" />
+    <None Include="res\shader\text_2d.fs" />
     <None Include="src\vendor\glm\detail\func_common.inl" />
     <None Include="src\vendor\glm\detail\func_common_simd.inl" />
     <None Include="src\vendor\glm\detail\func_exponential.inl" />
