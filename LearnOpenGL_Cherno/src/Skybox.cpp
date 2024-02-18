@@ -107,6 +107,12 @@ void Skybox::Draw(const glm::mat4& view, const glm::mat4& projection)
 	GLCall(glDepthFunc(GL_LESS)); // set depth function back to default
 }
 
+void Skybox::BindTexture()
+{
+	GLCall(glActiveTexture(GL_TEXTURE0));
+	GLCall(glBindTexture(GL_TEXTURE_CUBE_MAP, m_CubemapTextureID));
+}
+
 unsigned int Skybox::LoadCubemap(const std::vector<std::string>& faces)
 {
 	unsigned int textureID;

@@ -12,6 +12,8 @@ public:
 
 	void Draw(const glm::mat4& view, const glm::mat4& projection);
 
+	void BindTexture();
+
 private:
 	unsigned int LoadCubemap(const std::vector<std::string>& faces);
 
