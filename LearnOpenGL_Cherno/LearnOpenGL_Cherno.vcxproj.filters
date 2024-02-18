@@ -189,6 +189,12 @@
     <ClCompile Include="src\Blaze\GLTextureCache.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\test\LearnOpenGL\15_Cubemaps.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Skybox.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shader\Basic.shader" />
@@ -1652,6 +1658,12 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\Blaze\GLTextureCache.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\test\LearnOpenGL\15_Cubemaps.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Skybox.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

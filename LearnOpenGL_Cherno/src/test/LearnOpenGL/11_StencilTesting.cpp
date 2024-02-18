@@ -1,4 +1,6 @@
 #include "11_StencilTesting.h"
+#include "glm/gtc/matrix_transform.hpp"
+
 namespace Test {
 	Part4_StencilTesting::Part4_StencilTesting()
 	{

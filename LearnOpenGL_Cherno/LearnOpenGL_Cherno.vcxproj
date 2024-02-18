@@ -157,6 +157,7 @@
     <ClCompile Include="src\Renderer.cpp" />
     <ClCompile Include="src\Screen.cpp" />
     <ClCompile Include="src\Shader.cpp" />
+    <ClCompile Include="src\Skybox.cpp" />
     <ClCompile Include="src\test\LearnOpenGL\01_HelloTriangle.cpp" />
     <ClCompile Include="src\test\LearnOpenGL\02_Shader.cpp" />
     <ClCompile Include="src\test\LearnOpenGL\02_Shader_Interpolation.cpp" />
@@ -171,6 +172,7 @@
     <ClCompile Include="src\test\LearnOpenGL\11_StencilTesting.cpp" />
     <ClCompile Include="src\test\LearnOpenGL\12_Blending.cpp" />
     <ClCompile Include="src\test\LearnOpenGL\14_ShadowMapping.cpp" />
+    <ClCompile Include="src\test\LearnOpenGL\15_Cubemaps.cpp" />
     <ClCompile Include="src\test\LearnOpenGL\CameraTest.cpp" />
     <ClCompile Include="src\test\Test.cpp" />
     <ClCompile Include="src\test\TestBatchRender.cpp" />
@@ -363,6 +365,7 @@
     <ClInclude Include="src\Renderer.h" />
     <ClInclude Include="src\Screen.h" />
     <ClInclude Include="src\Shader.h" />
+    <ClInclude Include="src\Skybox.h" />
     <ClInclude Include="src\test\LearnOpenGL\01_HelloTriangle.h" />
     <ClInclude Include="src\test\LearnOpenGL\02_Shader.h" />
     <ClInclude Include="src\test\LearnOpenGL\02_Shader_Interpolation.h" />
@@ -377,6 +380,7 @@
     <ClInclude Include="src\test\LearnOpenGL\11_StencilTesting.h" />
     <ClInclude Include="src\test\LearnOpenGL\12_Blending.h" />
     <ClInclude Include="src\test\LearnOpenGL\14_ShadowMapping.h" />
+    <ClInclude Include="src\test\LearnOpenGL\15_Cubemaps.h" />
     <ClInclude Include="src\test\LearnOpenGL\CameraTest.h" />
     <ClInclude Include="src\test\Test.h" />
     <ClInclude Include="src\test\TestBatchRender.h" />

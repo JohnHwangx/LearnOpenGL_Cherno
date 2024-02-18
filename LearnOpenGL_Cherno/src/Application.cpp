@@ -31,6 +31,7 @@
 #include "test/LearnOpenGL/12_Blending.h"
 #include "test/LearnOpenGL/13_Framebuffers.h"
 #include "test/LearnOpenGL/14_ShadowMapping.h"
+#include "test/LearnOpenGL/15_Cubemaps.h"
 #include "test/TestCube2.h"
 
 int main(void)
@@ -96,6 +97,7 @@ int main(void)
 		testMenu->RegisterTest<Test::Part4_StencilTesting>("Part4: Stencil Testing");
 		testMenu->RegisterTest<Test::Part4_Blending>("Part4: Blending");
 		testMenu->RegisterTest<Test::Part4_FrameBuffer>("Part4: Framebuffers");
+		testMenu->RegisterTest<Test::Part4_Cubemaps>("Part4: Cubemaps");
 		testMenu->RegisterTest<Test::Part5_ShadowMapping>("Part5: Shadow Mapping");
 
 		/* Loop until the user closes the window */
