@@ -6,6 +6,7 @@
 #include "ParticleGenerator.h"
 #include "PostProcessor.h"
 #include "glm/gtc/matrix_transform.hpp"
+#include "irrKlang/irrKlang.h"
 
 namespace Breakout {
 
@@ -21,11 +22,12 @@ namespace Breakout {
 	BallObject* Ball; 
 	ParticleGenerator* Particles;
 	PostProcessor* Effects;
+	irrklang::ISoundEngine* SoundEngine = irrklang::createIrrKlangDevice();
 
 	float ShakeTime = 0.0f;
 
 	Game::Game(unsigned int width, unsigned int height)
-		: State(GAME_ACTIVE), Keys(), Width(width), Height(height)
+		: State(GAME_ACTIVE), Keys(), Width(width), Height(height), Level(0), Lives(3)
 	{
 		
 	}
@@ -37,6 +39,7 @@ namespace Breakout {
 		delete Ball;
 		delete Particles;
 		delete Effects;
+		SoundEngine->drop();
 	}
 
 	void Game::Init()
@@ -92,6 +95,8 @@ namespace Breakout {
 
 		Particles = new ParticleGenerator(ResourceManager::GetShader("particle"),ResourceManager::GetTexture("particle"), 500);
 		Effects = new PostProcessor(ResourceManager::GetShader("postprocessing"), this->Width, this->Height);
+		// audio
+		SoundEngine->play2D("res/audio/breakout.mp3", GL_TRUE);
 	}
 
 	void Game::Update(float dt)
@@ -232,6 +237,8 @@ namespace Breakout {
 						ShakeTime = 0.05f;
 						Effects->Shake = true;
 					}
+					SoundEngine->play2D("res/audio/bleep.mp3", false);
+
 					// Åö×²´¦Àí
 					Direction dir = std::get<1>(collision);
 					glm::vec2 diff_vector = std::get<2>(collision);
@@ -274,6 +281,7 @@ namespace Breakout {
 					ActivatePowerUp(powerUp);
 					powerUp.Destroyed = GL_TRUE;
 					powerUp.Activated = GL_TRUE;
+					SoundEngine->play2D("res/audio/powerup.wav", false);
 				}
 			}
 		}
@@ -295,6 +303,8 @@ namespace Breakout {
 
 			// if Sticky powerup is activated, also stick ball to paddle once new velocity vectors were calculated
 			Ball->Stuck = Ball->Sticky;
+
+			SoundEngine->play2D("res/audio/bleep.wav", false);
 
 		}
 	}
