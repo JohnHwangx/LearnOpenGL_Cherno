@@ -30,7 +30,7 @@ namespace Breakout {
 	float ShakeTime = 0.0f;
 
 	Game::Game(unsigned int width, unsigned int height)
-		: State(GAME_ACTIVE), Keys(), Width(width), Height(height), Level(0), Lives(3)
+		: State(GAME_ACTIVE), Keys(), KeysProcessed(), Width(width), Height(height), Level(0), Lives(3)
 	{
 		
 	}
@@ -154,13 +154,45 @@ namespace Breakout {
 
 	void Game::ProcessInput(float dt)
 	{
+		if (this->State == GAME_MENU)
+		{
+			if (this->Keys[GLFW_KEY_ENTER] && !this->KeysProcessed[GLFW_KEY_ENTER])
+			{
+				this->State = GAME_ACTIVE;
+				this->KeysProcessed[GLFW_KEY_ENTER] = true;
+			}
+			if (this->Keys[GLFW_KEY_W] && !this->KeysProcessed[GLFW_KEY_W])
+			{
+				this->Level = (this->Level + 1) % 4;
+				this->KeysProcessed[GLFW_KEY_W] = true;
+			}
+			if (this->Keys[GLFW_KEY_S] && !this->KeysProcessed[GLFW_KEY_S])
+			{
+				if (this->Level > 0)
+					--this->Level;
+				else
+					this->Level = 3;
+				//this->Level = (this->Level - 1) % 4;
+				this->KeysProcessed[GLFW_KEY_S] = true;
+			}
+		}
+		if (this->State == GAME_WIN)
+		{
+			if (this->Keys[GLFW_KEY_ENTER])
+			{
+				this->KeysProcessed[GLFW_KEY_ENTER] = true;
+				Effects->Chaos = false;
+				this->State = GAME_MENU;
+			}
+		}
 		if (this->State == GAME_ACTIVE)
 		{
 			float velocity = PLAYER_VELOCITY * dt;
 			// ÒÆ¶¯µ²°å
 			if (this->Keys[GLFW_KEY_A])
 			{
-				if (Player->Position.x >= 0) {
+				if (Player->Position.x >= 0)
+				{
 					Player->Position.x -= velocity;
 					if (Ball->Stuck)
 						Ball->Position.x -= velocity;
@@ -373,8 +405,8 @@ namespace Breakout {
 		Player->Position = glm::vec2(this->Width / 2.0f - PLAYER_SIZE.x / 2.0f, this->Height - PLAYER_SIZE.y);
 		Ball->Reset(Player->Position + glm::vec2(PLAYER_SIZE.x / 2.0f - BALL_RADIUS, -(BALL_RADIUS * 2.0f)), INITIAL_BALL_VELOCITY);
 		// also disable all active powerups
-		/*Effects->Chaos = Effects->Confuse = false;
-		Ball->PassThrough = Ball->Sticky = false;*/
+		Effects->Chaos = Effects->Confuse = false;
+		Ball->PassThrough = Ball->Sticky = false;
 		Player->Color = glm::vec3(1.0f);
 		Ball->Color = glm::vec3(1.0f);
 	}
@@ -474,6 +506,8 @@ namespace Breakout {
 			}
 		}
 
+		// Remove all PowerUps from vector that are destroyed AND !activated (thus either off the map or finished)
+		// Note we use a lambda expression to remove each PowerUp which is destroyed and not activated
 		this->PowerUps.erase(std::remove_if(this->PowerUps.begin(), this->PowerUps.end(),
 			[](const PowerUp& powerUp) { return powerUp.Destroyed && !powerUp.Activated; }
 		), this->PowerUps.end());
