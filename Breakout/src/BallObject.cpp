@@ -36,6 +36,7 @@ namespace Breakout {
         }
         return this->Position;
 	}
+
 	void BallObject::Reset(glm::vec2 position, glm::vec2 velocity)
 	{
         this->Position = position;

@@ -61,14 +61,14 @@ namespace Breakout {
 		ResourceManager::GetShader("particle").Use().SetInteger("sprite", 0);
 		ResourceManager::GetShader("particle").SetMatrix4("projection", projection);
 		// 加载纹理
-		ResourceManager::LoadTexture("res/textures/awesomeface.png", GL_TRUE, "face");
-		ResourceManager::LoadTexture("res/textures/particle.png", GL_TRUE, "particle");
+		ResourceManager::LoadTexture("res/textures/awesomeface.png", true, "face");
+		ResourceManager::LoadTexture("res/textures/particle.png", true, "particle");
 
 		// 加载纹理
-		ResourceManager::LoadTexture("res/textures/background.jpg", GL_FALSE, "background");
-		ResourceManager::LoadTexture("res/textures/awesomeface.png", GL_TRUE, "face");
-		ResourceManager::LoadTexture("res/textures/block.png", GL_FALSE, "block");
-		ResourceManager::LoadTexture("res/textures/block_solid.png", GL_FALSE, "block_solid");
+		ResourceManager::LoadTexture("res/textures/background.jpg", false, "background");
+		ResourceManager::LoadTexture("res/textures/awesomeface.png", true, "face");
+		ResourceManager::LoadTexture("res/textures/block.png", false, "block");
+		ResourceManager::LoadTexture("res/textures/block_solid.png", false, "block_solid");
 
 		ResourceManager::LoadTexture("res/textures/paddle.png", true, "paddle");
 
@@ -107,7 +107,7 @@ namespace Breakout {
 		Text = new TextRenderer(this->Width, this->Height);
 		Text->Load("res/fonts/ocraext.TTF", 24);
 		// audio
-		SoundEngine->play2D("res/audio/breakout.mp3", GL_TRUE);
+		SoundEngine->play2D("res/audio/breakout.mp3", true);
 	}
 
 	void Game::Update(float dt)
@@ -224,7 +224,7 @@ namespace Breakout {
 		if (this->State == GAME_ACTIVE || this->State == GAME_MENU || this->State == GAME_WIN)
 		{
 			Effects->BeginRender();
-			
+			{
 				// 绘制背景
 				Renderer->DrawSprite(ResourceManager::GetTexture("background"), glm::vec2(0, 0), glm::vec2(this->Width, this->Height), 0.0f);
 				// 绘制关卡
@@ -240,7 +240,7 @@ namespace Breakout {
 				Particles->Draw();
 				// draw ball
 				Ball->Draw(*Renderer);
-			
+			}
 			Effects->EndRender();
 			Effects->Render(glfwGetTime());
 

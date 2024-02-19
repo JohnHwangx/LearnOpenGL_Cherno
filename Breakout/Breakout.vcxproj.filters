@@ -1426,8 +1426,5 @@
     <None Include="src\vendor\glm\gtx\wrap.inl">
       <Filter>头文件</Filter>
     </None>
-    <None Include="res\shader\sprite.vs" />
-    <None Include="res\shader\sprite.fs" />
-    <None Include="res\shader\text_2d.fs" />
   </ItemGroup>
 </Project>

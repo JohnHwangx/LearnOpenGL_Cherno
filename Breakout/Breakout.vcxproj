@@ -476,9 +476,6 @@
     <ClCompile Include="src\PostProcessor.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\shader\sprite.fs" />
-    <None Include="res\shader\sprite.vs" />
-    <None Include="res\shader\text_2d.fs" />
     <None Include="src\vendor\glm\detail\func_common.inl" />
     <None Include="src\vendor\glm\detail\func_common_simd.inl" />
     <None Include="src\vendor\glm\detail\func_exponential.inl" />
