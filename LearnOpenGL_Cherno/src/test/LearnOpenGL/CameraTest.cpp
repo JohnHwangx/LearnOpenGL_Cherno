@@ -4,6 +4,7 @@
 
 namespace Test {
 	CameraTest::CameraTest()
+		:m_IsOthor(false), m_Yaw(0.0f), m_Pitch(0.0f), m_Distance(3.0f)
 	{
 		m_Camera = std::make_unique<Camera>(glm::vec3(0.0f, 0.0f, 3.0f));
 		GLCall(glEnable(GL_DEPTH_TEST));
