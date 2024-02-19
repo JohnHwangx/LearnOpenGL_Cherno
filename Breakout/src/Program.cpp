@@ -120,7 +120,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
         else if (action == GLFW_RELEASE)
         {
             BreakoutApp.Keys[key] = false;
-            //Breakout.KeysProcessed[key] = false;
+            BreakoutApp.KeysProcessed[key] = false;
         }
     }
 }

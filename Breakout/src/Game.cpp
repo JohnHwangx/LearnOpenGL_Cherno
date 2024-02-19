@@ -30,7 +30,7 @@ namespace Breakout {
 	float ShakeTime = 0.0f;
 
 	Game::Game(unsigned int width, unsigned int height)
-		: State(GAME_ACTIVE), Keys(), KeysProcessed(), Width(width), Height(height), Level(0), Lives(3)
+		: State(GAME_MENU), Keys(), KeysProcessed(), Width(width), Height(height), Level(0), Lives(3)
 	{
 		
 	}
@@ -60,8 +60,6 @@ namespace Breakout {
 		ResourceManager::GetShader("sprite").SetMatrix4("projection", projection);
 		ResourceManager::GetShader("particle").Use().SetInteger("sprite", 0);
 		ResourceManager::GetShader("particle").SetMatrix4("projection", projection);
-		// 设置专用于渲染的控制
-		Renderer = new SpriteRenderer(ResourceManager::GetShader("sprite"));
 		// 加载纹理
 		ResourceManager::LoadTexture("res/textures/awesomeface.png", GL_TRUE, "face");
 		ResourceManager::LoadTexture("res/textures/particle.png", GL_TRUE, "particle");
@@ -93,14 +91,16 @@ namespace Breakout {
 		this->Levels.push_back(two);
 		this->Levels.push_back(three);
 		this->Levels.push_back(four);
-		this->Level = 1;
+		this->Level = 0;
 
-		glm::vec2 playerPos = glm::vec2(this->Width / 2 - PLAYER_SIZE.x / 2, this->Height - PLAYER_SIZE.y);
+		glm::vec2 playerPos = glm::vec2(this->Width / 2.0f - PLAYER_SIZE.x / 2.0f, this->Height - PLAYER_SIZE.y);
 		Player = new GameObject(playerPos, PLAYER_SIZE, ResourceManager::GetTexture("paddle"));
 
-		glm::vec2 ballPos = playerPos + glm::vec2(PLAYER_SIZE.x / 2 - BALL_RADIUS, -BALL_RADIUS * 2);
+		glm::vec2 ballPos = playerPos + glm::vec2(PLAYER_SIZE.x / 2.0f - BALL_RADIUS, -BALL_RADIUS * 2.0f);
 		Ball = new BallObject(ballPos, BALL_RADIUS, INITIAL_BALL_VELOCITY, ResourceManager::GetTexture("face"));
 
+		// 设置专用于渲染的控制
+		Renderer = new SpriteRenderer(ResourceManager::GetShader("sprite"));
 		Particles = new ParticleGenerator(ResourceManager::GetShader("particle"),ResourceManager::GetTexture("particle"), 500);
 		Effects = new PostProcessor(ResourceManager::GetShader("postprocessing"), this->Width, this->Height);
 
@@ -176,6 +176,7 @@ namespace Breakout {
 				this->KeysProcessed[GLFW_KEY_S] = true;
 			}
 		}
+
 		if (this->State == GAME_WIN)
 		{
 			if (this->Keys[GLFW_KEY_ENTER])
@@ -185,6 +186,7 @@ namespace Breakout {
 				this->State = GAME_MENU;
 			}
 		}
+
 		if (this->State == GAME_ACTIVE)
 		{
 			float velocity = PLAYER_VELOCITY * dt;
@@ -198,6 +200,7 @@ namespace Breakout {
 						Ball->Position.x -= velocity;
 				}
 			}
+
 			if (this->Keys[GLFW_KEY_D])
 			{
 				if (Player->Position.x <= this->Width - Player->Size.x)
@@ -207,6 +210,7 @@ namespace Breakout {
 						Ball->Position.x += velocity;
 				}
 			}
+
 			if (this->Keys[GLFW_KEY_SPACE])
 				Ball->Stuck = false;
 		}
@@ -220,7 +224,7 @@ namespace Breakout {
 		if (this->State == GAME_ACTIVE || this->State == GAME_MENU || this->State == GAME_WIN)
 		{
 			Effects->BeginRender();
-			{
+			
 				// 绘制背景
 				Renderer->DrawSprite(ResourceManager::GetTexture("background"), glm::vec2(0, 0), glm::vec2(this->Width, this->Height), 0.0f);
 				// 绘制关卡
@@ -236,7 +240,7 @@ namespace Breakout {
 				Particles->Draw();
 				// draw ball
 				Ball->Draw(*Renderer);
-			}
+			
 			Effects->EndRender();
 			Effects->Render(glfwGetTime());
 
@@ -267,27 +271,27 @@ namespace Breakout {
 		}
 		else if (powerUp.Type == "sticky")
 		{
-			Ball->Sticky = GL_TRUE;
+			Ball->Sticky = true;
 			Player->Color = glm::vec3(1.0f, 0.5f, 1.0f);
 		}
 		else if (powerUp.Type == "pass-through")
 		{
-			Ball->PassThrough = GL_TRUE;
+			Ball->PassThrough = true;
 			Ball->Color = glm::vec3(1.0f, 0.5f, 0.5f);
 		}
 		else if (powerUp.Type == "pad-size-increase")
 		{
-			Player->Size.x += 50;
+			Player->Size.x += 50.0f;
 		}
 		else if (powerUp.Type == "confuse")
 		{
 			if (!Effects->Chaos)
-				Effects->Confuse = GL_TRUE; // 只在chaos未激活时生效，chaos同理
+				Effects->Confuse = true; // 只在chaos未激活时生效，chaos同理
 		}
 		else if (powerUp.Type == "chaos")
 		{
 			if (!Effects->Confuse)
-				Effects->Chaos = GL_TRUE;
+				Effects->Chaos = true;
 		}
 	}
 
@@ -350,12 +354,14 @@ namespace Breakout {
 			if (!powerUp.Destroyed)
 			{
 				if (powerUp.Position.y >= this->Height)
-					powerUp.Destroyed = GL_TRUE;
+					powerUp.Destroyed = true;
+
 				if (CheckCollision(*Player, powerUp))
-				{   // 道具与挡板接触，激活它！
+				{   
+					// 道具与挡板接触，激活它！
 					ActivatePowerUp(powerUp);
-					powerUp.Destroyed = GL_TRUE;
-					powerUp.Activated = GL_TRUE;
+					powerUp.Destroyed = true;
+					powerUp.Activated = true;
 					SoundEngine->play2D("res/audio/powerup.wav", false);
 				}
 			}
@@ -365,16 +371,16 @@ namespace Breakout {
 		if (!Ball->Stuck && std::get<0>(result))
 		{
 			// 检查碰到了挡板的哪个位置，并根据碰到哪个位置来改变速度
-			float centerBoard = Player->Position.x + Player->Size.x / 2;
+			float centerBoard = Player->Position.x + Player->Size.x / 2.0f;
 			float distance = (Ball->Position.x + Ball->Radius) - centerBoard;
-			float percentage = distance / (Player->Size.x / 2);
+			float percentage = distance / (Player->Size.x / 2.0f);
 			// 依据结果移动
 			float strength = 2.0f;
 			glm::vec2 oldVelocity = Ball->Velocity;
 			Ball->Velocity.x = INITIAL_BALL_VELOCITY.x * percentage * strength;
 			//Ball->Velocity.y = -Ball->Velocity.y;
 			Ball->Velocity = glm::normalize(Ball->Velocity) * glm::length(oldVelocity);
-			Ball->Velocity.y = -1 * abs(Ball->Velocity.y);
+			Ball->Velocity.y = -1.0f * abs(Ball->Velocity.y);
 
 			// if Sticky powerup is activated, also stick ball to paddle once new velocity vectors were calculated
 			Ball->Stuck = Ball->Sticky;
@@ -530,7 +536,7 @@ namespace Breakout {
 		// 获取圆的中心 
 		glm::vec2 center(one.Position + one.Radius);
 		// 计算AABB的信息（中心、半边长）
-		glm::vec2 aabb_half_extents(two.Size.x / 2, two.Size.y / 2);
+		glm::vec2 aabb_half_extents(two.Size.x / 2.0f, two.Size.y / 2.0f);
 		glm::vec2 aabb_center(
 			two.Position.x + aabb_half_extents.x,
 			two.Position.y + aabb_half_extents.y
@@ -543,10 +549,11 @@ namespace Breakout {
 		// 获得圆心center和最近点closest的矢量并判断是否 length <= radius
 		difference = closest - center;
 		//return glm::length(difference) < one.Radius;
-		if (glm::length(difference) <= one.Radius)
-			return std::make_tuple(GL_TRUE, VectorDirection(difference), difference);
+
+		if (glm::length(difference) < one.Radius)
+			return std::make_tuple(true, VectorDirection(difference), difference);
 		else
-			return std::make_tuple(GL_FALSE, UP, glm::vec2(0, 0));
+			return std::make_tuple(false, UP, glm::vec2(0.0f, 0.0f));
 	}
 
 	Direction VectorDirection(glm::vec2 target)
