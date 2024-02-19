@@ -53,8 +53,7 @@ namespace Breakout {
 		ResourceManager::LoadShader("res/shader/particle.vs", "res/shader/particle.fs", nullptr, "particle");
 		ResourceManager::LoadShader("res/shader/postProcessing.vs", "res/shader/postProcessing.fs", nullptr, "postprocessing");
 		// 配置着色器
-		glm::mat4 projection = glm::ortho(0.0f, static_cast<GLfloat>(this->Width),
-			static_cast<GLfloat>(this->Height), 0.0f, -1.0f, 1.0f);
+		glm::mat4 projection = glm::ortho(0.0f, static_cast<GLfloat>(this->Width), static_cast<GLfloat>(this->Height), 0.0f, -1.0f, 1.0f);
 
 		ResourceManager::GetShader("sprite").Use().SetInteger("image", 0);
 		ResourceManager::GetShader("sprite").SetMatrix4("projection", projection);
@@ -63,8 +62,6 @@ namespace Breakout {
 		// 加载纹理
 		ResourceManager::LoadTexture("res/textures/awesomeface.png", true, "face");
 		ResourceManager::LoadTexture("res/textures/particle.png", true, "particle");
-
-		// 加载纹理
 		ResourceManager::LoadTexture("res/textures/background.jpg", false, "background");
 		ResourceManager::LoadTexture("res/textures/awesomeface.png", true, "face");
 		ResourceManager::LoadTexture("res/textures/block.png", false, "block");
@@ -93,6 +90,7 @@ namespace Breakout {
 		this->Levels.push_back(four);
 		this->Level = 0;
 
+		// configure game objects
 		glm::vec2 playerPos = glm::vec2(this->Width / 2.0f - PLAYER_SIZE.x / 2.0f, this->Height - PLAYER_SIZE.y);
 		Player = new GameObject(playerPos, PLAYER_SIZE, ResourceManager::GetTexture("paddle"));
 
