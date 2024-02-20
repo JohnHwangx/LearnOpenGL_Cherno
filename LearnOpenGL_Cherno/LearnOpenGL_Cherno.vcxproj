@@ -173,6 +173,7 @@
     <ClCompile Include="src\test\LearnOpenGL\12_Blending.cpp" />
     <ClCompile Include="src\test\LearnOpenGL\14_ShadowMapping.cpp" />
     <ClCompile Include="src\test\LearnOpenGL\15_Cubemaps.cpp" />
+    <ClCompile Include="src\test\LearnOpenGL\16_AsteroidsInstanced.cpp" />
     <ClCompile Include="src\test\LearnOpenGL\CameraTest.cpp" />
     <ClCompile Include="src\test\Test.cpp" />
     <ClCompile Include="src\test\TestBatchRender.cpp" />
@@ -381,6 +382,7 @@
     <ClInclude Include="src\test\LearnOpenGL\12_Blending.h" />
     <ClInclude Include="src\test\LearnOpenGL\14_ShadowMapping.h" />
     <ClInclude Include="src\test\LearnOpenGL\15_Cubemaps.h" />
+    <ClInclude Include="src\test\LearnOpenGL\16_AsteroidsInstanced.h" />
     <ClInclude Include="src\test\LearnOpenGL\CameraTest.h" />
     <ClInclude Include="src\test\Test.h" />
     <ClInclude Include="src\test\TestBatchRender.h" />

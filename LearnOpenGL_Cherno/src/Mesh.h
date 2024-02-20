@@ -27,6 +27,8 @@ public:
     Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<Texture*> textures);
     ~Mesh();
     void Draw(Shader& shader);
+
+    inline unsigned int GetVAO() { return m_VAO->GetRendererID(); }
 private:
     /*  º¯Êý  */
     void setupMesh();

@@ -33,6 +33,11 @@ void Model::Draw()
 		meshes[i]->Draw(*m_Shader);
 }
 
+void Model::DrawInstanced()
+{
+
+}
+
 void Model::loadModel(const std::string& path)
 {
     // read file via ASSIMP

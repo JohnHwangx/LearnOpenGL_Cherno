@@ -54,16 +54,17 @@ public:
     }
     ~Model();
     void Draw();
+    void DrawInstanced();
     void BindShader(Shader& shader);
 
     void SetTransform(const glm::mat4& transform);
 public:
     BoundingBox m_BBox;
+    std::vector<Mesh*> meshes;
+    std::vector<Texture*> textures_loaded;	// stores all the textures loaded so far, optimization to make sure textures aren't loaded more than once.
 
 private:
     /*  模型数据  */
-    std::vector<Texture*> textures_loaded;	// stores all the textures loaded so far, optimization to make sure textures aren't loaded more than once.
-    std::vector<Mesh*> meshes;
     Shader* m_Shader;
     std::string directory;
     bool gammaCorrection;
