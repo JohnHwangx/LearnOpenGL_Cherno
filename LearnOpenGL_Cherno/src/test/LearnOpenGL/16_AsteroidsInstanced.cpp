@@ -10,6 +10,8 @@ namespace Test {
         :m_Amount(10000)
 	{
         m_Distance = 300.0f;
+        m_Camera->SetDistance(m_Distance);
+
 		m_AsteroidShader = std::make_unique<Shader>("res/shader/Part4_InstancedAsteroid.shader");
 		m_PlanetShader = std::make_unique<Shader>("res/shader/Part4_InstancedPlanet.shader");
 
@@ -51,38 +53,7 @@ namespace Test {
             modelMatrices[i] = model;
         }
 
-        // configure instanced array
-        // -------------------------
-        unsigned int buffer;
-        glGenBuffers(1, &buffer);
-        glBindBuffer(GL_ARRAY_BUFFER, buffer);
-        glBufferData(GL_ARRAY_BUFFER, m_Amount * sizeof(glm::mat4), &modelMatrices[0], GL_STATIC_DRAW);
-
-        // set transformation matrices as an instance vertex attribute (with divisor 1)
-        // note: we're cheating a little by taking the, now publicly declared, VAO of the model's mesh(es) and adding new vertexAttribPointers
-        // normally you'd want to do this in a more organized fashion, but for learning purposes this will do.
-        // -----------------------------------------------------------------------------------------------------------------------------------
-        for (unsigned int i = 0; i < m_Rock->meshes.size(); i++)
-        {
-            unsigned int VAO = m_Rock->meshes[i]->GetVAO();
-            glBindVertexArray(VAO);
-            // set attribute pointers for matrix (4 times vec4)
-            glEnableVertexAttribArray(3);
-            glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (void*)0);
-            glEnableVertexAttribArray(4);
-            glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (void*)(sizeof(glm::vec4)));
-            glEnableVertexAttribArray(5);
-            glVertexAttribPointer(5, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (void*)(2 * sizeof(glm::vec4)));
-            glEnableVertexAttribArray(6);
-            glVertexAttribPointer(6, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (void*)(3 * sizeof(glm::vec4)));
-
-            glVertexAttribDivisor(3, 1);
-            glVertexAttribDivisor(4, 1);
-            glVertexAttribDivisor(5, 1);
-            glVertexAttribDivisor(6, 1);
-
-            glBindVertexArray(0);
-        }
+        m_Rock->SetInstancedMatrix(m_Amount, modelMatrices);
 	}
 
 	Part4_AsteroidInstanced::~Part4_AsteroidInstanced()
@@ -122,15 +93,8 @@ namespace Test {
 
         // draw meteorites
         m_AsteroidShader->Bind();
-        m_AsteroidShader->SetUniform1i("texture_diffuse1", 0);
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, m_Rock->textures_loaded[0]->GetRendererId()); // note: we also made the textures_loaded vector public (instead of private) from the model class.
-        for (unsigned int i = 0; i < m_Rock->meshes.size(); i++)
-        {
-            glBindVertexArray(m_Rock->meshes[i]->GetVAO());
-            glDrawElementsInstanced(GL_TRIANGLES, m_Rock->meshes[i]->indices.size(), GL_UNSIGNED_INT, 0, m_Amount);
-            glBindVertexArray(0);
-        }
+
+        m_Rock->DrawInstanced(m_Amount);
     }
 
 	void Part4_AsteroidInstanced::OnRender()

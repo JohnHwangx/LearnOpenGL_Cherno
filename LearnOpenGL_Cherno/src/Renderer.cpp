@@ -44,3 +44,11 @@ void Renderer::DrawArray(const VertexArray& va, const Shader& shader, unsigned i
     va.Bind();
     GLCall(glDrawArrays(GL_TRIANGLES, 0, vertexCount));
 }
+
+void Renderer::DrawInstanced(const VertexArray& va, const IndexBuffer& ib, const Shader& shader, unsigned int amount) const
+{
+    shader.Bind();
+    va.Bind();
+    ib.Bind();
+    GLCall(glDrawElementsInstanced(GL_TRIANGLES, ib.GetCount(), GL_UNSIGNED_INT, 0, amount));
+}

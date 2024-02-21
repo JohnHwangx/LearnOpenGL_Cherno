@@ -21,6 +21,39 @@ void Model::BindShader(Shader& shader)
     m_Shader = &shader;
 }
 
+void Model::SetInstancedMatrix(unsigned int amount, const glm::mat4* modelMatrices)
+{
+    // configure instanced array
+    // -------------------------
+    unsigned int buffer;
+    glGenBuffers(1, &buffer);
+    glBindBuffer(GL_ARRAY_BUFFER, buffer);
+    glBufferData(GL_ARRAY_BUFFER, amount * sizeof(glm::mat4), modelMatrices, GL_STATIC_DRAW);
+
+    for (unsigned int i = 0; i < meshes.size(); i++)
+    {
+        //meshes[i]->SetInstancedMatrix();
+        unsigned int VAO = meshes[i]->GetVAO();
+        glBindVertexArray(VAO);
+        // set attribute pointers for matrix (4 times vec4)
+        glEnableVertexAttribArray(3);
+        glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (void*)0);
+        glEnableVertexAttribArray(4);
+        glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (void*)(sizeof(glm::vec4)));
+        glEnableVertexAttribArray(5);
+        glVertexAttribPointer(5, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (void*)(2 * sizeof(glm::vec4)));
+        glEnableVertexAttribArray(6);
+        glVertexAttribPointer(6, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (void*)(3 * sizeof(glm::vec4)));
+
+        glVertexAttribDivisor(3, 1);
+        glVertexAttribDivisor(4, 1);
+        glVertexAttribDivisor(5, 1);
+        glVertexAttribDivisor(6, 1);
+
+        glBindVertexArray(0);
+    }
+}
+
 void Model::SetTransform(const glm::mat4& transform)
 {
     m_Shader->Bind();
@@ -33,9 +66,10 @@ void Model::Draw()
 		meshes[i]->Draw(*m_Shader);
 }
 
-void Model::DrawInstanced()
+void Model::DrawInstanced(unsigned int amount)
 {
-
+    for (unsigned int i = 0; i < meshes.size(); i++)
+        meshes[i]->DrawInstanced(*m_Shader, amount);
 }
 
 void Model::loadModel(const std::string& path)

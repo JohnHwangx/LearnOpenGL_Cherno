@@ -20,4 +20,5 @@ public:
     void Clear() const;
     void DrawElement(const VertexArray& va, const IndexBuffer& ib, const Shader& shader) const;
     void DrawArray(const VertexArray& va, const Shader& shader, unsigned int vertexCount) const;
+    void DrawInstanced(const VertexArray& va, const IndexBuffer& ib, const Shader& shader, unsigned int amount) const;
 };

@@ -54,8 +54,10 @@ public:
     }
     ~Model();
     void Draw();
-    void DrawInstanced();
+    void DrawInstanced(unsigned int amount);
     void BindShader(Shader& shader);
+
+    void SetInstancedMatrix(unsigned int amount,const glm::mat4* modelMatrices);
 
     void SetTransform(const glm::mat4& transform);
 public:
