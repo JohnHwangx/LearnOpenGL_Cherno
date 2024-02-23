@@ -198,6 +198,9 @@
     <ClCompile Include="src\test\LearnOpenGL\16_AsteroidsInstanced.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\test\LearnOpenGL\17_DeferredShading.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shader\Basic.shader" />
@@ -1670,6 +1673,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\test\LearnOpenGL\16_AsteroidsInstanced.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\test\LearnOpenGL\17_DeferredShading.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
