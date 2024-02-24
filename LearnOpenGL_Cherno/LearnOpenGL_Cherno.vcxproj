@@ -148,6 +148,7 @@
     <ClCompile Include="src\Blaze\Geometry.cpp" />
     <ClCompile Include="src\Blaze\GLMeshBase.cpp" />
     <ClCompile Include="src\Blaze\GLStaticMesh.cpp" />
+    <ClCompile Include="src\GBufferFramebuffer.cpp" />
     <ClCompile Include="src\IndexBuffer.cpp" />
     <ClCompile Include="src\Light.cpp" />
     <ClCompile Include="src\Mesh.cpp" />
@@ -358,6 +359,7 @@
     <ClInclude Include="src\Blaze\Geometry.h" />
     <ClInclude Include="src\Blaze\GLMeshBase.h" />
     <ClInclude Include="src\Blaze\GLStaticMesh.h" />
+    <ClInclude Include="src\GBufferFrameBuffer.h" />
     <ClInclude Include="src\IndexBuffer.h" />
     <ClInclude Include="src\Light.h" />
     <ClInclude Include="src\Mesh.h" />

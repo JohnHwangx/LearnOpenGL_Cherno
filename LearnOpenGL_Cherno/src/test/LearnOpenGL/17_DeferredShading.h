@@ -1,6 +1,8 @@
 #pragma once
 
 #include "CameraTest.h"
+#include "Model.h"
+#include "GBufferFrameBuffer.h"
 
 namespace Test {
 
@@ -16,5 +18,16 @@ namespace Test {
 
 	private:
 
+		Model* m_Model;
+		std::vector<glm::vec3> m_ObjectPositions;
+
+		Shader* m_GeometryPassShader;
+		Shader* m_LightingPassShader;
+		Shader* m_LightBoxShader;
+
+		GBuffer* m_GBuffer;
+
+		std::vector<glm::vec3> m_LightPositions;
+		std::vector<glm::vec3> m_LightColors;
 	};
 }
