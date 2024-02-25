@@ -8,6 +8,7 @@ namespace Test {
 		m_GeometryPassShader = new Shader("res/shader/Part5_DeferredShading/Part5_G_Buffer.shader");
 		m_LightingPassShader = new Shader("res/shader/Part5_DeferredShading/Part5_Deferred_Shading.shader");
 		m_LightBoxShader = new Shader("res/shader/Part5_DeferredShading/Part5_Deferred_Light_Box.shader");
+		m_FBODebug = new Shader("res/shader/Part5_DeferredShading/Part5_Fbo_Debug.shader");
 
 		m_Model = new Model("res/models/nanosuit/nanosuit.obj");
 		m_ObjectPositions.push_back(glm::vec3(-3.0, -0.5, -3.0));
@@ -46,10 +47,23 @@ namespace Test {
 		m_LightingPassShader->SetUniform1i("gPosition", 0);
 		m_LightingPassShader->SetUniform1i("gNormal", 1);
 		m_LightingPassShader->SetUniform1i("gAlbedoSpec", 2);
+
+		m_FBODebug->Bind();
+		m_FBODebug->SetUniform1i("fboAttachment", 0);
+
+		m_Screen = new Screen();
+
 	}
 
 	Part5_DeferredShading::~Part5_DeferredShading()
 	{
+		delete m_Model;
+		delete m_GBuffer;
+		delete m_Screen;
+
+		delete m_GeometryPassShader;
+		delete m_LightBoxShader;
+		delete m_LightingPassShader;
 	}
 
 	void Part5_DeferredShading::OnUpdate(float deltaTime)
@@ -94,8 +108,18 @@ namespace Test {
 		// 2. lighting pass: calculate lighting by iterating over a screen filled quad pixel-by-pixel using the gbuffer's content.
 		// -----------------------------------------------------------------------------------------------------------------------
 		GLCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
-		m_LightingPassShader->Bind();
+		//m_LightingPassShader->Bind();
+		m_FBODebug->Bind();
 		
+		//GLCall(glActiveTexture(GL_TEXTURE0));
+		////GLCall(glBindTexture(GL_TEXTURE_2D, m_GBuffer->GetGPositionTexture()));
+		////GLCall(glBindTexture(GL_TEXTURE_2D, m_GBuffer->GetGNormalTexture()));
+		//GLCall(glBindTexture(GL_TEXTURE_2D, m_GBuffer->GetGAlbedoSpecTexture()));
+		m_GBuffer->ActiveTextures();
+
+		//m_Screen->BindShader(*m_LightingPassShader);
+		m_Screen->BindShader(*m_FBODebug);
+		m_Screen->Draw();
 	}
 
 	void Part5_DeferredShading::OnRender()
@@ -104,5 +128,6 @@ namespace Test {
 
 	void Part5_DeferredShading::OnImGuiRender()
 	{
+		this->CameraTest::OnImGuiRender();
 	}
 }

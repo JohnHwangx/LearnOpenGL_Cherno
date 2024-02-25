@@ -34,6 +34,7 @@ Framebuffer::Framebuffer(const unsigned int width, const unsigned int height)
 
 Framebuffer::~Framebuffer()
 {
+    GLCall(glDeleteFramebuffers(1, &m_RendererID));
 }
 
 void Framebuffer::MakeDepthFramebuffer(const unsigned int width, const unsigned int height)

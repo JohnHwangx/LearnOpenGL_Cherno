@@ -3,6 +3,7 @@
 #include "CameraTest.h"
 #include "Model.h"
 #include "GBufferFrameBuffer.h"
+#include "Screen.h"
 
 namespace Test {
 
@@ -21,9 +22,12 @@ namespace Test {
 		Model* m_Model;
 		std::vector<glm::vec3> m_ObjectPositions;
 
+		Screen* m_Screen;
+
 		Shader* m_GeometryPassShader;
 		Shader* m_LightingPassShader;
 		Shader* m_LightBoxShader;
+		Shader* m_FBODebug;
 
 		GBuffer* m_GBuffer;
 

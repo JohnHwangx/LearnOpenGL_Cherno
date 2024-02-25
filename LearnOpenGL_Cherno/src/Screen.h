@@ -7,6 +7,7 @@
 class Screen
 {
 public:
+	Screen();
 	Screen(Texture& texture);
 	~Screen();
 
