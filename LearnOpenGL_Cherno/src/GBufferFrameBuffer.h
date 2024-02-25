@@ -14,9 +14,6 @@ public:
 	void ActiveTextures();
 
 	inline unsigned int GetRendererID() const { return m_RendererID; }
-	inline unsigned int GetGPositionTexture() const { return m_GPosition; }
-	inline unsigned int GetGNormalTexture() const { return m_GNormal; }
-	inline unsigned int GetGAlbedoSpecTexture() const { return m_GAlbedoSpec; }
 
 private:
 	void BindFramebufferTexture2D(unsigned int&, unsigned int slot = 0);

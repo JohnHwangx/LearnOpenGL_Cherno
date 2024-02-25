@@ -11,15 +11,15 @@ namespace Test {
 		m_FBODebug = new Shader("res/shader/Part5_DeferredShading/Part5_Fbo_Debug.shader");
 
 		m_Model = new Model("res/models/nanosuit/nanosuit.obj");
-		m_ObjectPositions.push_back(glm::vec3(-3.0, -0.5, -3.0));
-		m_ObjectPositions.push_back(glm::vec3(0.0, -0.5, -3.0));
-		m_ObjectPositions.push_back(glm::vec3(3.0, -0.5, -3.0));
-		m_ObjectPositions.push_back(glm::vec3(-3.0, -0.5, 0.0));
-		m_ObjectPositions.push_back(glm::vec3(0.0, -0.5, 0.0));
-		m_ObjectPositions.push_back(glm::vec3(3.0, -0.5, 0.0));
-		m_ObjectPositions.push_back(glm::vec3(-3.0, -0.5, 3.0));
-		m_ObjectPositions.push_back(glm::vec3(0.0, -0.5, 3.0));
-		m_ObjectPositions.push_back(glm::vec3(3.0, -0.5, 3.0));
+		m_ObjectPositions.push_back(glm::vec3(-3.0, -3.5, -3.0));
+		m_ObjectPositions.push_back(glm::vec3(0.0, -3.5, -3.0));
+		m_ObjectPositions.push_back(glm::vec3(3.0, -3.5, -3.0));
+		m_ObjectPositions.push_back(glm::vec3(-3.0, -3.5, 0.0));
+		m_ObjectPositions.push_back(glm::vec3(0.0, -3.5, 0.0));
+		m_ObjectPositions.push_back(glm::vec3(3.0, -3.5, 0.0));
+		m_ObjectPositions.push_back(glm::vec3(-3.0, -3.5, 3.0));
+		m_ObjectPositions.push_back(glm::vec3(0.0, -3.5, 3.0));
+		m_ObjectPositions.push_back(glm::vec3(3.0, -3.5, 3.0));
 
 		m_GBuffer = new GBuffer(1200, 800);
 
@@ -52,6 +52,7 @@ namespace Test {
 		m_FBODebug->SetUniform1i("fboAttachment", 0);
 
 		m_Screen = new Screen();
+		m_Cube = new Cube(1.0f);
 
 	}
 
@@ -106,20 +107,55 @@ namespace Test {
 		m_GBuffer->Unbind();
 
 		// 2. lighting pass: calculate lighting by iterating over a screen filled quad pixel-by-pixel using the gbuffer's content.
-		// -----------------------------------------------------------------------------------------------------------------------
+		// ------------------------------------------------------------------------------------------------------------
 		GLCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
-		//m_LightingPassShader->Bind();
-		m_FBODebug->Bind();
-		
-		//GLCall(glActiveTexture(GL_TEXTURE0));
-		////GLCall(glBindTexture(GL_TEXTURE_2D, m_GBuffer->GetGPositionTexture()));
-		////GLCall(glBindTexture(GL_TEXTURE_2D, m_GBuffer->GetGNormalTexture()));
-		//GLCall(glBindTexture(GL_TEXTURE_2D, m_GBuffer->GetGAlbedoSpecTexture()));
-		m_GBuffer->ActiveTextures();
+		m_LightingPassShader->Bind();
+		//m_FBODebug->Bind();
 
-		//m_Screen->BindShader(*m_LightingPassShader);
-		m_Screen->BindShader(*m_FBODebug);
+		m_GBuffer->ActiveTextures();
+		// send light relevant uniforms
+		for (unsigned int i = 0; i < m_LightPositions.size(); i++)
+		{
+			m_LightingPassShader->SetUniform3fv("lights[" + std::to_string(i) + "].Position", m_LightPositions[i]);
+			m_LightingPassShader->SetUniform3fv("lights[" + std::to_string(i) + "].Color", m_LightPositions[i]);
+			// update attenuation parameters and calculate radius
+			const float linear = 0.7;
+			const float quadratic = 1.8;
+			m_LightingPassShader->SetUniform1f("lights[" + std::to_string(i) + "].Linear", linear);
+			m_LightingPassShader->SetUniform1f("lights[" + std::to_string(i) + "].Quadratic", quadratic);
+		}
+		m_LightingPassShader->SetUniform3fv("viewPos", m_Camera->GetPosition());
+
+		m_Screen->BindShader(*m_LightingPassShader);
+		//m_Screen->BindShader(*m_FBODebug);
 		m_Screen->Draw();
+
+		// 2.5. copy content of geometry's depth buffer to default framebuffer's depth buffer
+		// ----------------------------------------------------------------------------------
+		glBindFramebuffer(GL_READ_FRAMEBUFFER, m_GBuffer->GetRendererID());
+		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0); // write to default framebuffer
+		// blit to default framebuffer. Note that this may or may not work as the internal formats of both the FBO and default framebuffer have to match.
+		// the internal formats are implementation defined. This works on all of my systems, but if it doesn't on yours you'll likely have to write to the 		
+		// depth buffer in another shader stage (or somehow see to match the default framebuffer's internal format with the FBO's internal format).
+		glBlitFramebuffer(0, 0, 1200, 800, 0, 0, 1200, 800, GL_DEPTH_BUFFER_BIT, GL_NEAREST);
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+		// 3. render lights on top of scene
+		// --------------------------------
+		m_LightBoxShader->Bind();
+		m_LightBoxShader->SetUniformMat4f("projection", projection);
+		m_LightBoxShader->SetUniformMat4f("view", view);
+		m_Cube->BindShader(*m_LightBoxShader);
+		for (unsigned int i = 0; i < m_LightPositions.size(); i++)
+		{
+			model = glm::mat4(1.0f);
+			model = glm::translate(model, m_LightPositions[i]);
+			model = glm::scale(model, glm::vec3(0.125f));
+			m_LightBoxShader->SetUniformMat4f("model", model);
+			m_LightBoxShader->SetUniform3fv("lightColor", m_LightPositions[i]);
+			//renderCube();
+			m_Cube->Draw();
+		}
 	}
 
 	void Part5_DeferredShading::OnRender()

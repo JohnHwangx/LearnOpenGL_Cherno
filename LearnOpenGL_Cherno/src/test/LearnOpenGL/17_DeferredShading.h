@@ -4,6 +4,7 @@
 #include "Model.h"
 #include "GBufferFrameBuffer.h"
 #include "Screen.h"
+#include "Cube.h"
 
 namespace Test {
 
@@ -23,6 +24,7 @@ namespace Test {
 		std::vector<glm::vec3> m_ObjectPositions;
 
 		Screen* m_Screen;
+		Cube* m_Cube;
 
 		Shader* m_GeometryPassShader;
 		Shader* m_LightingPassShader;
